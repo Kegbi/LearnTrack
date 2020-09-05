@@ -29,3 +29,8 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 2rem;
   }
 `;
+
+export const black = "black";
+export const white = "white";
+export const grey = "grey";
+export const grey_dark = "#343434";

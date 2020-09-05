@@ -1,30 +1,30 @@
 import styled, { css } from "styled-components";
+import { black, white, grey_dark } from "../../global.styles";
 
 const normalButtonStyle = css`
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  transition: 0.3s all;
+  background-color: ${white};
+  color: ${black};
+  border: 1px solid ${black};
   font-weight: bold;
   font-size: 1.1rem;
+  transition: 0.3s all;
 
   &:hover {
-    background-color: black;
-    color: white;
-    border-color: transparent;
+    background-color: ${black};
+    color: ${white};
   }
 `;
 
 const textButtonStyle = css`
   background-color: transparent;
-  color: #343434;
+  color: ${grey_dark};
   border: none;
   transition: 0.3s color;
   font-size: 0.9rem;
   margin-top: 5px;
 
   &:hover {
-    color: black;
+    color: ${black};
   }
 `;
 

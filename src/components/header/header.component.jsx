@@ -1,6 +1,8 @@
 import React from "react";
 import {
   HeaderContainer,
+  HeaderSearch,
+  Logo,
   ProfileContainer,
   ProfilePicture,
 } from "./header.styles";
@@ -8,9 +10,11 @@ import {
 const Header = ({ user }) => {
   if (user) {
     return (
-      <HeaderContainer>
-        <h1>Logo</h1>
-        <h1>SearchBar</h1>
+      <HeaderContainer user={user}>
+        <Logo>
+          <h1>Logo</h1>
+        </Logo>
+        <HeaderSearch placeholder={"Search your materials..."} />
         <ProfileContainer>
           <h1>{user.name}</h1>
           <ProfilePicture />
@@ -20,7 +24,9 @@ const Header = ({ user }) => {
   } else {
     return (
       <HeaderContainer>
-        <h1>Logo</h1>
+        <Logo>
+          <h1>Logo</h1>
+        </Logo>
       </HeaderContainer>
     );
   }

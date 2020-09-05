@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LoginPageContainer = styled.div`
+export const PageContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -11,7 +11,7 @@ export const LoginPageContainer = styled.div`
   flex-grow: 1;
 `;
 
-export const LoginPageContent = styled.div`
+export const PageContent = styled.div`
   width: 700px;
   display: flex;
   align-items: center;
@@ -20,6 +20,6 @@ export const LoginPageContent = styled.div`
   text-align: center;
 `;
 
-export const LoginForm = styled.form`
+export const LoginSignupForm = styled.form`
   width: 50%;
 `;

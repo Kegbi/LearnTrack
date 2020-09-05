@@ -1,25 +1,43 @@
 import styled from "styled-components";
+import { grey, grey_dark } from "../../global.styles";
 
 export const HeaderContainer = styled.header`
   width: 100%;
   padding: 10px 0;
-  display: flex;
-  justify-content: center;
+  //display: flex;
+  justify-content: ${(props) => (props.user ? "space-between" : "center")};
   align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   //justify-content: space-between;
+`;
+
+export const Logo = styled.div`
+  padding-left: 50px;
+`;
+
+export const HeaderSearch = styled.input`
+  margin: 0 auto;
+  width: 60%;
+  height: 80%;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid ${grey};
 `;
 
 export const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: 50px;
 `;
 
 export const ProfilePicture = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #262626;
+  background-color: ${grey_dark};
   width: 50px;
   height: 50px;
   border-radius: 50%;

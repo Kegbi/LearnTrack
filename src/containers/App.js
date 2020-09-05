@@ -5,6 +5,7 @@ import { createStructuredSelector } from "reselect";
 
 import Header from "../components/header/header.component";
 import ErrorBoundary from "../components/error-boundary/error-boundary.component";
+import Loader from "../components/loader/loader.component";
 
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { checkUserSession } from "../redux/user/user.actions";
@@ -37,7 +38,7 @@ const App = () => {
           <ErrorBoundary>
             <Header user={user.currentUser} />
             <Switch>
-              <Suspense fallback={<h1>Loading...</h1>}>
+              <Suspense fallback={<Loader />}>
                 <Route
                   exact
                   path={"/"}

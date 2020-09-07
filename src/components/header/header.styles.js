@@ -12,9 +12,7 @@ export const HeaderContainer = styled.header`
   //justify-content: space-between;
 `;
 
-export const Logo = styled.div`
-  padding-left: 50px;
-`;
+export const Logo = styled.div``;
 
 export const HeaderSearch = styled.input`
   margin: 0 auto;
@@ -30,7 +28,6 @@ export const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 50px;
 `;
 
 export const ProfilePicture = styled.div`

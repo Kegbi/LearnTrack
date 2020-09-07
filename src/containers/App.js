@@ -43,7 +43,11 @@ const App = () => {
                   exact
                   path={"/"}
                   render={() =>
-                    user.currentUser ? <MainPage /> : <Redirect to="/login" />
+                    user.currentUser ? (
+                      <MainPage user={user.currentUser} />
+                    ) : (
+                      <Redirect to="/login" />
+                    )
                   }
                 />
                 <Route

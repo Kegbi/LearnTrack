@@ -1,8 +1,8 @@
 import UserActionTypes from "./user.types";
 
 const INITIAL_STATE = {
-  currentUser: null,
-  // currentUser: { _id: 123, name: "Ivan", books: [112, 12312, 12312, 1231] },
+  // currentUser: null,
+  currentUser: { _id: 123, name: "Ivan", books: [112, 12312, 12312, 1231] },
   error: null,
 };
 

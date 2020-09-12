@@ -2,18 +2,36 @@ import styled from "styled-components";
 import { BookBookmark } from "styled-icons/boxicons-regular";
 import { Like } from "styled-icons/boxicons-regular";
 import { Dislike } from "styled-icons/boxicons-regular";
-import { green, grey, red, yellow } from "../../global.styles";
+import { green, grey, grey_light, red, yellow } from "../../global.styles";
+import { PhotoCamera } from "@styled-icons/material";
 
 export const ContentListCardContainer = styled.div`
   width: 230px;
-  height: 300px;
   background-color: rgba(196, 196, 196, 0.2);
+`;
+
+export const ContentListCardLink = styled.div`
+  cursor: pointer;
 `;
 
 export const ContainerListCardPhoto = styled.img`
   width: 100%;
   height: 190px;
 `;
+
+export const ContainerListCardPhotoContainer = styled.div`
+  height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const UnknownPhoto = styled(PhotoCamera)`
+  width: 50%;
+  height: 50%;
+  color: ${grey_light};
+`;
+
 export const ContentListCardBottom = styled.div`
   margin: 0 10px;
 `;
@@ -40,7 +58,7 @@ export const ContainerListCardIcons = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 5px;
+  margin: 10px 0;
 `;
 
 export const ContainerListCardIconGroup = styled.div`

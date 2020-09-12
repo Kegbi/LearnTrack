@@ -9,7 +9,7 @@ import Loader from "../components/loader/loader.component";
 
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { checkUserSession } from "../redux/user/user.actions";
-import { Container } from "./app.styles";
+import { AppContainer, MainContainer } from "./app.styles";
 
 const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
 const MainPage = lazy(() => import("../pages/MainPage/MainPage"));
@@ -34,51 +34,53 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-        <Container>
+        <MainContainer>
           <ErrorBoundary>
-            <Header user={user.currentUser} />
-            <Switch>
-              <Suspense fallback={<Loader />}>
-                <Route
-                  exact
-                  path={"/"}
-                  render={() =>
-                    user.currentUser ? (
-                      <MainPage user={user.currentUser} />
-                    ) : (
-                      <Redirect to="/login" />
-                    )
-                  }
-                />
-                <Route
-                  exact
-                  path={"/achievements"}
-                  render={() =>
-                    user.currentUser ? (
-                      <AchievementsPage />
-                    ) : (
-                      <Redirect to="/login" />
-                    )
-                  }
-                />
-                <Route
-                  exact
-                  path={"/login"}
-                  render={() =>
-                    user.currentUser ? <Redirect to="/" /> : <LoginPage />
-                  }
-                />
-                <Route
-                  exact
-                  path={"/signup"}
-                  render={() =>
-                    user.currentUser ? <Redirect to="/" /> : <SignUpPage />
-                  }
-                />
-              </Suspense>
-            </Switch>
+            <AppContainer>
+              <Header user={user.currentUser} />
+              <Switch>
+                <Suspense fallback={<Loader />}>
+                  <Route
+                    exact
+                    path={"/"}
+                    render={() =>
+                      user.currentUser ? (
+                        <MainPage user={user.currentUser} />
+                      ) : (
+                        <Redirect to="/login" />
+                      )
+                    }
+                  />
+                  <Route
+                    exact
+                    path={"/achievements"}
+                    render={() =>
+                      user.currentUser ? (
+                        <AchievementsPage />
+                      ) : (
+                        <Redirect to="/login" />
+                      )
+                    }
+                  />
+                  <Route
+                    exact
+                    path={"/login"}
+                    render={() =>
+                      user.currentUser ? <Redirect to="/" /> : <LoginPage />
+                    }
+                  />
+                  <Route
+                    exact
+                    path={"/signup"}
+                    render={() =>
+                      user.currentUser ? <Redirect to="/" /> : <SignUpPage />
+                    }
+                  />
+                </Suspense>
+              </Switch>
+            </AppContainer>
           </ErrorBoundary>
-        </Container>
+        </MainContainer>
       </BrowserRouter>
     </>
   );

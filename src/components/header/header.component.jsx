@@ -6,12 +6,15 @@ import {
   ProfileContainer,
   ProfilePicture,
 } from "./header.styles";
+import { useHistory } from "react-router-dom";
 
 const Header = ({ user }) => {
+  let history = useHistory();
+
   if (user) {
     return (
       <HeaderContainer user={user}>
-        <Logo>
+        <Logo onClick={() => history.push("/")}>
           <h1>Logo</h1>
         </Logo>
         <HeaderSearch placeholder={"Search your materials..."} />

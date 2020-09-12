@@ -31,9 +31,11 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const black = "black";
+export const light_black = "#404040";
 export const white = "white";
 export const grey = "grey";
 export const grey_dark = "#343434";
 export const green = "#1fac1f";
+export const grey_light = "#b6b6b6";
 export const red = "#e02b2b";
 export const yellow = "#f1c900";

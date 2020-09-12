@@ -7,19 +7,36 @@ import {
   ContainerListCardIcons,
   ContainerListCardName,
   ContainerListCardPhoto,
+  ContainerListCardPhotoContainer,
   ContentListCardBottom,
   ContentListCardContainer,
+  ContentListCardLink,
   DislikeIcon,
   LikeIcon,
+  UnknownPhoto,
 } from "./content-list-card.styles";
+import { useHistory } from "react-router-dom";
 
-const ContentListCard = ({ name, author }) => {
+const ContentListCard = ({ _id, image, name, author, type }) => {
+  let history = useHistory();
+
   return (
     <ContentListCardContainer>
-      <ContainerListCardPhoto />
-      <ContentListCardBottom>
+      <ContentListCardLink onClick={() => history.push(`/${type}/${_id}`)}>
+        <ContainerListCardPhotoContainer>
+          {image.length ? (
+            <ContainerListCardPhoto
+              src={`../../../uploads/images/${image}`}
+              alt={"card-photo"}
+            />
+          ) : (
+            <UnknownPhoto />
+          )}
+        </ContainerListCardPhotoContainer>
         <ContainerListCardName>{name}</ContainerListCardName>
         <ContainerListCardAuthor>{author}</ContainerListCardAuthor>
+      </ContentListCardLink>
+      <ContentListCardBottom>
         <ContainerListCardIcons>
           <ContainerListCardIconGroup>
             <LikeIcon />

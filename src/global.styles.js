@@ -34,3 +34,6 @@ export const black = "black";
 export const white = "white";
 export const grey = "grey";
 export const grey_dark = "#343434";
+export const green = "#1fac1f";
+export const red = "#e02b2b";
+export const yellow = "#f1c900";

@@ -8,6 +8,7 @@ import {
   ContainerListCardName,
   ContainerListCardPhoto,
   ContainerListCardPhotoContainer,
+  ContainerListCardText,
   ContentListCardBottom,
   ContentListCardContainer,
   ContentListCardLink,
@@ -33,8 +34,10 @@ const ContentListCard = ({ _id, image, name, author, type }) => {
             <UnknownPhoto />
           )}
         </ContainerListCardPhotoContainer>
-        <ContainerListCardName>{name}</ContainerListCardName>
-        <ContainerListCardAuthor>{author}</ContainerListCardAuthor>
+        <ContainerListCardText>
+          <ContainerListCardName>{name}</ContainerListCardName>
+          <ContainerListCardAuthor>{author}</ContainerListCardAuthor>
+        </ContainerListCardText>
       </ContentListCardLink>
       <ContentListCardBottom>
         <ContainerListCardIcons>

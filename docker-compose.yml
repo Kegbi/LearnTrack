@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   learntrack:
-    container_name: learntrack
+    container_name: app
     build: ./
     command: npm run dev
     working_dir: /usr/src/learntrack

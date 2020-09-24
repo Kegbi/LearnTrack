@@ -32,6 +32,10 @@ export const UnknownPhoto = styled(PhotoCamera)`
   color: ${grey_light};
 `;
 
+export const ContainerListCardText = styled.div`
+  margin: 0 10px;
+`;
+
 export const ContentListCardBottom = styled.div`
   margin: 0 10px;
 `;

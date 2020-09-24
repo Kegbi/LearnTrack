@@ -1,9 +1,10 @@
-FROM node:12.8.4
+FROM node:12.18.4
 
 WORKDIR /usr/src/learntrack
 
 COPY ./ ./
 
 RUN npm install
+RUN npm run client:install
 
 CMD ["/bin/bash"]

@@ -8,7 +8,7 @@ export const HeaderContainer = styled.header`
   align-items: center;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 10px 20px;
+  padding: 25px 0;
   //justify-content: space-between;
 `;
 

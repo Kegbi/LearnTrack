@@ -26,9 +26,7 @@ const ContentList = ({ typeOfContent }) => {
           <h1>Latest added {typeOfContent}</h1>
           <ContentListHeaderLink
             onClick={() =>
-              typeOfContent === "Books"
-                ? history.push(`/${type}`)
-                : history.push(`/${type}`)
+                history.push(`/${type}`)
             }
           >
             Watch all

@@ -47,3 +47,9 @@ const getBook = (req, res, db) => {
     })
     .catch((err) => res.status(400).json("Error getting book"));
 };
+
+module.exports = {
+  getAllBooks,
+  getLikedBooks,
+  getBook,
+};

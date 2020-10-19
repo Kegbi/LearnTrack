@@ -47,3 +47,9 @@ const getCourse = (req, res, db) => {
     })
     .catch((err) => res.status(400).json("Error getting course"));
 };
+
+module.exports = {
+  getAllCourses,
+  getLikedCourses,
+  getCourse,
+};

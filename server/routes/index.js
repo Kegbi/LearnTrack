@@ -1,6 +1,3 @@
-const path = require("path");
-const sharp = require("sharp");
-
 const books = require("../controllers/books");
 const courses = require("../controllers/courses");
 const image = require("../controllers/image");
@@ -14,27 +11,11 @@ module.exports = (app) => {
     "/uploadImage",
     image.uploadImage.single("file"),
     async (req, res) => {
-      if (req.file) {
-        let compressedImageFilePath = path.join(
-          __dirname,
-          "..",
-          "public",
-          "images",
-          new Date().getTime() + ".jpeg"
-        );
-        await sharp(req.file.path)
-          .resize(640, 480)
-          .jpeg({
-            quality: 80,
-            chromaSubsampling: "4:4:4",
-          })
-          .toFile(compressedImageFilePath, (err, req, info) => {
-            if (err) {
-              res.send("Some error with compressing your image");
-            } else {
-              res.send({ success: true, filename: req.file.filename });
-            }
-          });
+      const response = await image.processImage(req);
+      if (response.success === true) {
+        res.send({ success: response.success, message: response.message });
+      } else if (response.success === false && response.message) {
+        res.status(500).send(response.message);
       } else {
         res.sendStatus(500);
       }

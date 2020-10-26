@@ -7,7 +7,8 @@ WORKDIR /usr/src/learntrack
 
 COPY ./ ./
 
-RUN npm install
-RUN npm run client:install
+RUN npm run install_packages
+RUN rm -rf ./server/node_modules/sharp
+RUN npm i sharp --prefix server
 
 CMD ["/bin/bash"]

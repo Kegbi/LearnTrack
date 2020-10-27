@@ -11,14 +11,7 @@ module.exports = (app) => {
     "/uploadImage",
     image.uploadImage.single("file"),
     async (req, res) => {
-      const response = await image.processImage(req);
-      if (response.success === true) {
-        res.send({ success: response.success, message: response.message });
-      } else if (response.success === false && response.message) {
-        res.status(500).send(response.message);
-      } else {
-        res.sendStatus(500);
-      }
+      await image.processImage(req, res);
     }
   );
 

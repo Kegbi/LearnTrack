@@ -7,31 +7,14 @@ const imageStorage = multer.memoryStorage();
 
 const compressedImageFolder = path.join(__dirname, "..", "uploads", "images");
 
-const processImage = async (req) => {
-  let compressedImageFileName = `${new Date().getTime()}${Math.floor(
-    Math.random() * 1000000000
-  )}.jpg`;
-  let compressedImageFilePath = path.join(
-    compressedImageFolder,
-    compressedImageFileName
-  );
-  if (req.file) {
-    fs.access(compressedImageFolder, (err) => {
-      if (err) {
-        fs.mkdirSync(compressedImageFolder);
-      }
-    });
-    await sharp(req.file.buffer)
-      .resize({ width: 640, height: 480 })
-      .jpeg({ quality: 80, chromaSubsampling: "4:4:4" })
-      .toFile(compressedImageFilePath, (err, file, info) => {
-        if (err) {
-          return { success: false, message: "Error compressing your image" };
-        }
-      });
-    return { success: true, message: compressedImageFileName };
+const processImage = async (req, res) => {
+  const response = await resizeImage(req);
+  if (response.success === true) {
+    res.send({ success: response.success, message: response.message });
+  } else if (response.success === false && response.message) {
+    res.status(500).send(response.message);
   } else {
-    return { success: false, message: "File not found" };
+    res.sendStatus(500);
   }
 };
 
@@ -48,16 +31,44 @@ const uploadImage = multer({
   },
 });
 
-function checkFileType(file, cb) {
+const checkFileType = (file, cb) => {
   const filetypes = /jpeg|jpg|png/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
   if (mimetype && extname) {
     return cb(null, true);
   } else {
-    cb("Error: You can download images only!");
+    return cb(null, false);
   }
-}
+};
+
+const resizeImage = (req) => {
+  let compressedImageFileName = `${new Date().getTime()}${Math.floor(
+    Math.random() * 1000000000
+  )}.jpg`;
+  let compressedImageFilePath = path.join(
+    compressedImageFolder,
+    compressedImageFileName
+  );
+  if (req.file) {
+    fs.access(compressedImageFolder, (err) => {
+      if (err) {
+        fs.mkdirSync(compressedImageFolder);
+      }
+    });
+    sharp(req.file.buffer)
+      .resize({ width: 640, height: 480 })
+      .jpeg({ quality: 80, chromaSubsampling: "4:4:4" })
+      .toFile(compressedImageFilePath, (err) => {
+        if (err) {
+          return { success: false, message: "Error compressing your image" };
+        }
+      });
+    return { success: true, message: compressedImageFileName };
+  } else {
+    return { success: false, message: "No file or wrong file format" };
+  }
+};
 
 module.exports = {
   uploadImage,

@@ -76,16 +76,12 @@ const addBook = (req, res, db) => {
 const deleteBook = async (req, res, db) => {
   const { id } = req.params;
   try {
+    await db("books_likes").where({ bookid: id }).del();
     let resp = await db("books").where({ bookid: id }).del();
     if (resp) {
-      let response = await db("books_likes").where({ bookid: id }).del();
-      if (response) {
-        res.json("Book deleted");
-      } else {
-        res.status(400).json("Unable to delete book");
-      }
+      res.json("Book deleted");
     } else {
-      res.status(400).json("Unable to delete book");
+      res.status(400).json("Unable to delete book. Maybe it's already deleted");
     }
   } catch {
     res.status(400).json("Error deleting book");

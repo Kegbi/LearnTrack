@@ -23,21 +23,23 @@ module.exports = (app) => {
     }
   );
 
-  app.route("/api/books").get((req, res) => books.getAllBooks(req, res, db));
-  app.route("/api/books").post((req, res) => books.addBook(req, res, db));
+  app
+    .route("/api/books")
+    .get((req, res) => books.getAllBooks(req, res, db))
+    .post((req, res) => books.addBook(req, res, db));
   app
     .route("/api/books/:id")
     .get((req, res) => books.getBook(req, res, db))
     .put((req, res) => books.updateBook(req, res, db))
     .delete((req, res) => books.deleteBook(req, res, db));
 
-  // app.route("/api/courses").get(courses.all);
-  // app.route("/api/courses").post(courses.create);
-  // app
-  //   .route("/api/courses/:id")
-  //   .get((req, res) => {
-  //     res.send("Working, buddy");
-  //   })
-  //   .put(courses.updateCourse)
-  //   .delete(books.deleteCourse);
+  app
+    .route("/api/courses")
+    .get((req, res) => courses.getAllCourses(req, res, db))
+    .post((req, res) => courses.addCourse(req, res, db));
+  app
+    .route("/api/courses/:id")
+    .get((req, res) => courses.getCourse(req, res, db))
+    .put((req, res) => courses.updateCourse(req, res, db))
+    .delete((req, res) => courses.deleteCourse(req, res, db));
 };

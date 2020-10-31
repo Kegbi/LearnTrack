@@ -1,0 +1,11 @@
+\i '/docker-entrypoint-initdb.d/tables/users.sql'
+\i '/docker-entrypoint-initdb.d/tables/books.sql'
+\i '/docker-entrypoint-initdb.d/tables/books_likes.sql'
+\i '/docker-entrypoint-initdb.d/tables/courses.sql'
+\i '/docker-entrypoint-initdb.d/tables/courses_likes.sql'
+
+\i '/docker-entrypoint-initdb.d/seed/users.sql'
+\i '/docker-entrypoint-initdb.d/seed/books.sql'
+\i '/docker-entrypoint-initdb.d/seed/courses.sql'
+\i '/docker-entrypoint-initdb.d/seed/courses_likes.sql'
+\i '/docker-entrypoint-initdb.d/seed/books_likes.sql'

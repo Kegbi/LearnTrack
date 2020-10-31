@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  learntrack:
+    container_name: app
+    build: ./
+    command: npm run dev
+    working_dir: /usr/src/learntrack
+    environment:
+      CLIENT_URL: http://localhost:30000
+      POSTGRES_URI: postgres://postgres:secretpass@postgres:5432/learntrack
+      REDIS_URI: redis://redis:6379
+    ports:
+      - "30000:3000"
+      - "50000:5000"
+    volumes:
+      - ./:/usr/src/learntrack
+
+  postgres:
+    build: ./postgres
+    ports:
+      - "54320:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secretpass
+      POSTGRES_DB: learntrack
+      POSTGRES_HOST: postgres
+
+  redis:
+    image: redis
+    ports:
+      - "63790:6379"

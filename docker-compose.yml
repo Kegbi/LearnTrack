@@ -7,6 +7,7 @@ services:
     command: npm run dev
     working_dir: /usr/src/learntrack
     environment:
+      CLIENT_URL: http://localhost:30000
       POSTGRES_URI: postgres://postgres:secretpass@postgres:5432/learntrack
       REDIS_URI: redis://redis:6379
     ports:

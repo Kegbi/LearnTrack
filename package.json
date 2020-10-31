@@ -1,33 +1,30 @@
 {
   "name": "learntrack",
   "version": "1.0.0",
-  "description": "## Planning to implement book tracking and learned courses tracking + achievements for your progress. Maybe some other stuff, but this will be later",
-  "main": "app.js",
+  "description": "* ### React/Redux\r * ### Styled Components\r * ### Saga for async",
+  "dependencies": {
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.2",
+    "sharp": "^0.26.2"
+  },
+  "devDependencies": {},
   "scripts": {
-    "start": "cross-env NODE_ENV=production node app.js",
-    "server": "nodemon app.js",
     "client": "npm run start --prefix client",
     "client:install": "npm install --prefix client",
     "client:build": "npm run build --prefix client",
+    "server": "nodemon server.js --prefix server",
+    "server:install": "npm install --prefix server",
+    "install_packages": "npm run client:install & npm run server:install",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kegbi/LearnTrack.git"
   },
-  "keywords": [],
   "author": "Kegbi <kegbi.networking@gmail.com>",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/Kegbi/LearnTrack/issues"
   },
-  "homepage": "https://github.com/Kegbi/LearnTrack#readme",
-  "dependencies": {
-    "express": "^4.17.1"
-  },
-  "devDependencies": {
-    "concurrently": "^5.3.0",
-    "cross-env": "^7.0.2",
-    "nodemon": "^2.0.4"
-  }
+  "homepage": "https://github.com/Kegbi/LearnTrack#readme"
 }

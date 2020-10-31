@@ -10,3 +10,7 @@ export const MainPageContainer = styled.div`
 export const MainPageContent = styled.div`
   width: 100%;
 `;
+
+export const MainPageGreeting = styled.h1`
+  font-size: 2.3rem;
+`;

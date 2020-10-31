@@ -1,12 +1,12 @@
 import React from "react";
-import { MainPageContainer, MainPageContent } from "./MainPage.styles";
+import { MainPageContainer, MainPageContent, MainPageGreeting } from "./MainPage.styles";
 import ContentBlock from "../../containers/content-list/content-block.container";
 
 const MainPage = ({ user }) => {
   return (
     <MainPageContainer>
       <MainPageContent>
-        <h1>Welcome, {user.name}</h1>
+        <MainPageGreeting>Welcome, {user.name}</MainPageGreeting>
         <ContentBlock typeOfContent={"Books"} />
         <ContentBlock typeOfContent={"Courses"} />
       </MainPageContent>

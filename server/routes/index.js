@@ -12,7 +12,7 @@ const db = knex({
 
 module.exports = (app) => {
   app.route("/").get((req, res) => {
-    res.send("It's working!");
+    res.send("Hey, get out of here!");
   });
 
   app.post(

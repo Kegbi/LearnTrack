@@ -11,6 +11,25 @@ const getAllBooks = async (req, res, db) => {
   }
 };
 
+const getLastFiveBooks = async (req, res, db) => {
+  try {
+    let resp = await db
+      .select("*")
+      .from("books")
+      .orderBy("created", "desc")
+      .limit(5);
+    if (resp && Array.isArray(resp) && !resp.length) {
+      res.json("Looks like there are no books for now");
+    } else if (resp) {
+      res.json(resp);
+    } else {
+      res.status(400).json("Unable to get books");
+    }
+  } catch {
+    res.status(400).json("Error getting books");
+  }
+};
+
 const getLikedBooks = async (req, res, db) => {
   const { id } = req.params;
   try {
@@ -107,6 +126,7 @@ const updateBook = async (req, res, db) => {
 
 module.exports = {
   getAllBooks,
+  getLastFiveBooks,
   getLikedBooks,
   getBook,
   addBook,

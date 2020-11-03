@@ -11,6 +11,25 @@ const getAllCourses = async (req, res, db) => {
   }
 };
 
+const getLastFiveCourses = async (req, res, db) => {
+  try {
+    let resp = await db
+      .select("*")
+      .from("courses")
+      .orderBy("created", "desc")
+      .limit(5);
+    if (resp && Array.isArray(resp) && !resp.length) {
+      res.json("Looks like there are no courses for now");
+    } else if (resp) {
+      res.json(resp);
+    } else {
+      res.status(400).json("Unable to get courses");
+    }
+  } catch {
+    res.status(400).json("Error getting courses");
+  }
+};
+
 const getLikedCourses = async (req, res, db) => {
   const { id } = req.params;
   try {
@@ -109,6 +128,7 @@ const updateCourse = async (req, res, db) => {
 
 module.exports = {
   getAllCourses,
+  getLastFiveCourses,
   getLikedCourses,
   getCourse,
   addCourse,

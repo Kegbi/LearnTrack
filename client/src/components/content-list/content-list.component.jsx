@@ -7,39 +7,52 @@ import {
   ContentListHeaderLink,
 } from "./content-list.styles";
 import { useHistory } from "react-router-dom";
+import Loader from "../loader/loader.component";
 
-const ContentList = ({ typeOfContent }) => {
+const ContentList = ({ typeOfContent, content, isPending }) => {
   let history = useHistory();
 
   let type;
 
   typeOfContent === "Books" ? (type = "books") : (type = "courses");
 
-  const name = "Very long name of the famous book";
-  const author = "Book Author";
-  const image = "";
-  const _id = "2";
   return (
     <>
       <ContentListContainer>
         <ContentListContainerHeader>
           <h1>Latest added {typeOfContent}</h1>
-          <ContentListHeaderLink
-            onClick={() =>
-                history.push(`/${type}`)
-            }
-          >
+          <ContentListHeaderLink onClick={() => history.push(`/${type}`)}>
             Watch all
           </ContentListHeaderLink>
         </ContentListContainerHeader>
         <ContentListCards>
-          <ContentListCard
-            _id={_id}
-            image={image}
-            name={name}
-            author={author}
-            type={type}
-          />
+          {isPending ? (
+            <Loader />
+          ) : content.length ? (
+            <>
+              {content.map((card, i) => {
+                let id;
+                if (type === "books") {
+                  id = content[i].bookid;
+                } else if (type === "courses") {
+                  id = content[i].courseid;
+                }
+                return (
+                  <ContentListCard
+                    _id={id}
+                    key={id}
+                    name={content[i].name}
+                    image={content[i].image}
+                    author={content[i].author}
+                    // info={content[i].info}
+                    type={type}
+                  />
+                );
+              })}
+            </>
+          ) : (
+            <h1>No data here for now</h1>
+          )}
         </ContentListCards>
       </ContentListContainer>
     </>

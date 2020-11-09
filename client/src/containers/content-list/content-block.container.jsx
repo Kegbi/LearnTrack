@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
 
-const ContentBlock = ({ typeOfContent }) => {
+const ContentBlock = ({ typeOfContent, content, isPending }) => {
   const user = useSelector(
     createStructuredSelector({
       currentUser: selectCurrentUser,
@@ -13,14 +13,13 @@ const ContentBlock = ({ typeOfContent }) => {
 
   const userId = user._id;
 
-  if (typeOfContent === "Books") {
-    // Fetch books for this component
-    return <ContentList typeOfContent={typeOfContent} />;
-  } else if (typeOfContent === "Courses") {
-    // Fetch courses for this component
-    return <ContentList typeOfContent={typeOfContent} />;
-  }
-  throw Error("Wrong content type for content-block container");
+  return (
+    <ContentList
+      typeOfContent={typeOfContent}
+      content={content}
+      isPending={isPending}
+    />
+  );
 };
 
 export default ContentBlock;

@@ -18,7 +18,7 @@ import {
 } from "./content-list-card.styles";
 import { useHistory } from "react-router-dom";
 
-const ContentListCard = ({ _id, image, name, author, type }) => {
+const ContentListCard = ({ _id, name, image, author, type }) => {
   let history = useHistory();
 
   return (

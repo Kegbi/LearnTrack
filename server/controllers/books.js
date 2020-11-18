@@ -11,13 +11,13 @@ const getAllBooks = async (req, res, db) => {
   }
 };
 
-const getLastFiveBooks = async (req, res, db) => {
+const getLastBooks = async (req, res, db) => {
   try {
     let resp = await db
       .select("*")
       .from("books")
       .orderBy("created", "desc")
-      .limit(5);
+      .limit(7);
     if (resp && Array.isArray(resp) && !resp.length) {
       res.json("Looks like there are no books for now");
     } else if (resp) {
@@ -126,7 +126,7 @@ const updateBook = async (req, res, db) => {
 
 module.exports = {
   getAllBooks,
-  getLastFiveBooks,
+  getLastBooks,
   getLikedBooks,
   getBook,
   addBook,

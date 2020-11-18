@@ -8,8 +8,26 @@ export const ContentListContainer = styled.div`
 
 export const ContentListCards = styled.div`
   width: 100%;
-  display: flex;
+  grid-template-columns: repeat(7, 1fr);
+  display: grid;
+  grid-gap: 34px;
+  align-items: center;
   margin-top: 30px;
+  @media (max-width: 1880px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  @media (max-width: 1630px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  @media (max-width: 1360px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 1090px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 875px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 export const ContentListContainerHeader = styled.div`

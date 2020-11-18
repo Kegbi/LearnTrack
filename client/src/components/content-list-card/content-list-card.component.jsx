@@ -43,15 +43,15 @@ const ContentListCard = ({ _id, name, image, author, type }) => {
         <ContainerListCardIcons>
           <ContainerListCardIconGroup>
             <LikeIcon />
-            <ContainerListCardIconCounter>222</ContainerListCardIconCounter>
+            {/*<ContainerListCardIconCounter>222</ContainerListCardIconCounter>*/}
           </ContainerListCardIconGroup>
           <ContainerListCardIconGroup>
             <BookmarkIcon />
-            <ContainerListCardIconCounter>222</ContainerListCardIconCounter>
+            {/*<ContainerListCardIconCounter>222</ContainerListCardIconCounter>*/}
           </ContainerListCardIconGroup>
           <ContainerListCardIconGroup>
             <DislikeIcon />
-            <ContainerListCardIconCounter>222</ContainerListCardIconCounter>
+            {/*<ContainerListCardIconCounter>222</ContainerListCardIconCounter>*/}
           </ContainerListCardIconGroup>
         </ContainerListCardIcons>
       </ContentListCardBottom>

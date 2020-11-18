@@ -29,7 +29,7 @@ module.exports = (app) => {
     .post((req, res) => books.addBook(req, res, db));
   app
     .route("/api/books/latest")
-    .get((req, res) => books.getLastFiveBooks(req, res, db));
+    .get((req, res) => books.getLastBooks(req, res, db));
   app
     .route("/api/books/:id")
     .get((req, res) => books.getBook(req, res, db))
@@ -42,7 +42,7 @@ module.exports = (app) => {
     .post((req, res) => courses.addCourse(req, res, db));
   app
     .route("/api/courses/latest")
-    .get((req, res) => courses.getLastFiveCourses(req, res, db));
+    .get((req, res) => courses.getLastCourses(req, res, db));
   app
     .route("/api/courses/:id")
     .get((req, res) => courses.getCourse(req, res, db))

@@ -11,13 +11,13 @@ const getAllCourses = async (req, res, db) => {
   }
 };
 
-const getLastFiveCourses = async (req, res, db) => {
+const getLastCourses = async (req, res, db) => {
   try {
     let resp = await db
       .select("*")
       .from("courses")
       .orderBy("created", "desc")
-      .limit(5);
+      .limit(7);
     if (resp && Array.isArray(resp) && !resp.length) {
       res.json("Looks like there are no courses for now");
     } else if (resp) {
@@ -128,7 +128,7 @@ const updateCourse = async (req, res, db) => {
 
 module.exports = {
   getAllCourses,
-  getLastFiveCourses,
+  getLastCourses,
   getLikedCourses,
   getCourse,
   addCourse,

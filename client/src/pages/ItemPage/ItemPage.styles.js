@@ -39,7 +39,6 @@ export const UnknownPhoto = styled(PhotoCamera)`
 
 export const IconsContainer = styled.div`
   width: 100%;
-  padding: 0 32px;
   display: flex;
   justify-content: center;
   align-items: center;

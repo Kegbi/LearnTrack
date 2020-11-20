@@ -1,3 +1,8 @@
+const { getLatest } = require("../utils/item");
+const { getItemInfo } = require("../utils/item");
+const { getItemInteractions } = require("../utils/item");
+const { getProfileInteractions } = require("../utils/item");
+
 const getAllBooks = async (req, res, db) => {
   try {
     let resp = await db.select("*").from("books");
@@ -13,11 +18,7 @@ const getAllBooks = async (req, res, db) => {
 
 const getLastBooks = async (req, res, db) => {
   try {
-    let resp = await db
-      .select("*")
-      .from("books")
-      .orderBy("created", "desc")
-      .limit(7);
+    let resp = await getLatest(db, "books", 7);
     if (resp && Array.isArray(resp) && !resp.length) {
       res.json("Looks like there are no books for now");
     } else if (resp) {
@@ -33,15 +34,9 @@ const getLastBooks = async (req, res, db) => {
 const getLikedBooks = async (req, res, db) => {
   const { id } = req.params;
   try {
-    let resp = await db
-      .select("bookid")
-      .from("books_likes")
-      .where({ userid: id, typeofaction: "like" });
+    let resp = await getProfileInteractions(db, id, "books", "l");
     if (resp) {
-      let response = await db
-        .select("*")
-        .from("books")
-        .where({ bookid: resp.bookid });
+      let response = await getItemInfo(db, resp.bookid, "books");
       if (response) {
         res.json(response);
       }
@@ -56,8 +51,13 @@ const getLikedBooks = async (req, res, db) => {
 const getBook = async (req, res, db) => {
   const { id } = req.params;
   try {
-    let resp = await db.select("*").from("books").where({ bookid: id });
-    if (resp && Array.isArray(resp) && resp.length) {
+    const resp = {
+      info: await getItemInfo(db, id, "books"),
+      likes: await getItemInteractions(db, id, "books", "l"),
+      // stored: ,
+      // dislikes: ,
+    };
+    if (resp.info && Array.isArray(resp.info) && resp.info.length) {
       res.json(resp);
     } else {
       res.status(400).json("Unable to get book");

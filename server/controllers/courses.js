@@ -1,3 +1,8 @@
+const { getLatest } = require("../utils/item");
+const { getItemInfo } = require("../utils/item");
+const { getItemInteractions } = require("../utils/item");
+const { getProfileInteractions } = require("../utils/item");
+
 const getAllCourses = async (req, res, db) => {
   try {
     let resp = await db.select("*").from("courses");
@@ -13,11 +18,7 @@ const getAllCourses = async (req, res, db) => {
 
 const getLastCourses = async (req, res, db) => {
   try {
-    let resp = await db
-      .select("*")
-      .from("courses")
-      .orderBy("created", "desc")
-      .limit(7);
+    let resp = await getLatest(db, "courses", 7);
     if (resp && Array.isArray(resp) && !resp.length) {
       res.json("Looks like there are no courses for now");
     } else if (resp) {
@@ -33,15 +34,9 @@ const getLastCourses = async (req, res, db) => {
 const getLikedCourses = async (req, res, db) => {
   const { id } = req.params;
   try {
-    let resp = await db
-      .select("courseid")
-      .from("courses_likes")
-      .where({ userid: id, typeofaction: "like" });
+    let resp = await getProfileInteractions(db, id, "courses", "l");
     if (resp) {
-      let response = await db
-        .select("*")
-        .from("courses")
-        .where({ courseid: resp.courseid });
+      let response = await getItemInfo(db, resp.courseid, "courses");
       if (response) {
         res.json(response);
       }
@@ -56,8 +51,13 @@ const getLikedCourses = async (req, res, db) => {
 const getCourse = async (req, res, db) => {
   const { id } = req.params;
   try {
-    let resp = await db.select("*").from("courses").where({ courseid: id });
-    if (resp && Array.isArray(resp) && resp.length) {
+    const resp = {
+      info: await getItemInfo(db, id, "courses"),
+      likes: await getItemInteractions(db, id, "courses", "l"),
+      // stored: ,
+      // dislikes: ,
+    };
+    if (resp.info && Array.isArray(resp.info) && resp.info.length) {
       res.json(resp);
     } else {
       res.status(400).json("Unable to get course");

@@ -1,5 +1,4 @@
-const books = require("../controllers/books");
-const courses = require("../controllers/courses");
+const items = require("../controllers/items");
 const image = require("../controllers/image");
 const knex = require("knex");
 
@@ -25,27 +24,27 @@ module.exports = (app) => {
 
   app
     .route("/api/books")
-    .get((req, res) => books.getAllBooks(req, res, db))
-    .post((req, res) => books.addBook(req, res, db));
+    .get((req, res) => items.getAllItems(req, res, db, "books"))
+    .post((req, res) => items.addItem(req, res, db, "books"));
   app
     .route("/api/books/latest")
-    .get((req, res) => books.getLastBooks(req, res, db));
+    .get((req, res) => items.getLastItems(req, res, db, "books"));
   app
     .route("/api/books/:id")
-    .get((req, res) => books.getBook(req, res, db))
-    .put((req, res) => books.updateBook(req, res, db))
-    .delete((req, res) => books.deleteBook(req, res, db));
+    .get((req, res) => items.getItem(req, res, db, "books"))
+    .put((req, res) => items.updateItem(req, res, db, "books"))
+    .delete((req, res) => items.deleteItem(req, res, db, "books"));
 
   app
     .route("/api/courses")
-    .get((req, res) => courses.getAllCourses(req, res, db))
-    .post((req, res) => courses.addCourse(req, res, db));
+    .get((req, res) => items.getAllItems(req, res, db, "courses"))
+    .post((req, res) => items.addItem(req, res, db, "courses"));
   app
     .route("/api/courses/latest")
-    .get((req, res) => courses.getLastCourses(req, res, db));
+    .get((req, res) => items.getLastItems(req, res, db, "courses"));
   app
     .route("/api/courses/:id")
-    .get((req, res) => courses.getCourse(req, res, db))
-    .put((req, res) => courses.updateCourse(req, res, db))
-    .delete((req, res) => courses.deleteCourse(req, res, db));
+    .get((req, res) => items.getItem(req, res, db, "courses"))
+    .put((req, res) => items.updateItem(req, res, db, "courses"))
+    .delete((req, res) => items.deleteItem(req, res, db, "courses"));
 };

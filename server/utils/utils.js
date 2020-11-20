@@ -1,4 +1,4 @@
-const getTableName = (type) => {
+const getLikesTableName = (type) => {
   return type === "books" ? "books_likes" : "courses_likes";
 };
 
@@ -7,6 +7,6 @@ const getIdColumnName = (type) => {
 };
 
 module.exports = {
-  getTableName,
+  getLikesTableName,
   getIdColumnName,
 };

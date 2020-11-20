@@ -32,7 +32,7 @@ const ItemPage = ({ type, id }) => {
     }
     const fetchData = async () => {
       const resp = await getData(`${link}/${id}`);
-      await setItem(resp[0]);
+      await setItem(resp);
       await togglePending(false);
     };
     fetchData();
@@ -46,27 +46,27 @@ const ItemPage = ({ type, id }) => {
         <ItemPageContainer>
           <PhotoGroupContainer>
             <PhotoContainer>
-              {item.image.length ? <Photo /> : <UnknownPhoto />}
+              {item.info[0].image.length ? <Photo /> : <UnknownPhoto />}
             </PhotoContainer>
             <IconsContainer>
               <IconGroup>
                 <LikeIcon />
-                <IconCounter>222</IconCounter>
+                <IconCounter>{item.likes[0].count}</IconCounter>
               </IconGroup>
               <IconGroup>
                 <BookmarkIcon />
-                <IconCounter>222</IconCounter>
+                <IconCounter>{item.stored[0].count}</IconCounter>
               </IconGroup>
               <IconGroup>
                 <DislikeIcon />
-                <IconCounter>222</IconCounter>
+                <IconCounter>{item.dislikes[0].count}</IconCounter>
               </IconGroup>
             </IconsContainer>
           </PhotoGroupContainer>
           <TextContainer>
-            <ItemName>{item.name}</ItemName>
-            <ItemAuthor>{item.author}</ItemAuthor>
-            <ItemInfo>{item.info}</ItemInfo>
+            <ItemName>{item.info[0].name}</ItemName>
+            <ItemAuthor>{item.info[0].author}</ItemAuthor>
+            <ItemInfo>{item.info[0].info}</ItemInfo>
           </TextContainer>
         </ItemPageContainer>
       )}

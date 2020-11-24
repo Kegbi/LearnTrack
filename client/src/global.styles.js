@@ -39,3 +39,5 @@ export const green = "#1fac1f";
 export const grey_light = "#b6b6b6";
 export const red = "#e02b2b";
 export const yellow = "#f1c900";
+export const card_bg = "rgba(196, 196, 196, 0.2)";
+export const controllers_text = "#858585";

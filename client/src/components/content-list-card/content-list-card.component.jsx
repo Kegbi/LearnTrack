@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import {
   BookmarkIcon,
   ContainerListCardAuthor,
@@ -16,7 +17,6 @@ import {
   LikeIcon,
   UnknownPhoto,
 } from "./content-list-card.styles";
-import { useHistory } from "react-router-dom";
 
 const ContentListCard = ({ _id, name, image, author, type }) => {
   let history = useHistory();

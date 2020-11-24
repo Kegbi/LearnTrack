@@ -1,7 +1,26 @@
 import styled from "styled-components";
 import { PhotoCamera } from "@styled-icons/material";
-import { green, grey, grey_light, red, yellow } from "../../global.styles";
-import { BookBookmark, Dislike, Like } from "styled-icons/boxicons-regular";
+import {
+  card_bg,
+  controllers_text,
+  green,
+  grey,
+  grey_light,
+  red,
+  yellow,
+} from "../../global.styles";
+import {
+  BookBookmark,
+  Dislike,
+  Like,
+  ArrowBack,
+} from "styled-icons/boxicons-regular";
+
+export const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 
 export const ItemPageContainer = styled.div`
   width: 100%;
@@ -11,11 +30,49 @@ export const ItemPageContainer = styled.div`
   margin-top: 30px;
 `;
 
+export const ControlsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const BackControlGroup = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const BackArrow = styled(ArrowBack)`
+  height: 25px;
+  color: ${controllers_text};
+`;
+
+export const BackArrowText = styled.h2`
+  font-size: 2rem;
+  font-weight: 500;
+  margin-left: 15px;
+  color: ${controllers_text};
+`;
+
+export const ItemControlsGroup = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ControlsText = styled.h2`
+  font-size: 2rem;
+  font-weight: 500;
+  margin-left: 25px;
+  color: ${controllers_text};
+  cursor: pointer;
+`;
+
 export const PhotoGroupContainer = styled.div`
   width: 570px;
   height: 600px;
   margin-right: 115px;
-  background-color: rgba(196, 196, 196, 0.2);
+  background-color: ${card_bg};
 `;
 
 export const PhotoContainer = styled.div`

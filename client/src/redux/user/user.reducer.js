@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   currentUser: {
     _id: 1,
     name: "Kegbi",
+    isAdmin: true,
     likedBooks: [],
     dislikedBooks: [],
     storedBooks: [],

@@ -88,7 +88,11 @@ const App = () => {
                     path={"/books/:id"}
                     render={(props) =>
                       user.currentUser ? (
-                        <ItemPage type={"book"} id={props.match.params.id} />
+                        <ItemPage
+                          type={"book"}
+                          id={props.match.params.id}
+                          admin={user.currentUser.isAdmin}
+                        />
                       ) : (
                         <Redirect to="/login" />
                       )
@@ -99,7 +103,11 @@ const App = () => {
                     path={"/courses/:id"}
                     render={(props) =>
                       user.currentUser ? (
-                        <ItemPage type={"course"} id={props.match.params.id} />
+                        <ItemPage
+                          type={"course"}
+                          id={props.match.params.id}
+                          admin={user.currentUser.isAdmin}
+                        />
                       ) : (
                         <Redirect to="/login" />
                       )

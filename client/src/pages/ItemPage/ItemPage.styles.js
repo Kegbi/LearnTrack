@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { PhotoCamera } from "@styled-icons/material";
 import {
+  black,
   card_bg,
   controllers_text,
   green,
@@ -136,11 +137,24 @@ export const TextContainer = styled.div`
   align-items: start;
   justify-content: start;
   padding-right: 50px;
+  color: ${black};
 `;
 
 export const ItemName = styled.h1`
   font-size: 3rem;
   margin-bottom: 25px;
+`;
+
+export const ItemNameEditing = styled.input`
+  font-size: 3rem;
+  margin-bottom: 25px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  width: 100%;
+  ::placeholder {
+    color: ${black};
+  }
 `;
 
 export const ItemAuthor = styled.h2`
@@ -149,7 +163,30 @@ export const ItemAuthor = styled.h2`
   margin-bottom: 50px;
 `;
 
+export const ItemAuthorEditing = styled.input`
+  font-size: 2.35rem;
+  font-weight: 400;
+  margin-bottom: 50px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  ::placeholder {
+    color: ${black};
+  }
+`;
+
 export const ItemInfo = styled.p`
   font-size: 1.8rem;
   font-weight: 400;
+`;
+
+export const ItemInfoEditing = styled.input`
+  font-size: 1.8rem;
+  font-weight: 400;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  ::placeholder {
+    color: ${black};
+  }
 `;

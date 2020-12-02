@@ -25,13 +25,21 @@ import {
   Container,
   ItemControlsGroup,
   BackArrowText,
+  ItemAuthorEditing,
+  ItemNameEditing,
+  ItemInfoEditing,
 } from "./ItemPage.styles";
 import Loader from "../../components/loader/loader.component";
 
 const ItemPage = ({ type, id, admin }) => {
   let history = useHistory();
   const [item, setItem] = useState({});
+  const [reactions, setReactions] = useState({});
+  const [baseItem, setBaseItem] = useState({});
   const [isPending, togglePending] = useState(true);
+  const [isEditing, toggleEditing] = useState(false);
+  const [modalOpened, toggleModal] = useState(false);
+
   useEffect(() => {
     let link;
     if (type === "course") {
@@ -41,11 +49,81 @@ const ItemPage = ({ type, id, admin }) => {
     }
     const fetchData = async () => {
       const resp = await getData(`${link}/${id}`);
-      await setItem(resp);
+      await setItem(resp.info[0]);
+      await setReactions({
+        likes: resp.likes,
+        stored: resp.stored,
+        dislikes: resp.dislikes,
+      });
+      await setBaseItem(resp.info[0]);
       await togglePending(false);
     };
     fetchData();
   }, []);
+
+  const openModal = () => {
+    if (modalOpened === false) {
+      toggleModal(true);
+    } else {
+      toggleModal(false);
+    }
+  };
+
+  const startEditing = () => {
+    toggleEditing(true);
+  };
+
+  const onTextChange = (event) => {
+    switch (event.target.name) {
+      case "item_name":
+        if (event.target.value === "") {
+          setItem({ ...item, name: baseItem.name });
+        } else {
+          setItem({ ...item, name: event.target.value });
+        }
+        break;
+      case "item_author":
+        if (event.target.value === "") {
+          setItem({ ...item, author: baseItem.author });
+        } else {
+          setItem({ ...item, author: event.target.value });
+        }
+        break;
+      case "item_info":
+        if (event.target.value === "") {
+          setItem({ ...item, info: baseItem.info });
+        } else {
+          setItem({ ...item, info: event.target.value });
+        }
+        break;
+      default:
+        return;
+    }
+  };
+
+  const saveCard = () => {
+    let card;
+    if (type === "course") {
+      card = {
+        courseid: item.courseid,
+        name: item.name,
+        image: item.image,
+        author: item.author,
+        info: item.info,
+      };
+    } else if (type === "book") {
+      card = {
+        bookid: item.bookid,
+        name: item.name,
+        image: item.image,
+        author: item.author,
+        info: item.info,
+      };
+    }
+    setItem(card);
+    setBaseItem(card);
+    toggleEditing(false);
+  };
 
   return (
     <>
@@ -60,7 +138,11 @@ const ItemPage = ({ type, id, admin }) => {
             </BackControlGroup>
             {admin ? (
               <ItemControlsGroup>
-                <ControlsText>Edit</ControlsText>
+                {isEditing ? (
+                  <ControlsText onClick={saveCard}>Save</ControlsText>
+                ) : (
+                  <ControlsText onClick={startEditing}>Edit</ControlsText>
+                )}
                 <ControlsText>Delete</ControlsText>
               </ItemControlsGroup>
             ) : (
@@ -70,28 +152,54 @@ const ItemPage = ({ type, id, admin }) => {
           <ItemPageContainer>
             <PhotoGroupContainer>
               <PhotoContainer>
-                {item.info[0].image.length ? <Photo /> : <UnknownPhoto />}
+                {item.image.length ? <Photo /> : <UnknownPhoto />}
               </PhotoContainer>
               <IconsContainer>
                 <IconGroup>
                   <LikeIcon />
-                  <IconCounter>{item.likes[0].count}</IconCounter>
+                  <IconCounter>{reactions.likes.count}</IconCounter>
                 </IconGroup>
                 <IconGroup>
                   <BookmarkIcon />
-                  <IconCounter>{item.stored[0].count}</IconCounter>
+                  <IconCounter>{reactions.stored.count}</IconCounter>
                 </IconGroup>
                 <IconGroup>
                   <DislikeIcon />
-                  <IconCounter>{item.dislikes[0].count}</IconCounter>
+                  <IconCounter>{reactions.dislikes.count}</IconCounter>
                 </IconGroup>
               </IconsContainer>
             </PhotoGroupContainer>
-            <TextContainer>
-              <ItemName>{item.info[0].name}</ItemName>
-              <ItemAuthor>{item.info[0].author}</ItemAuthor>
-              <ItemInfo>{item.info[0].info}</ItemInfo>
-            </TextContainer>
+            {isEditing ? (
+              <TextContainer>
+                <ItemNameEditing
+                  name={"item_name"}
+                  type={"text"}
+                  value={item.name}
+                  placeholder={item.name}
+                  onChange={onTextChange}
+                />
+                <ItemAuthorEditing
+                  name={"item_author"}
+                  type={"text"}
+                  value={item.author}
+                  placeholder={item.author}
+                  onChange={onTextChange}
+                />
+                <ItemInfoEditing
+                  name={"item_info"}
+                  type={"text"}
+                  value={item.info}
+                  placeholder={item.info}
+                  onChange={onTextChange}
+                />
+              </TextContainer>
+            ) : (
+              <TextContainer>
+                <ItemName>{item.name}</ItemName>
+                <ItemAuthor>{item.author}</ItemAuthor>
+                <ItemInfo>{item.info}</ItemInfo>
+              </TextContainer>
+            )}
           </ItemPageContainer>
         </Container>
       )}

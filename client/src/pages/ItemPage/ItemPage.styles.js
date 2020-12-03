@@ -152,9 +152,6 @@ export const ItemNameEditing = styled.input`
   background-color: transparent;
   outline: none;
   width: 100%;
-  ::placeholder {
-    color: ${black};
-  }
 `;
 
 export const ItemAuthor = styled.h2`
@@ -170,9 +167,6 @@ export const ItemAuthorEditing = styled.input`
   border: none;
   background-color: transparent;
   outline: none;
-  ::placeholder {
-    color: ${black};
-  }
 `;
 
 export const ItemInfo = styled.p`
@@ -186,7 +180,4 @@ export const ItemInfoEditing = styled.input`
   border: none;
   background-color: transparent;
   outline: none;
-  ::placeholder {
-    color: ${black};
-  }
 `;

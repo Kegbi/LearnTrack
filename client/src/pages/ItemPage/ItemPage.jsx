@@ -77,21 +77,21 @@ const ItemPage = ({ type, id, admin }) => {
     switch (event.target.name) {
       case "item_name":
         if (event.target.value === "") {
-          setItem({ ...item, name: baseItem.name });
+          setItem({ ...item, name: "" });
         } else {
           setItem({ ...item, name: event.target.value });
         }
         break;
       case "item_author":
         if (event.target.value === "") {
-          setItem({ ...item, author: baseItem.author });
+          setItem({ ...item, author: "" });
         } else {
           setItem({ ...item, author: event.target.value });
         }
         break;
       case "item_info":
         if (event.target.value === "") {
-          setItem({ ...item, info: baseItem.info });
+          setItem({ ...item, info: "" });
         } else {
           setItem({ ...item, info: event.target.value });
         }
@@ -120,9 +120,13 @@ const ItemPage = ({ type, id, admin }) => {
         info: item.info,
       };
     }
-    setItem(card);
-    setBaseItem(card);
-    toggleEditing(false);
+    if (!card.name || !card.author || !card.info) {
+      console.log("Can't do this");
+    } else {
+      setItem(card);
+      setBaseItem(card);
+      toggleEditing(false);
+    }
   };
 
   return (
@@ -175,21 +179,21 @@ const ItemPage = ({ type, id, admin }) => {
                   name={"item_name"}
                   type={"text"}
                   value={item.name}
-                  placeholder={item.name}
+                  placeholder={baseItem.name}
                   onChange={onTextChange}
                 />
                 <ItemAuthorEditing
                   name={"item_author"}
                   type={"text"}
                   value={item.author}
-                  placeholder={item.author}
+                  placeholder={baseItem.author}
                   onChange={onTextChange}
                 />
                 <ItemInfoEditing
                   name={"item_info"}
                   type={"text"}
                   value={item.info}
-                  placeholder={item.info}
+                  placeholder={baseItem.info}
                   onChange={onTextChange}
                 />
               </TextContainer>

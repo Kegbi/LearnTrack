@@ -152,6 +152,7 @@ export const ItemNameEditing = styled.input`
   background-color: transparent;
   outline: none;
   width: 100%;
+  font-weight: 600;
 `;
 
 export const ItemAuthor = styled.h2`

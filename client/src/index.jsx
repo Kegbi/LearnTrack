@@ -6,11 +6,13 @@ import store from "./redux/store";
 import "./fonts.css";
 import { GlobalStyle } from "./global.styles";
 import App from "./containers/App";
+import NotificationsWrapper from "./containers/notifications-wrapper/notifications-wrapper.container";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <GlobalStyle />
+      <NotificationsWrapper />
       <App />
     </Provider>
   </React.StrictMode>,

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { urlConstants } from "../../constants/urlConstants";
 import { getData } from "../../api/api";
+import { addNotification } from "../../redux/notifications/notifications.actions";
 import {
   ItemName,
   IconGroup,
@@ -32,6 +34,7 @@ import {
 import Loader from "../../components/loader/loader.component";
 
 const ItemPage = ({ type, id, admin }) => {
+  const dispatch = useDispatch();
   let history = useHistory();
   const [item, setItem] = useState({});
   const [reactions, setReactions] = useState({});
@@ -51,9 +54,9 @@ const ItemPage = ({ type, id, admin }) => {
       const resp = await getData(`${link}/${id}`);
       await setItem(resp.info[0]);
       await setReactions({
-        likes: resp.likes,
-        stored: resp.stored,
-        dislikes: resp.dislikes,
+        likes: resp.likes[0],
+        stored: resp.stored[0],
+        dislikes: resp.dislikes[0],
       });
       await setBaseItem(resp.info[0]);
       await togglePending(false);
@@ -129,6 +132,16 @@ const ItemPage = ({ type, id, admin }) => {
     }
   };
 
+  const testNotification = () => {
+    dispatch(
+      addNotification({
+        typeOfItem: "Error",
+        message: "Hello there",
+        title: "Successful Request",
+      })
+    );
+  };
+
   return (
     <>
       {isPending ? (
@@ -147,7 +160,7 @@ const ItemPage = ({ type, id, admin }) => {
                 ) : (
                   <ControlsText onClick={startEditing}>Edit</ControlsText>
                 )}
-                <ControlsText>Delete</ControlsText>
+                <ControlsText onClick={testNotification}>Delete</ControlsText>
               </ItemControlsGroup>
             ) : (
               <ItemControlsGroup />

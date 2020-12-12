@@ -15,7 +15,7 @@ module.exports = (app) => {
   });
 
   app.post(
-    "/uploadImage",
+    "/api/uploadImage",
     image.uploadImage.single("file"),
     async (req, res) => {
       await image.processImage(req, res);

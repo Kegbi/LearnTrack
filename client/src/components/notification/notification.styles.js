@@ -38,7 +38,12 @@ export const NotificationItem = styled.div`
   width: 300px;
 `;
 
-export const NotificationItemText = styled.p`
+export const NotificationItemHeader = styled.h3`
+  margin: 0;
+  padding: 10px 10px 0 10px;
+`;
+
+export const NotificationItemMessage = styled.p`
   margin: 0;
   padding: 10px;
 `;

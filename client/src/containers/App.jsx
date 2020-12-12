@@ -10,7 +10,6 @@ import Loader from "../components/loader/loader.component";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { checkUserSession } from "../redux/user/user.actions";
 import { AppContainer, MainContainer } from "./app.styles";
-import TestDownload from "../pages/TestDownload/TestDownload";
 import ItemPage from "../pages/ItemPage/ItemPage";
 
 const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
@@ -52,11 +51,6 @@ const App = () => {
                         <Redirect to="/login" />
                       )
                     }
-                  />
-                  <Route
-                    exact
-                    path={"/upload"}
-                    render={() => <TestDownload />}
                   />
                   <Route
                     exact

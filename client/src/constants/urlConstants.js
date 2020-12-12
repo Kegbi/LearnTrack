@@ -4,4 +4,5 @@ export const urlConstants = {
   courses: "http://localhost:50000/api/courses",
   latestCourses: "http://localhost:50000/api/courses/latest",
   profile: "http://localhost:50000/api/profile",
+  uploadImage: "http://localhost:50000/api/uploadImage",
 };

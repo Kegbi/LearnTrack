@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 import { urlConstants } from "../../constants/urlConstants";
 import { getData } from "../../api/api";
 import { addNotification } from "../../redux/notifications/notifications.actions";
@@ -64,6 +65,23 @@ const ItemPage = ({ type, id, admin }) => {
     fetchData();
   }, []);
 
+  const pushNotification = (type, message, title) => {
+    dispatch(
+      addNotification({
+        typeOfItem: type,
+        message: message,
+        title: title,
+      })
+    );
+  };
+
+  // Adjusting textarea height to content
+  const textareaCallback = useCallback((itemNameRef) => {
+    if (itemNameRef) {
+      itemNameRef.style.height = itemNameRef.scrollHeight + "px";
+    }
+  }, []);
+
   const openModal = () => {
     if (modalOpened === false) {
       toggleModal(true);
@@ -76,6 +94,26 @@ const ItemPage = ({ type, id, admin }) => {
     toggleEditing(true);
   };
 
+  const changePhoto = (event) => {
+    if (event.target.files.length === 0) return;
+    try {
+      let files = event.target.files;
+      const sendFiles = async (event) => {
+        let formData = new FormData();
+        formData.append("file", files[0]);
+        const data = await axios.post(urlConstants.uploadImage, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        if (await data.success) {
+          setItem({ ...item, image: data.message });
+        }
+      };
+      return sendFiles();
+    } catch (err) {
+      console.log("Something went wrong with uploading your photo");
+    }
+  };
+
   const onTextChange = (event) => {
     switch (event.target.name) {
       case "item_name":
@@ -84,6 +122,10 @@ const ItemPage = ({ type, id, admin }) => {
         } else {
           setItem({ ...item, name: event.target.value });
         }
+        event.target.style.height = "auto";
+        event.target.style.padding = 0;
+        event.target.style.height = event.target.scrollHeight + "px";
+        console.log(event.target.scrollHeight);
         break;
       case "item_author":
         if (event.target.value === "") {
@@ -91,6 +133,9 @@ const ItemPage = ({ type, id, admin }) => {
         } else {
           setItem({ ...item, author: event.target.value });
         }
+        event.target.style.height = "auto";
+        event.target.style.padding = 0;
+        event.target.style.height = event.target.scrollHeight + "px";
         break;
       case "item_info":
         if (event.target.value === "") {
@@ -98,6 +143,9 @@ const ItemPage = ({ type, id, admin }) => {
         } else {
           setItem({ ...item, info: event.target.value });
         }
+        event.target.style.height = "auto";
+        event.target.style.padding = 0;
+        event.target.style.height = event.target.scrollHeight + "px";
         break;
       default:
         return;
@@ -109,37 +157,35 @@ const ItemPage = ({ type, id, admin }) => {
     if (type === "course") {
       card = {
         courseid: item.courseid,
-        name: item.name,
+        name: item.name.trim(),
         image: item.image,
-        author: item.author,
-        info: item.info,
+        author: item.author.trim(),
+        info: item.info.trim(),
       };
     } else if (type === "book") {
       card = {
         bookid: item.bookid,
-        name: item.name,
+        name: item.name.trim(),
         image: item.image,
-        author: item.author,
-        info: item.info,
+        author: item.author.trim(),
+        info: item.info.trim(),
       };
     }
-    if (!card.name || !card.author || !card.info) {
-      console.log("Can't do this");
+    if (!card.name) {
+      pushNotification("Error", "No item name specified", "Error saving item");
+    } else if (!card.author) {
+      pushNotification(
+        "Error",
+        "No item author specified",
+        "Error saving item"
+      );
+    } else if (!card.info) {
+      pushNotification("Error", "No item info specified", "Error saving item");
     } else {
       setItem(card);
       setBaseItem(card);
       toggleEditing(false);
     }
-  };
-
-  const testNotification = () => {
-    dispatch(
-      addNotification({
-        typeOfItem: "Error",
-        message: "Hello there",
-        title: "Successful Request",
-      })
-    );
   };
 
   return (
@@ -160,7 +206,13 @@ const ItemPage = ({ type, id, admin }) => {
                 ) : (
                   <ControlsText onClick={startEditing}>Edit</ControlsText>
                 )}
-                <ControlsText onClick={testNotification}>Delete</ControlsText>
+                <ControlsText
+                  onClick={() =>
+                    pushNotification("Error", "Deleting", "Successful request")
+                  }
+                >
+                  Delete
+                </ControlsText>
               </ItemControlsGroup>
             ) : (
               <ItemControlsGroup />
@@ -169,7 +221,24 @@ const ItemPage = ({ type, id, admin }) => {
           <ItemPageContainer>
             <PhotoGroupContainer>
               <PhotoContainer>
-                {item.image.length ? <Photo /> : <UnknownPhoto />}
+                {isEditing ? (
+                  <input
+                    type={"file"}
+                    accept={"image/*"}
+                    name={"photo"}
+                    id={"file"}
+                    hidden
+                    onChange={changePhoto}
+                  />
+                ) : null}
+                {item.image.length ? (
+                  <Photo
+                    src={`../../../../server/uploads/images/${item.image}`}
+                    alt={"item-photo"}
+                  />
+                ) : (
+                  <UnknownPhoto />
+                )}
               </PhotoContainer>
               <IconsContainer>
                 <IconGroup>
@@ -191,23 +260,29 @@ const ItemPage = ({ type, id, admin }) => {
                 <ItemNameEditing
                   name={"item_name"}
                   type={"text"}
+                  rows={"1"}
                   value={item.name}
                   placeholder={baseItem.name}
-                  onChange={onTextChange}
+                  onChange={(e) => onTextChange(e)}
+                  ref={textareaCallback}
                 />
                 <ItemAuthorEditing
                   name={"item_author"}
                   type={"text"}
+                  rows={"1"}
                   value={item.author}
                   placeholder={baseItem.author}
                   onChange={onTextChange}
+                  ref={textareaCallback}
                 />
                 <ItemInfoEditing
                   name={"item_info"}
                   type={"text"}
+                  rows={"1"}
                   value={item.info}
                   placeholder={baseItem.info}
                   onChange={onTextChange}
+                  ref={textareaCallback}
                 />
               </TextContainer>
             ) : (

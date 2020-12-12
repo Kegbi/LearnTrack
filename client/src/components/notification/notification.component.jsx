@@ -4,7 +4,8 @@ import NotificationsActionTypes from "../../redux/notifications/notifications.ty
 import {
   NotificationItem,
   NotificationItemBar,
-  NotificationItemText,
+  NotificationItemHeader,
+  NotificationItemMessage,
 } from "./notification.styles";
 
 const Notification = (props) => {
@@ -62,7 +63,8 @@ const Notification = (props) => {
       onMouseLeave={handleStartTimer}
       exit={exit ? "exit" : ""}
     >
-      <NotificationItemText>{props.message}</NotificationItemText>
+      <NotificationItemHeader>{props.title}</NotificationItemHeader>
+      <NotificationItemMessage>{props.message}</NotificationItemMessage>
       <NotificationItemBar success={props.typeOfItem} width={width} />
     </NotificationItem>
   );

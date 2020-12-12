@@ -76,7 +76,7 @@ export const PhotoGroupContainer = styled.div`
   background-color: ${card_bg};
 `;
 
-export const PhotoContainer = styled.div`
+export const PhotoContainer = styled.label`
   width: 570px;
   height: 470px;
   display: flex;
@@ -132,6 +132,7 @@ export const BookmarkIcon = styled(BookBookmark)`
 `;
 
 export const TextContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -145,13 +146,22 @@ export const ItemName = styled.h1`
   margin-bottom: 25px;
 `;
 
-export const ItemNameEditing = styled.input`
-  font-size: 3rem;
-  margin-bottom: 25px;
+const StandardTextarea = styled.textarea`
+  font-family: "Roboto", "Segoe UI", "Ubuntu", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   border: none;
   background-color: transparent;
   outline: none;
+  border-bottom: 2px solid black;
+  overflow: hidden;
+  resize: none;
   width: 100%;
+  transition: height 0.2s;
+`;
+
+export const ItemNameEditing = styled(StandardTextarea)`
+  font-size: 3rem;
+  margin-bottom: 25px;
   font-weight: 600;
 `;
 
@@ -161,13 +171,10 @@ export const ItemAuthor = styled.h2`
   margin-bottom: 50px;
 `;
 
-export const ItemAuthorEditing = styled.input`
+export const ItemAuthorEditing = styled(StandardTextarea)`
   font-size: 2.35rem;
   font-weight: 400;
   margin-bottom: 50px;
-  border: none;
-  background-color: transparent;
-  outline: none;
 `;
 
 export const ItemInfo = styled.p`
@@ -175,10 +182,7 @@ export const ItemInfo = styled.p`
   font-weight: 400;
 `;
 
-export const ItemInfoEditing = styled.input`
+export const ItemInfoEditing = styled(StandardTextarea)`
   font-size: 1.8rem;
   font-weight: 400;
-  border: none;
-  background-color: transparent;
-  outline: none;
 `;

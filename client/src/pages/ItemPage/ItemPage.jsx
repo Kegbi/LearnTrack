@@ -101,11 +101,13 @@ const ItemPage = ({ type, id, admin }) => {
       const sendFiles = async (event) => {
         let formData = new FormData();
         formData.append("file", files[0]);
-        const data = await axios.post(urlConstants.uploadImage, formData, {
+        const { data } = await axios.post(urlConstants.uploadImage, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        if (await data.success) {
+        if (data.success) {
+          console.log(item);
           setItem({ ...item, image: data.message });
+          console.log(item);
         }
       };
       return sendFiles();
@@ -233,7 +235,7 @@ const ItemPage = ({ type, id, admin }) => {
                 ) : null}
                 {item.image.length ? (
                   <Photo
-                    src={`../../../../server/uploads/images/${item.image}`}
+                    src={`http://localhost:50000/images/${item.image}`}
                     alt={"item-photo"}
                   />
                 ) : (

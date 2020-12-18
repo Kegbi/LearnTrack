@@ -71,7 +71,6 @@ export const ControlsText = styled.h2`
 
 export const PhotoGroupContainer = styled.div`
   width: 570px;
-  height: 600px;
   margin-right: 115px;
   background-color: ${card_bg};
 `;
@@ -96,6 +95,7 @@ export const UnknownPhoto = styled(PhotoCamera)`
 `;
 
 export const IconsContainer = styled.div`
+  margin: 15px 0 15px 0;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -157,6 +157,8 @@ const StandardTextarea = styled.textarea`
   resize: none;
   width: 100%;
   transition: height 0.2s;
+  margin: 0;
+  padding: 0;
 `;
 
 export const ItemNameEditing = styled(StandardTextarea)`

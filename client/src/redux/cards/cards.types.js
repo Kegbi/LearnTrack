@@ -1,7 +1,10 @@
-const LatestActionTypes = {
+const CardsActionTypes = {
   FETCH_CONTENT_START: "FETCH_CONTENT_START",
   FETCH_CONTENT_SUCCESS: "FETCH_CONTENT_SUCCESS",
   FETCH_CONTENT_FAILURE: "FETCH_CONTENT_FAILURE",
+  UPDATE_CARD: "UPDATE_CARD",
+  DELETE_CARD: "DELETE_CARD",
+  ADD_CARD: "ADD_CARD",
 };
 
-export default LatestActionTypes;
+export default CardsActionTypes;

@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import userReducer from "./user/user.reducer";
-import latestReducer from "./latest/latest.reducer";
+import cardsReducer from "./cards/cards.reducer";
 import notificationsReducer from "./notifications/notifications.reducer";
 
 export const rootReducer = combineReducers({
   user: userReducer,
-  latest: latestReducer,
+  latest: cardsReducer,
   notifications: notificationsReducer,
 });

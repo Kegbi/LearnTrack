@@ -6,8 +6,8 @@ import {
 } from "./MainPage.styles";
 import ContentBlock from "../../containers/content-list/content-block.container";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLatestStart } from "../../redux/latest/latest.actions";
-import { selectLatestContent } from "../../redux/latest/latest.selectors";
+import { fetchLatestStart } from "../../redux/cards/cards.actions";
+import { selectLatestContent } from "../../redux/cards/cards.selectors";
 
 const MainPage = ({ user }) => {
   const dispatch = useDispatch();

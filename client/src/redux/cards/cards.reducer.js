@@ -1,7 +1,11 @@
-import LatestActionTypes from "./latest.types";
+import CardsActionTypes from "./cards.types";
 
 const INITIAL_STATE = {
-  content: {
+  latest: {
+    books: [],
+    courses: [],
+  },
+  cards: {
     books: [],
     courses: [],
   },
@@ -9,20 +13,20 @@ const INITIAL_STATE = {
   errorMessage: undefined,
 };
 
-const latestReducer = (state = INITIAL_STATE, action) => {
+const cardsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case LatestActionTypes.FETCH_CONTENT_START:
+    case CardsActionTypes.FETCH_CONTENT_START:
       return {
         ...state,
         isPending: true,
       };
-    case LatestActionTypes.FETCH_CONTENT_SUCCESS:
+    case CardsActionTypes.FETCH_CONTENT_SUCCESS:
       return {
         ...state,
-        content: action.payload,
+        latest: action.payload,
         isPending: false,
       };
-    case LatestActionTypes.FETCH_CONTENT_FAILURE:
+    case CardsActionTypes.FETCH_CONTENT_FAILURE:
       return {
         ...state,
         isPending: false,
@@ -33,4 +37,4 @@ const latestReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default latestReducer;
+export default cardsReducer;

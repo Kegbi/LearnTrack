@@ -1,7 +1,7 @@
-import { fetchLatestFailure, fetchLatestSuccess } from "./latest.actions";
+import { fetchLatestFailure, fetchLatestSuccess } from "./cards.actions";
 import { takeLatest, call, put, all } from "@redux-saga/core/effects";
 
-import LatestActionTypes from "./latest.types";
+import CardsActionTypes from "./cards.types";
 import { urlConstants } from "../../constants/urlConstants";
 import { getData } from "../../api/api";
 
@@ -22,9 +22,9 @@ async function fetchLatest() {
 }
 
 export function* fetchLatestStart() {
-  yield takeLatest(LatestActionTypes.FETCH_CONTENT_START, fetchLatestAsync);
+  yield takeLatest(CardsActionTypes.FETCH_CONTENT_START, fetchLatestAsync);
 }
 
-export function* latestSagas() {
+export function* cardsSagas() {
   yield all([call(fetchLatestStart)]);
 }

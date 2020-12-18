@@ -105,9 +105,15 @@ const ItemPage = ({ type, id, admin }) => {
           headers: { "Content-Type": "multipart/form-data" },
         });
         if (data.success) {
-          console.log(item);
-          setItem({ ...item, image: data.message });
-          console.log(item);
+          setTimeout(function () {
+            setItem({ ...item, image: data.message });
+          }, 100);
+        } else {
+          pushNotification(
+            "Error",
+            "File wasn't loaded",
+            "Error saving your image"
+          );
         }
       };
       return sendFiles();
@@ -117,6 +123,11 @@ const ItemPage = ({ type, id, admin }) => {
   };
 
   const onTextChange = (event) => {
+    const fixHeight = (event) => {
+      event.target.style.height = "auto";
+      event.target.style.padding = 0;
+      event.target.style.height = event.target.scrollHeight + "px";
+    };
     switch (event.target.name) {
       case "item_name":
         if (event.target.value === "") {
@@ -124,10 +135,7 @@ const ItemPage = ({ type, id, admin }) => {
         } else {
           setItem({ ...item, name: event.target.value });
         }
-        event.target.style.height = "auto";
-        event.target.style.padding = 0;
-        event.target.style.height = event.target.scrollHeight + "px";
-        console.log(event.target.scrollHeight);
+        fixHeight(event);
         break;
       case "item_author":
         if (event.target.value === "") {
@@ -135,9 +143,7 @@ const ItemPage = ({ type, id, admin }) => {
         } else {
           setItem({ ...item, author: event.target.value });
         }
-        event.target.style.height = "auto";
-        event.target.style.padding = 0;
-        event.target.style.height = event.target.scrollHeight + "px";
+        fixHeight(event);
         break;
       case "item_info":
         if (event.target.value === "") {
@@ -145,9 +151,7 @@ const ItemPage = ({ type, id, admin }) => {
         } else {
           setItem({ ...item, info: event.target.value });
         }
-        event.target.style.height = "auto";
-        event.target.style.padding = 0;
-        event.target.style.height = event.target.scrollHeight + "px";
+        fixHeight(event);
         break;
       default:
         return;
@@ -184,6 +188,7 @@ const ItemPage = ({ type, id, admin }) => {
     } else if (!card.info) {
       pushNotification("Error", "No item info specified", "Error saving item");
     } else {
+      // Need to implement sending data to backend
       setItem(card);
       setBaseItem(card);
       toggleEditing(false);
@@ -235,7 +240,7 @@ const ItemPage = ({ type, id, admin }) => {
                 ) : null}
                 {item.image.length ? (
                   <Photo
-                    src={`http://localhost:50000/images/${item.image}`}
+                    src={`${urlConstants.images}/${item.image}`}
                     alt={"item-photo"}
                   />
                 ) : (

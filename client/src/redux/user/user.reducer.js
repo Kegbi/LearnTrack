@@ -1,8 +1,19 @@
 import UserActionTypes from "./user.types";
 
 const INITIAL_STATE = {
+  isPending: false,
   // currentUser: null,
-  currentUser: { _id: 123, name: "Ivan", books: [112, 12312, 12312, 1231] },
+  currentUser: {
+    _id: 1,
+    name: "Kegbi",
+    isAdmin: true,
+    likedBooks: [],
+    dislikedBooks: [],
+    storedBooks: [],
+    likedCourses: [],
+    dislikedCourses: [],
+    storedCourses: [],
+  },
   error: null,
 };
 

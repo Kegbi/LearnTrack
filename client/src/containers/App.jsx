@@ -10,7 +10,7 @@ import Loader from "../components/loader/loader.component";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { checkUserSession } from "../redux/user/user.actions";
 import { AppContainer, MainContainer } from "./app.styles";
-import TestDownload from "../pages/TestDownload/TestDownload";
+import ItemPage from "../pages/ItemPage/ItemPage";
 
 const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
 const MainPage = lazy(() => import("../pages/MainPage/MainPage"));
@@ -54,11 +54,6 @@ const App = () => {
                   />
                   <Route
                     exact
-                    path={"/upload"}
-                    render={() => <TestDownload />}
-                  />
-                  <Route
-                    exact
                     path={"/achievements"}
                     render={() =>
                       user.currentUser ? (
@@ -80,6 +75,36 @@ const App = () => {
                     path={"/signup"}
                     render={() =>
                       user.currentUser ? <Redirect to="/" /> : <SignUpPage />
+                    }
+                  />
+                  <Route
+                    exact
+                    path={"/books/:id"}
+                    render={(props) =>
+                      user.currentUser ? (
+                        <ItemPage
+                          type={"book"}
+                          id={props.match.params.id}
+                          admin={user.currentUser.isAdmin}
+                        />
+                      ) : (
+                        <Redirect to="/login" />
+                      )
+                    }
+                  />
+                  <Route
+                    exact
+                    path={"/courses/:id"}
+                    render={(props) =>
+                      user.currentUser ? (
+                        <ItemPage
+                          type={"course"}
+                          id={props.match.params.id}
+                          admin={user.currentUser.isAdmin}
+                        />
+                      ) : (
+                        <Redirect to="/login" />
+                      )
                     }
                   />
                 </Suspense>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import {
   BookmarkIcon,
   ContainerListCardAuthor,
@@ -16,9 +17,9 @@ import {
   LikeIcon,
   UnknownPhoto,
 } from "./content-list-card.styles";
-import { useHistory } from "react-router-dom";
+import { urlConstants } from "../../constants/urlConstants";
 
-const ContentListCard = ({ _id, image, name, author, type }) => {
+const ContentListCard = ({ _id, name, image, author, type }) => {
   let history = useHistory();
 
   return (
@@ -27,7 +28,7 @@ const ContentListCard = ({ _id, image, name, author, type }) => {
         <ContainerListCardPhotoContainer>
           {image.length ? (
             <ContainerListCardPhoto
-              src={`../../../uploads/images/${image}`}
+              src={`${urlConstants.images}/${image}`}
               alt={"card-photo"}
             />
           ) : (
@@ -43,15 +44,15 @@ const ContentListCard = ({ _id, image, name, author, type }) => {
         <ContainerListCardIcons>
           <ContainerListCardIconGroup>
             <LikeIcon />
-            <ContainerListCardIconCounter>222</ContainerListCardIconCounter>
+            {/*<ContainerListCardIconCounter>222</ContainerListCardIconCounter>*/}
           </ContainerListCardIconGroup>
           <ContainerListCardIconGroup>
             <BookmarkIcon />
-            <ContainerListCardIconCounter>222</ContainerListCardIconCounter>
+            {/*<ContainerListCardIconCounter>222</ContainerListCardIconCounter>*/}
           </ContainerListCardIconGroup>
           <ContainerListCardIconGroup>
             <DislikeIcon />
-            <ContainerListCardIconCounter>222</ContainerListCardIconCounter>
+            {/*<ContainerListCardIconCounter>222</ContainerListCardIconCounter>*/}
           </ContainerListCardIconGroup>
         </ContainerListCardIcons>
       </ContentListCardBottom>

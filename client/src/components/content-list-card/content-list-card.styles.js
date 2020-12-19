@@ -24,6 +24,7 @@ export const ContainerListCardPhotoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 10px;
 `;
 
 export const UnknownPhoto = styled(PhotoCamera)`
@@ -49,7 +50,7 @@ export const ContainerListCardName = styled.h2`
 `;
 
 export const ContainerListCardAuthor = styled.h2`
-  margin-top: 5px;
+  margin-top: 3px;
   font-size: 1.2rem;
   font-weight: normal;
   text-overflow: ellipsis;

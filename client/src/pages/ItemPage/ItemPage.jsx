@@ -5,6 +5,7 @@ import axios from "axios";
 import { urlConstants } from "../../constants/urlConstants";
 import { getData } from "../../api/api";
 import { addNotification } from "../../redux/notifications/notifications.actions";
+import { updateCard } from "../../redux/cards/cards.actions";
 import {
   ItemName,
   IconGroup,
@@ -107,7 +108,7 @@ const ItemPage = ({ type, id, admin }) => {
         if (data.success) {
           setTimeout(function () {
             setItem({ ...item, image: data.message });
-          }, 100);
+          }, 500);
         } else {
           pushNotification(
             "Error",
@@ -187,8 +188,24 @@ const ItemPage = ({ type, id, admin }) => {
       );
     } else if (!card.info) {
       pushNotification("Error", "No item info specified", "Error saving item");
+    } else if (card.name.length > 200) {
+      pushNotification(
+        "Error",
+        "Name of the item can't be longer than 200 symbols",
+        "Error saving item"
+      );
+    } else if (card.author.length > 100) {
+      pushNotification(
+        "Error",
+        "Authors line can't be longer than 100 symbols"
+      );
+    } else if (card.info.length > 1000) {
+      pushNotification(
+        "Error",
+        "Item description can't be longer than 1000 symbols"
+      );
     } else {
-      // Need to implement sending data to backend
+      dispatch(updateCard(card, type));
       setItem(card);
       setBaseItem(card);
       toggleEditing(false);

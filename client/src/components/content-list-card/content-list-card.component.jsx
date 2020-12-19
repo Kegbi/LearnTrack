@@ -17,6 +17,7 @@ import {
   LikeIcon,
   UnknownPhoto,
 } from "./content-list-card.styles";
+import { urlConstants } from "../../constants/urlConstants";
 
 const ContentListCard = ({ _id, name, image, author, type }) => {
   let history = useHistory();
@@ -27,7 +28,7 @@ const ContentListCard = ({ _id, name, image, author, type }) => {
         <ContainerListCardPhotoContainer>
           {image.length ? (
             <ContainerListCardPhoto
-              src={`../../../uploads/images/${image}`}
+              src={`${urlConstants.images}/${image}`}
               alt={"card-photo"}
             />
           ) : (

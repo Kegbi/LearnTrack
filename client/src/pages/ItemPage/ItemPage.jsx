@@ -43,6 +43,7 @@ const ItemPage = ({ type, id, admin }) => {
   const [baseItem, setBaseItem] = useState({});
   const [isPending, togglePending] = useState(true);
   const [isEditing, toggleEditing] = useState(false);
+  const [photoLoading, togglePhotoLoading] = useState(false);
   const [modalOpened, toggleModal] = useState(false);
 
   useEffect(() => {
@@ -102,12 +103,14 @@ const ItemPage = ({ type, id, admin }) => {
       const sendFiles = async (event) => {
         let formData = new FormData();
         formData.append("file", files[0]);
+        togglePhotoLoading(true);
         const { data } = await axios.post(urlConstants.uploadImage, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         if (data.success) {
+          setItem({ ...item, image: data.message });
           setTimeout(function () {
-            setItem({ ...item, image: data.message });
+            togglePhotoLoading(false);
           }, 500);
         } else {
           pushNotification(
@@ -119,7 +122,11 @@ const ItemPage = ({ type, id, admin }) => {
       };
       return sendFiles();
     } catch (err) {
-      console.log("Something went wrong with uploading your photo");
+      pushNotification(
+        "Error",
+        "Something went wrong with uploading your photo",
+        "Photo wasn't loaded"
+      );
     }
   };
 
@@ -255,7 +262,9 @@ const ItemPage = ({ type, id, admin }) => {
                     onChange={changePhoto}
                   />
                 ) : null}
-                {item.image.length ? (
+                {photoLoading ? (
+                  <Loader />
+                ) : item.image.length ? (
                   <Photo
                     src={`${urlConstants.images}/${item.image}`}
                     alt={"item-photo"}

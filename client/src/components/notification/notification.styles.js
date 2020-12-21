@@ -48,9 +48,12 @@ export const NotificationItemMessage = styled.p`
   padding: 10px;
 `;
 
-export const NotificationItemBar = styled.div`
+export const NotificationItemBar = styled.div.attrs((props) => ({
+  style: {
+    width: `${props.width}%`,
+  },
+}))`
   height: 10px;
-  width: ${(props) => `${props.width}%`};
   background-color: ${(props) =>
     props.success === "SUCCESS" ? "#65d266" : "red"};
 `;

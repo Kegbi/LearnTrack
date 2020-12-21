@@ -24,3 +24,9 @@ export const updateCard = (data, type) => ({
   payload: data,
   typeOfCard: type,
 });
+
+export const deleteCard = (data, type) => ({
+  type: CardsActionTypes.DELETE_CARD,
+  payload: data,
+  typeOfCard: type,
+});

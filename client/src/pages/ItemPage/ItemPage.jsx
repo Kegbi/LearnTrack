@@ -34,6 +34,7 @@ import {
   ItemInfoEditing,
 } from "./ItemPage.styles";
 import Loader from "../../components/loader/loader.component";
+import ConfirmPopup from "../../containers/confirm-popup/confirm-container.container";
 
 const ItemPage = ({ type, id, admin }) => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const ItemPage = ({ type, id, admin }) => {
   const [isEditing, toggleEditing] = useState(false);
   const [photoLoading, togglePhotoLoading] = useState(false);
   const [modalOpened, toggleModal] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
     let link;
@@ -219,12 +221,23 @@ const ItemPage = ({ type, id, admin }) => {
     }
   };
 
+  const confirmAction = () => {
+    setConfirmOpen(true);
+  };
+
   return (
     <>
       {isPending ? (
         <Loader />
       ) : (
         <Container>
+          <ConfirmPopup
+            header="Do you really want to delete this item?"
+            content="Are you sure?"
+            confirmOpen={confirmOpen}
+            pushNotification={pushNotification}
+            setConfirmOpen={setConfirmOpen}
+          />
           <ControlsContainer>
             <BackControlGroup onClick={() => history.push(`/${type}s/`)}>
               <BackArrow />
@@ -237,11 +250,7 @@ const ItemPage = ({ type, id, admin }) => {
                 ) : (
                   <ControlsText onClick={startEditing}>Edit</ControlsText>
                 )}
-                <ControlsText
-                  onClick={() =>
-                    pushNotification("Error", "Deleting", "Successful request")
-                  }
-                >
+                <ControlsText onClick={() => confirmAction()}>
                   Delete
                 </ControlsText>
               </ItemControlsGroup>

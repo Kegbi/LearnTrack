@@ -1,32 +1,39 @@
-import React from "react";
-import {
-  ConfirmContainerBg,
-  ConfirmContainerBody,
-} from "../../containers/confirm-popup/confirm-container.styles";
+import React, { useState } from "react";
+import { createPortal } from "react-dom";
 
-const ConfirmContainer = ({
-  header,
-  content,
-  confirmOpen,
-  handleConfirm,
-  handleCancel,
-}) => {
+import Dialog from "../dialog/dialog.component";
+
+const Confirm = (props) => {
+  const [isOpen, setOpen] = useState(false);
+
+  const { message, children } = props;
+
+  const confirm = () => {
+    setOpen(true);
+  };
+
+  const cancel = () => {
+    setOpen(false);
+  };
+
+  const ok = () => {
+    const { callback } = props;
+
+    setOpen(false);
+
+    callback();
+  };
+
   return (
-    <ConfirmContainerBg>
-      <ConfirmContainerBody
-        style={{
-          width: "500px",
-          height: "500px",
-          "background-color": "grey",
-        }}
-      >
-        <div>{header}</div>
-        <div>{content}</div>
-        <button onClick={handleConfirm}>Press me more to say yes</button>
-        <button onClick={handleCancel}>Cancel all of this!</button>
-      </ConfirmContainerBody>
-    </ConfirmContainerBg>
+    <>
+      {isOpen &&
+        createPortal(
+          <Dialog message={message} ok={ok} cancel={cancel} />,
+          document.body
+        )}
+      {children(confirm)}
+    </>
   );
 };
 
-export default ConfirmContainer;
+export default Confirm;

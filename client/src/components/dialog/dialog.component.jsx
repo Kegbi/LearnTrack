@@ -11,15 +11,7 @@ import {
 } from "./dialog.styles";
 
 const Dialog = (props) => {
-  const {
-    title,
-    message,
-    confirmText,
-    declineText,
-    actionColor,
-    ok,
-    cancel,
-  } = props;
+  const { title, message, confirmText, declineText, alert, ok, cancel } = props;
 
   return (
     <DialogOverlay>
@@ -27,7 +19,7 @@ const Dialog = (props) => {
         <DialogTitle>{title}</DialogTitle>
         <DialogMessage>{message}</DialogMessage>
         <DialogButtonsGroup>
-          <AcceptButton actionColor={actionColor} onClick={ok}>
+          <AcceptButton alert={alert} onClick={ok}>
             {confirmText}
           </AcceptButton>
           <DeclineButton onClick={cancel}>{declineText}</DeclineButton>

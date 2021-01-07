@@ -54,6 +54,7 @@ const CleanDialogButton = styled.button`
   text-align: center;
   background-color: transparent;
   font-weight: normal;
+  outline: none;
 `;
 
 export const AcceptButton = styled(CleanDialogButton)`

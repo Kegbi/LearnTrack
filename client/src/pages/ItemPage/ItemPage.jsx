@@ -230,7 +230,7 @@ const ItemPage = ({ type, id, admin }) => {
     "The item will be deleted and you won't be able to restore it later",
     "Delete",
     "No, I changed my mind",
-    false
+    true
   );
 
   return (

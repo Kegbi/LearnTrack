@@ -21,12 +21,11 @@ export const uploadNewCard = (data) => ({
 
 export const updateCard = (data, type) => ({
   type: CardsActionTypes.UPDATE_CARD,
-  payload: data,
+  payload: { data, type },
   typeOfCard: type,
 });
 
-export const deleteCard = (data, type) => ({
+export const deleteCard = (data, type, history) => ({
   type: CardsActionTypes.DELETE_CARD,
-  payload: data,
-  typeOfCard: type,
+  payload: { data, type, history },
 });

@@ -41,3 +41,8 @@ export const ContentListHeaderLink = styled.a`
   color: ${grey_dark};
   cursor: pointer;
 `;
+
+export const ContentListNoCards = styled.h2`
+  font-size: 1.5rem;
+  margin-top: 30px;
+`;

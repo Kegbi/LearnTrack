@@ -63,7 +63,7 @@ const Notification = (props) => {
     >
       <NotificationItemHeader>{props.title}</NotificationItemHeader>
       <NotificationItemMessage>{props.message}</NotificationItemMessage>
-      <NotificationItemBar success={props.typeOfItem} width={width} />
+      <NotificationItemBar alert={props.alert} width={width} />
     </NotificationItem>
   );
 };

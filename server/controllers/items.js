@@ -22,7 +22,7 @@ const getLastItems = async (req, res, db, type) => {
   try {
     let resp = await getLatest(db, type, 7);
     if (resp && Array.isArray(resp) && !resp.length) {
-      res.json(`Looks like there are no ${type} for now`);
+      res.json([]);
     } else if (resp) {
       res.json(resp);
     } else {
@@ -111,7 +111,7 @@ const deleteItem = async (req, res, db, type) => {
       .where({ [id_column]: id })
       .del();
     if (resp) {
-      res.json(`Deleted`);
+      res.json({ deleted: true });
     } else {
       res
         .status(400)
@@ -132,7 +132,7 @@ const updateItem = async (req, res, db, type) => {
       .where({ [id_column]: id })
       .update({ name: name, image: image, author: author, info: info });
     if (resp) {
-      res.json("Updated");
+      res.json({ updated: true });
     } else {
       res.status(400).json(`Unable to update ${singularType}`);
     }

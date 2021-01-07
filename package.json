@@ -1,7 +1,7 @@
 {
   "name": "learntrack",
   "version": "1.0.0",
-  "description": "* ### React/Redux\r * ### Styled Components\r * ### Saga for async",
+  "description": "App for tracking your learning progress",
   "dependencies": {
     "concurrently": "^5.3.0",
     "cross-env": "^7.0.2",

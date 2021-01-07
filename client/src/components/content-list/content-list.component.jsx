@@ -5,6 +5,7 @@ import {
   ContentListCards,
   ContentListContainerHeader,
   ContentListHeaderLink,
+  ContentListNoCards,
 } from "./content-list.styles";
 import { useHistory } from "react-router-dom";
 import Loader from "../loader/loader.component";
@@ -25,35 +26,33 @@ const ContentList = ({ typeOfContent, content, isPending }) => {
             Watch all
           </ContentListHeaderLink>
         </ContentListContainerHeader>
-        <ContentListCards>
-          {isPending ? (
-            <Loader />
-          ) : content.length ? (
-            <>
-              {content.map((card, i) => {
-                let id;
-                if (type === "books") {
-                  id = content[i].bookid;
-                } else if (type === "courses") {
-                  id = content[i].courseid;
-                }
-                return (
-                  <ContentListCard
-                    _id={id}
-                    key={id}
-                    name={content[i].name}
-                    image={content[i].image}
-                    author={content[i].author}
-                    // info={content[i].info}
-                    type={type}
-                  />
-                );
-              })}
-            </>
-          ) : (
-            <h1>No data here for now</h1>
-          )}
-        </ContentListCards>
+        {isPending ? (
+          <Loader />
+        ) : content.length ? (
+          <ContentListCards>
+            {content.map((card, i) => {
+              let id;
+              if (type === "books") {
+                id = content[i].bookid;
+              } else if (type === "courses") {
+                id = content[i].courseid;
+              }
+              return (
+                <ContentListCard
+                  _id={id}
+                  key={id}
+                  name={content[i].name}
+                  image={content[i].image}
+                  author={content[i].author}
+                  // info={content[i].info}
+                  type={type}
+                />
+              );
+            })}
+          </ContentListCards>
+        ) : (
+          <ContentListNoCards>No data here for now</ContentListNoCards>
+        )}
       </ContentListContainer>
     </>
   );

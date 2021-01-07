@@ -6,7 +6,7 @@ import { urlConstants } from "../../constants/urlConstants";
 import { getData } from "../../api/api";
 import { useConfirm } from "../../hooks/useConfirm";
 import { addNotification } from "../../redux/notifications/notifications.actions";
-import { updateCard } from "../../redux/cards/cards.actions";
+import { deleteCard, updateCard } from "../../redux/cards/cards.actions";
 
 import {
   ItemName,
@@ -70,12 +70,12 @@ const ItemPage = ({ type, id, admin }) => {
     fetchData();
   }, []);
 
-  const pushNotification = (type, title, message) => {
+  const pushNotification = (title, message, alert) => {
     dispatch(
       addNotification({
-        typeOfItem: type,
         title: title,
         message: message,
+        alert: alert,
       })
     );
   };
@@ -109,18 +109,18 @@ const ItemPage = ({ type, id, admin }) => {
           }, 500);
         } else {
           pushNotification(
-            "Error",
             "Error saving your image",
-            "File wasn't loaded"
+            "File wasn't loaded",
+            true
           );
         }
       };
       return sendFiles();
     } catch (err) {
       pushNotification(
-        "Error",
         "Photo wasn't loaded",
-        "Something went wrong with uploading your photo"
+        "Something went wrong with uploading your photo",
+        true
       );
     }
   };
@@ -181,32 +181,28 @@ const ItemPage = ({ type, id, admin }) => {
       };
     }
     if (!card.name) {
-      pushNotification("Error", "No item name specified", "Error saving item");
+      pushNotification("No item name specified", "Error saving item", true);
     } else if (!card.author) {
-      pushNotification(
-        "Error",
-        "Error saving item",
-        "No item author specified"
-      );
+      pushNotification("Error saving item", "No item author specified", true);
     } else if (!card.info) {
-      pushNotification("Error", "No item info specified", "Error saving item");
+      pushNotification("No item info specified", "Error saving item", true);
     } else if (card.name.length > 200) {
       pushNotification(
-        "Error",
         "Error saving item",
-        "Name of the item can't be longer than 200 symbols"
+        "Name of the item can't be longer than 200 symbols",
+        true
       );
     } else if (card.author.length > 100) {
       pushNotification(
-        "Error",
         "Error saving item",
-        "Authors line can't be longer than 100 symbols"
+        "Authors line can't be longer than 100 symbols",
+        true
       );
     } else if (card.info.length > 1000) {
       pushNotification(
-        "Error",
         "Error saving item",
-        "Item description can't be longer than 1000 symbols"
+        "Item description can't be longer than 1000 symbols",
+        true
       );
     } else {
       dispatch(updateCard(card, type));
@@ -217,11 +213,7 @@ const ItemPage = ({ type, id, admin }) => {
   };
 
   const launch = () => {
-    pushNotification(
-      "Completed",
-      "Item deleted",
-      "Your item was successfully deleted"
-    );
+    dispatch(deleteCard(item, type, history));
   };
 
   const { open, Confirm } = useConfirm(

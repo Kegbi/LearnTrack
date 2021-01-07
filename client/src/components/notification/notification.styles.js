@@ -54,6 +54,5 @@ export const NotificationItemBar = styled.div.attrs((props) => ({
   },
 }))`
   height: 10px;
-  background-color: ${(props) =>
-    props.success === "SUCCESS" ? "#65d266" : "red"};
+  background-color: ${(props) => (props.alert ? "red" : "#65d266")};
 `;

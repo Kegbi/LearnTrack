@@ -62,12 +62,16 @@ const getItem = async (req, res, db, type) => {
       dislikes: await getItemInteractions(db, id, type, "d"),
     };
     if (resp.info && Array.isArray(resp.info) && resp.info.length) {
-      res.json(resp);
+      res.json({ success: true, data: resp });
     } else {
-      res.status(400).json(`Unable to get ${singularType}`);
+      res
+        .status(400)
+        .json({ success: false, message: `Unable to get ${singularType}` });
     }
   } catch {
-    res.status(400).json(`Error getting ${singularType}`);
+    res
+      .status(400)
+      .json({ success: false, message: `Error getting ${singularType}` });
   }
 };
 
@@ -76,7 +80,9 @@ const addItem = (req, res, db, type) => {
   let singularType = type === "books" ? "book" : "course";
   const { name, image, author, info } = req.body;
   if (!name || !author || !info) {
-    return res.status(400).json("Incorrect form submission");
+    return res
+      .status(400)
+      .json({ added: false, message: "Incorrect form submission" });
   }
   try {
     db.transaction((trx) => {
@@ -94,7 +100,9 @@ const addItem = (req, res, db, type) => {
         .then(trx.commit);
     });
   } catch {
-    res.status(400).json(`Error adding new ${singularType}`);
+    res
+      .status(400)
+      .json({ added: false, message: `Error adding new ${singularType}` });
   }
 };
 
@@ -113,12 +121,15 @@ const deleteItem = async (req, res, db, type) => {
     if (resp) {
       res.json({ deleted: true });
     } else {
-      res
-        .status(400)
-        .json(`Unable to delete ${singularType}. Maybe it's already deleted`);
+      res.status(400).json({
+        deleted: false,
+        message: `Unable to delete ${singularType}. Maybe it's already deleted`,
+      });
     }
   } catch {
-    res.status(400).json(`Error deleting ${singularType}`);
+    res
+      .status(400)
+      .json({ deleted: false, message: `Error deleting ${singularType}` });
   }
 };
 
@@ -134,10 +145,14 @@ const updateItem = async (req, res, db, type) => {
     if (resp) {
       res.json({ updated: true });
     } else {
-      res.status(400).json(`Unable to update ${singularType}`);
+      res
+        .status(400)
+        .json({ updated: false, message: `Unable to update ${singularType}` });
     }
   } catch {
-    res.status(400).json(`Error updating ${singularType}`);
+    res
+      .status(400)
+      .json({ updated: false, message: `Error updating ${singularType}` });
   }
 };
 

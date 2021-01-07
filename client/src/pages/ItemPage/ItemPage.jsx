@@ -58,13 +58,17 @@ const ItemPage = ({ type, id, admin }) => {
     }
     const fetchData = async () => {
       const resp = await getData(`${link}/${id}`);
-      await setItem(resp.info[0]);
-      await setReactions({
-        likes: resp.likes[0],
-        stored: resp.stored[0],
-        dislikes: resp.dislikes[0],
-      });
-      await setBaseItem(resp.info[0]);
+      if (resp.success === true) {
+        await setItem(resp.data.info[0]);
+        await setReactions({
+          likes: resp.data.likes[0],
+          stored: resp.data.stored[0],
+          dislikes: resp.data.dislikes[0],
+        });
+        await setBaseItem(resp.data.info[0]);
+      } else {
+        await history.push("/404");
+      }
       await togglePending(false);
     };
     fetchData();

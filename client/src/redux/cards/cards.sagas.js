@@ -53,7 +53,10 @@ function* updateCard(action) {
       yield put(
         addNotification({
           title: "Error updating your item",
-          message: "Error occurred when updating your item",
+          message:
+            response.message.length > 0
+              ? response.message
+              : "Error occurred when updating your item",
           alert: true,
         })
       );
@@ -62,7 +65,10 @@ function* updateCard(action) {
     yield put(
       addNotification({
         title: "Error updating your item",
-        message: "Error occurred when updating your item",
+        message:
+          response.message.length > 0
+            ? response.message
+            : "Error occurred when updating your item",
         alert: true,
       })
     );
@@ -100,7 +106,10 @@ function* deleteCard(action) {
       yield put(
         addNotification({
           title: "Error deleting your item",
-          message: "Error occurred when deleting your item",
+          message:
+            response.message.length > 0
+              ? response.message
+              : "Error occurred when deleting your item",
           alert: true,
         })
       );
@@ -109,7 +118,10 @@ function* deleteCard(action) {
     yield put(
       addNotification({
         title: "Error deleting your item",
-        message: "Error occurred when deleting your item",
+        message:
+          response.message.length > 0
+            ? response.message
+            : "Error occurred when deleting your item",
         alert: true,
       })
     );

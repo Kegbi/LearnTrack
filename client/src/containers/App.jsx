@@ -11,6 +11,8 @@ import { selectCurrentUser } from "../redux/user/user.selectors";
 import { checkUserSession } from "../redux/user/user.actions";
 import { AppContainer, MainContainer } from "./app.styles";
 import ItemPage from "../pages/ItemPage/ItemPage";
+import ItemsPage from "../pages/ItemsPage/ItemsPage";
+import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 
 const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
 const MainPage = lazy(() => import("../pages/MainPage/MainPage"));
@@ -39,8 +41,8 @@ const App = () => {
           <ErrorBoundary>
             <AppContainer>
               <Header user={user.currentUser} />
-              <Switch>
-                <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader />}>
+                <Switch>
                   <Route
                     exact
                     path={"/"}
@@ -79,6 +81,34 @@ const App = () => {
                   />
                   <Route
                     exact
+                    path={"/books"}
+                    render={() =>
+                      user.currentUser ? (
+                        <ItemsPage
+                          type={"book"}
+                          admin={user.currentUser.isAdmin}
+                        />
+                      ) : (
+                        <Redirect to={"/login"} />
+                      )
+                    }
+                  />
+                  <Route
+                    exact
+                    path={"/courses"}
+                    render={() =>
+                      user.currentUser ? (
+                        <ItemsPage
+                          type={"course"}
+                          admin={user.currentUser.isAdmin}
+                        />
+                      ) : (
+                        <Redirect to={"/login"} />
+                      )
+                    }
+                  />
+                  <Route
+                    exact
                     path={"/books/:id"}
                     render={(props) =>
                       user.currentUser ? (
@@ -107,8 +137,9 @@ const App = () => {
                       )
                     }
                   />
-                </Suspense>
-              </Switch>
+                  <Route component={NotFoundPage} />
+                </Switch>
+              </Suspense>
             </AppContainer>
           </ErrorBoundary>
         </MainContainer>

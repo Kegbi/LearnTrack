@@ -47,7 +47,6 @@ const Notification = (props) => {
 
   React.useEffect(() => {
     if (width === 100) {
-      // Close notification
       handleCloseNotification();
     }
   }, [width]);

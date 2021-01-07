@@ -4,8 +4,10 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { urlConstants } from "../../constants/urlConstants";
 import { getData } from "../../api/api";
+import { useConfirm } from "../../hooks/useConfirm";
 import { addNotification } from "../../redux/notifications/notifications.actions";
 import { updateCard } from "../../redux/cards/cards.actions";
+
 import {
   ItemName,
   IconGroup,
@@ -33,7 +35,9 @@ import {
   ItemNameEditing,
   ItemInfoEditing,
 } from "./ItemPage.styles";
+
 import Loader from "../../components/loader/loader.component";
+import Confirm from "../../components/confirm-popup/confirm-popup.component";
 
 const ItemPage = ({ type, id, admin }) => {
   const dispatch = useDispatch();
@@ -43,7 +47,7 @@ const ItemPage = ({ type, id, admin }) => {
   const [baseItem, setBaseItem] = useState({});
   const [isPending, togglePending] = useState(true);
   const [isEditing, toggleEditing] = useState(false);
-  const [modalOpened, toggleModal] = useState(false);
+  const [photoLoading, togglePhotoLoading] = useState(false);
 
   useEffect(() => {
     let link;
@@ -66,12 +70,12 @@ const ItemPage = ({ type, id, admin }) => {
     fetchData();
   }, []);
 
-  const pushNotification = (type, message, title) => {
+  const pushNotification = (type, title, message) => {
     dispatch(
       addNotification({
         typeOfItem: type,
-        message: message,
         title: title,
+        message: message,
       })
     );
   };
@@ -82,14 +86,6 @@ const ItemPage = ({ type, id, admin }) => {
       itemNameRef.style.height = itemNameRef.scrollHeight + "px";
     }
   }, []);
-
-  const openModal = () => {
-    if (modalOpened === false) {
-      toggleModal(true);
-    } else {
-      toggleModal(false);
-    }
-  };
 
   const startEditing = () => {
     toggleEditing(true);
@@ -102,24 +98,30 @@ const ItemPage = ({ type, id, admin }) => {
       const sendFiles = async (event) => {
         let formData = new FormData();
         formData.append("file", files[0]);
+        togglePhotoLoading(true);
         const { data } = await axios.post(urlConstants.uploadImage, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         if (data.success) {
+          setItem({ ...item, image: data.message });
           setTimeout(function () {
-            setItem({ ...item, image: data.message });
+            togglePhotoLoading(false);
           }, 500);
         } else {
           pushNotification(
             "Error",
-            "File wasn't loaded",
-            "Error saving your image"
+            "Error saving your image",
+            "File wasn't loaded"
           );
         }
       };
       return sendFiles();
     } catch (err) {
-      console.log("Something went wrong with uploading your photo");
+      pushNotification(
+        "Error",
+        "Photo wasn't loaded",
+        "Something went wrong with uploading your photo"
+      );
     }
   };
 
@@ -183,25 +185,27 @@ const ItemPage = ({ type, id, admin }) => {
     } else if (!card.author) {
       pushNotification(
         "Error",
-        "No item author specified",
-        "Error saving item"
+        "Error saving item",
+        "No item author specified"
       );
     } else if (!card.info) {
       pushNotification("Error", "No item info specified", "Error saving item");
     } else if (card.name.length > 200) {
       pushNotification(
         "Error",
-        "Name of the item can't be longer than 200 symbols",
-        "Error saving item"
+        "Error saving item",
+        "Name of the item can't be longer than 200 symbols"
       );
     } else if (card.author.length > 100) {
       pushNotification(
         "Error",
+        "Error saving item",
         "Authors line can't be longer than 100 symbols"
       );
     } else if (card.info.length > 1000) {
       pushNotification(
         "Error",
+        "Error saving item",
         "Item description can't be longer than 1000 symbols"
       );
     } else {
@@ -211,6 +215,23 @@ const ItemPage = ({ type, id, admin }) => {
       toggleEditing(false);
     }
   };
+
+  const launch = () => {
+    pushNotification(
+      "Completed",
+      "Item deleted",
+      "Your item was successfully deleted"
+    );
+  };
+
+  const { open, Confirm } = useConfirm(
+    launch,
+    "Do you want to delete this item?",
+    "The item will be deleted and you won't be able to restore it later",
+    "Delete",
+    "No, I changed my mind",
+    false
+  );
 
   return (
     <>
@@ -230,13 +251,9 @@ const ItemPage = ({ type, id, admin }) => {
                 ) : (
                   <ControlsText onClick={startEditing}>Edit</ControlsText>
                 )}
-                <ControlsText
-                  onClick={() =>
-                    pushNotification("Error", "Deleting", "Successful request")
-                  }
-                >
-                  Delete
-                </ControlsText>
+                <Confirm>
+                  <ControlsText onClick={open}>Delete</ControlsText>
+                </Confirm>
               </ItemControlsGroup>
             ) : (
               <ItemControlsGroup />
@@ -255,7 +272,9 @@ const ItemPage = ({ type, id, admin }) => {
                     onChange={changePhoto}
                   />
                 ) : null}
-                {item.image.length ? (
+                {photoLoading ? (
+                  <Loader />
+                ) : item.image.length ? (
                   <Photo
                     src={`${urlConstants.images}/${item.image}`}
                     alt={"item-photo"}

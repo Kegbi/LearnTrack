@@ -57,17 +57,21 @@ const ItemPage = ({ type, id, admin }) => {
       link = urlConstants.books;
     }
     const fetchData = async () => {
-      const resp = await getData(`${link}/${id}`);
-      if (resp.success === true) {
-        await setItem(resp.data.info[0]);
-        await setReactions({
-          likes: resp.data.likes[0],
-          stored: resp.data.stored[0],
-          dislikes: resp.data.dislikes[0],
-        });
-        await setBaseItem(resp.data.info[0]);
-      } else {
-        await history.push("/404");
+      try {
+        const resp = await getData(`${link}/${id}`);
+        if (resp.success === true) {
+          await setItem(resp.data.info[0]);
+          await setReactions({
+            likes: resp.data.likes[0],
+            stored: resp.data.stored[0],
+            dislikes: resp.data.dislikes[0],
+          });
+          await setBaseItem(resp.data.info[0]);
+        } else {
+          await history.push("/404");
+        }
+      } catch {
+        pushNotification("Error fetching data", "Data wasn't fetched", true);
       }
       await togglePending(false);
     };

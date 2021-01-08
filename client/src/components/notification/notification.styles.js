@@ -27,7 +27,7 @@ export const NotificationItem = styled.div`
   overflow: hidden;
   margin-bottom: 20px;
   animation: ${(props) =>
-    props.exit === "exit"
+    props.exit === true
       ? css`
           ${SlideRight} 0.4s
         `
@@ -48,11 +48,21 @@ export const NotificationItemMessage = styled.p`
   padding: 10px;
 `;
 
-export const NotificationItemBar = styled.div.attrs((props) => ({
-  style: {
-    width: `${props.width}%`,
-  },
-}))`
+const BarFill = keyframes`
+  0% {
+    width: 0;
+  }
+  
+  100% {
+    width: 100%;
+  }
+`;
+
+export const NotificationItemBar = styled.div`
+  animation: ${() =>
+    css`
+      ${BarFill} 7s linear
+    `};
   height: 10px;
   background-color: ${(props) => (props.alert ? "red" : "#65d266")};
 `;

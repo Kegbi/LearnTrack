@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import NotificationsActionTypes from "../../redux/notifications/notifications.types";
+
 import {
   NotificationItem,
   NotificationItemBar,
@@ -12,30 +13,8 @@ const Notification = (props) => {
   const dispatch = useDispatch();
 
   const [exit, setExit] = useState(false);
-  const [width, setWidth] = useState(0);
-  const [intervalID, setIntervalID] = useState(null);
-
-  const handleStartTimer = () => {
-    const id = setInterval(() => {
-      setWidth((prev) => {
-        if (prev < 100) {
-          return prev + 0.5;
-        }
-
-        clearInterval(id);
-        return prev;
-      });
-    }, 20);
-
-    setIntervalID(id);
-  };
-
-  const handlePauseTimer = () => {
-    clearInterval(intervalID);
-  };
 
   const handleCloseNotification = () => {
-    handlePauseTimer();
     setExit(true);
     setTimeout(() => {
       dispatch({
@@ -46,24 +25,16 @@ const Notification = (props) => {
   };
 
   React.useEffect(() => {
-    if (width === 100) {
+    setTimeout(() => {
       handleCloseNotification();
-    }
-  }, [width]);
-
-  React.useEffect(() => {
-    handleStartTimer();
+    }, 7000);
   }, []);
 
   return (
-    <NotificationItem
-      onMouseEnter={handlePauseTimer}
-      onMouseLeave={handleStartTimer}
-      exit={exit ? "exit" : ""}
-    >
+    <NotificationItem exit={exit}>
       <NotificationItemHeader>{props.title}</NotificationItemHeader>
       <NotificationItemMessage>{props.message}</NotificationItemMessage>
-      <NotificationItemBar alert={props.alert} width={width} />
+      <NotificationItemBar alert={props.alert} />
     </NotificationItem>
   );
 };

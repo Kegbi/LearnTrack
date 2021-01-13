@@ -1,9 +1,4 @@
 import styled from "styled-components";
-import { BookBookmark } from "styled-icons/boxicons-regular";
-import { Like } from "styled-icons/boxicons-regular";
-import { Dislike } from "styled-icons/boxicons-regular";
-import { green, grey, grey_light, red, yellow } from "../../global.styles";
-import { PhotoCamera } from "@styled-icons/material";
 
 export const ContentListCardContainer = styled.div`
   width: 230px;
@@ -25,12 +20,6 @@ export const ContainerListCardPhotoContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
-`;
-
-export const UnknownPhoto = styled(PhotoCamera)`
-  width: 50%;
-  height: 50%;
-  color: ${grey_light};
 `;
 
 export const ContainerListCardText = styled.div`
@@ -56,41 +45,4 @@ export const ContainerListCardAuthor = styled.h2`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-`;
-
-export const ContainerListCardIcons = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0;
-`;
-
-export const ContainerListCardIconGroup = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
-
-export const ContainerListCardIconCounter = styled.div`
-  font-size: 1rem;
-  text-align: center;
-`;
-
-export const LikeIcon = styled(Like)`
-  height: 22px;
-  color: ${(props) => (props.active ? green : grey)};
-`;
-
-export const DislikeIcon = styled(Dislike)`
-  height: 22px;
-  color: ${(props) => (props.active ? red : grey)};
-`;
-
-export const BookmarkIcon = styled(BookBookmark)`
-  height: 22px;
-  color: ${(props) => (props.active ? yellow : grey)};
 `;

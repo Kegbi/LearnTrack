@@ -44,7 +44,6 @@ const ContentList = ({ typeOfContent, content, isPending }) => {
                   name={content[i].name}
                   image={content[i].image}
                   author={content[i].author}
-                  // info={content[i].info}
                   type={type}
                 />
               );

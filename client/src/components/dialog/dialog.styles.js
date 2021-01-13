@@ -56,18 +56,3 @@ const CleanDialogButton = styled.button`
   font-weight: normal;
   outline: none;
 `;
-
-export const AcceptButton = styled(CleanDialogButton)`
-  font-size: 1rem;
-  background-color: ${(props) => (props.alert ? red : green)};
-  color: white;
-  padding: 10px;
-  min-width: 150px;
-  border-radius: 7px;
-  margin-bottom: 5px;
-`;
-
-export const DeclineButton = styled(CleanDialogButton)`
-  color: ${grey};
-  font-size: 0.8rem;
-`;

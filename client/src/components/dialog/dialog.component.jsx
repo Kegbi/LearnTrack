@@ -1,14 +1,13 @@
 import React from "react";
 
 import {
-  AcceptButton,
-  DeclineButton,
   DialogBody,
   DialogButtonsGroup,
   DialogMessage,
   DialogOverlay,
   DialogTitle,
 } from "./dialog.styles";
+import { AcceptButton, DeclineButton } from "../../ui-kit/buttons/buttons";
 
 const Dialog = (props) => {
   const { title, message, confirmText, declineText, alert, ok, cancel } = props;

@@ -1,11 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+
+import IconsBlock from "../../ui-kit/icons/icons-block";
+
 import {
-  BookmarkIcon,
   ContainerListCardAuthor,
-  ContainerListCardIconCounter,
-  ContainerListCardIconGroup,
-  ContainerListCardIcons,
   ContainerListCardName,
   ContainerListCardPhoto,
   ContainerListCardPhotoContainer,
@@ -13,10 +12,9 @@ import {
   ContentListCardBottom,
   ContentListCardContainer,
   ContentListCardLink,
-  DislikeIcon,
-  LikeIcon,
-  UnknownPhoto,
 } from "./content-list-card.styles";
+import { UnknownPhoto } from "../../ui-kit/unknown-photo/unknown-photo.styles";
+
 import { urlConstants } from "../../constants/urlConstants";
 
 const ContentListCard = ({ _id, name, image, author, type }) => {
@@ -41,20 +39,7 @@ const ContentListCard = ({ _id, name, image, author, type }) => {
         </ContainerListCardText>
       </ContentListCardLink>
       <ContentListCardBottom>
-        <ContainerListCardIcons>
-          <ContainerListCardIconGroup>
-            <LikeIcon />
-            {/*<ContainerListCardIconCounter>222</ContainerListCardIconCounter>*/}
-          </ContainerListCardIconGroup>
-          <ContainerListCardIconGroup>
-            <BookmarkIcon />
-            {/*<ContainerListCardIconCounter>222</ContainerListCardIconCounter>*/}
-          </ContainerListCardIconGroup>
-          <ContainerListCardIconGroup>
-            <DislikeIcon />
-            {/*<ContainerListCardIconCounter>222</ContainerListCardIconCounter>*/}
-          </ContainerListCardIconGroup>
-        </ContainerListCardIcons>
+        <IconsBlock counters={false} big={false} reactions={null} />
       </ContentListCardBottom>
     </ContentListCardContainer>
   );

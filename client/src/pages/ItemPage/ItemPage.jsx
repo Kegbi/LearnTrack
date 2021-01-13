@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { urlConstants } from "../../constants/urlConstants";
 import { getData } from "../../api/api";
 import { useConfirm } from "../../hooks/useConfirm";
@@ -9,35 +8,21 @@ import { addNotification } from "../../redux/notifications/notifications.actions
 import { deleteCard, updateCard } from "../../redux/cards/cards.actions";
 
 import {
-  ItemName,
-  IconGroup,
-  IconsContainer,
   ItemPageContainer,
-  Photo,
-  PhotoContainer,
-  PhotoGroupContainer,
-  TextContainer,
-  UnknownPhoto,
-  ItemAuthor,
-  ItemInfo,
-  LikeIcon,
-  BookmarkIcon,
-  DislikeIcon,
-  IconCounter,
   ControlsContainer,
   BackControlGroup,
   BackArrow,
-  ControlsText,
   Container,
   ItemControlsGroup,
-  BackArrowText,
-  ItemAuthorEditing,
-  ItemNameEditing,
-  ItemInfoEditing,
+  PhotoBlockContainer,
 } from "./ItemPage.styles";
+import IconsBlock from "../../ui-kit/icons/icons-block";
 
 import Loader from "../../components/loader/loader.component";
 import Confirm from "../../components/confirm-popup/confirm-popup.component";
+import ItemPagePhotoComponent from "../../components/item-page-photo/item-page-photo.component";
+import { TextBtn } from "../../ui-kit/buttons/buttons";
+import ItemPageTextInfo from "../../components/item-page-text-info/item-page-text-info.component";
 
 const ItemPage = ({ type, id, admin }) => {
   const dispatch = useDispatch();
@@ -47,9 +32,10 @@ const ItemPage = ({ type, id, admin }) => {
   const [baseItem, setBaseItem] = useState({});
   const [isPending, togglePending] = useState(true);
   const [isEditing, toggleEditing] = useState(false);
-  const [photoLoading, togglePhotoLoading] = useState(false);
 
   useEffect(() => {
+    let ignoreResponse = false;
+
     let link;
     if (type === "course") {
       link = urlConstants.courses;
@@ -59,24 +45,29 @@ const ItemPage = ({ type, id, admin }) => {
     const fetchData = async () => {
       try {
         const resp = await getData(`${link}/${id}`);
-        if (resp.success === true) {
-          await setItem(resp.data.info[0]);
-          await setReactions({
+        if (resp.success === true && ignoreResponse === false) {
+          setItem(resp.data.info[0]);
+          setReactions({
             likes: resp.data.likes[0],
             stored: resp.data.stored[0],
             dislikes: resp.data.dislikes[0],
           });
-          await setBaseItem(resp.data.info[0]);
+          setBaseItem(resp.data.info[0]);
         } else {
-          await history.push("/404");
+          history.push("/404");
         }
       } catch {
         pushNotification("Error fetching data", "Data wasn't fetched", true);
       }
-      await togglePending(false);
+      togglePending(false);
     };
+
     fetchData();
-  }, []);
+
+    return () => {
+      ignoreResponse = true;
+    };
+  }, [type]);
 
   const pushNotification = (title, message, alert) => {
     dispatch(
@@ -88,85 +79,8 @@ const ItemPage = ({ type, id, admin }) => {
     );
   };
 
-  // Adjusting textarea height to content
-  const textareaCallback = useCallback((itemNameRef) => {
-    if (itemNameRef) {
-      itemNameRef.style.height = itemNameRef.scrollHeight + "px";
-    }
-  }, []);
-
   const startEditing = () => {
     toggleEditing(true);
-  };
-
-  const changePhoto = (event) => {
-    if (event.target.files.length === 0) return;
-    try {
-      let files = event.target.files;
-      const sendFiles = async (event) => {
-        let formData = new FormData();
-        formData.append("file", files[0]);
-        togglePhotoLoading(true);
-        const { data } = await axios.post(urlConstants.uploadImage, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        if (data.success) {
-          setItem({ ...item, image: data.message });
-          setTimeout(function () {
-            togglePhotoLoading(false);
-          }, 500);
-        } else {
-          pushNotification(
-            "Error saving your image",
-            "File wasn't loaded",
-            true
-          );
-        }
-      };
-      return sendFiles();
-    } catch (err) {
-      pushNotification(
-        "Photo wasn't loaded",
-        "Something went wrong with uploading your photo",
-        true
-      );
-    }
-  };
-
-  const onTextChange = (event) => {
-    const fixHeight = (event) => {
-      event.target.style.height = "auto";
-      event.target.style.padding = 0;
-      event.target.style.height = event.target.scrollHeight + "px";
-    };
-    switch (event.target.name) {
-      case "item_name":
-        if (event.target.value === "") {
-          setItem({ ...item, name: "" });
-        } else {
-          setItem({ ...item, name: event.target.value });
-        }
-        fixHeight(event);
-        break;
-      case "item_author":
-        if (event.target.value === "") {
-          setItem({ ...item, author: "" });
-        } else {
-          setItem({ ...item, author: event.target.value });
-        }
-        fixHeight(event);
-        break;
-      case "item_info":
-        if (event.target.value === "") {
-          setItem({ ...item, info: "" });
-        } else {
-          setItem({ ...item, info: event.target.value });
-        }
-        fixHeight(event);
-        break;
-      default:
-        return;
-    }
   };
 
   const saveCard = () => {
@@ -220,12 +134,12 @@ const ItemPage = ({ type, id, admin }) => {
     }
   };
 
-  const launch = () => {
+  const confirmAction = () => {
     dispatch(deleteCard(item, type, history));
   };
 
   const { open, Confirm } = useConfirm(
-    launch,
+    confirmAction,
     "Do you want to delete this item?",
     "The item will be deleted and you won't be able to restore it later",
     "Delete",
@@ -242,17 +156,17 @@ const ItemPage = ({ type, id, admin }) => {
           <ControlsContainer>
             <BackControlGroup onClick={() => history.push(`/${type}s/`)}>
               <BackArrow />
-              <BackArrowText>Back</BackArrowText>
+              <TextBtn ml={"15"}>Back</TextBtn>
             </BackControlGroup>
             {admin ? (
               <ItemControlsGroup>
                 {isEditing ? (
-                  <ControlsText onClick={saveCard}>Save</ControlsText>
+                  <TextBtn onClick={saveCard}>Save</TextBtn>
                 ) : (
-                  <ControlsText onClick={startEditing}>Edit</ControlsText>
+                  <TextBtn onClick={startEditing}>Edit</TextBtn>
                 )}
                 <Confirm>
-                  <ControlsText onClick={open}>Delete</ControlsText>
+                  <TextBtn onClick={open}>Delete</TextBtn>
                 </Confirm>
               </ItemControlsGroup>
             ) : (
@@ -260,81 +174,21 @@ const ItemPage = ({ type, id, admin }) => {
             )}
           </ControlsContainer>
           <ItemPageContainer>
-            <PhotoGroupContainer>
-              <PhotoContainer>
-                {isEditing ? (
-                  <input
-                    type={"file"}
-                    accept={"image/*"}
-                    name={"photo"}
-                    id={"file"}
-                    hidden
-                    onChange={changePhoto}
-                  />
-                ) : null}
-                {photoLoading ? (
-                  <Loader />
-                ) : item.image.length ? (
-                  <Photo
-                    src={`${urlConstants.images}/${item.image}`}
-                    alt={"item-photo"}
-                  />
-                ) : (
-                  <UnknownPhoto />
-                )}
-              </PhotoContainer>
-              <IconsContainer>
-                <IconGroup>
-                  <LikeIcon />
-                  <IconCounter>{reactions.likes.count}</IconCounter>
-                </IconGroup>
-                <IconGroup>
-                  <BookmarkIcon />
-                  <IconCounter>{reactions.stored.count}</IconCounter>
-                </IconGroup>
-                <IconGroup>
-                  <DislikeIcon />
-                  <IconCounter>{reactions.dislikes.count}</IconCounter>
-                </IconGroup>
-              </IconsContainer>
-            </PhotoGroupContainer>
-            {isEditing ? (
-              <TextContainer>
-                <ItemNameEditing
-                  name={"item_name"}
-                  type={"text"}
-                  rows={"1"}
-                  value={item.name}
-                  placeholder={baseItem.name}
-                  onChange={(e) => onTextChange(e)}
-                  ref={textareaCallback}
-                />
-                <ItemAuthorEditing
-                  name={"item_author"}
-                  type={"text"}
-                  rows={"1"}
-                  value={item.author}
-                  placeholder={baseItem.author}
-                  onChange={onTextChange}
-                  ref={textareaCallback}
-                />
-                <ItemInfoEditing
-                  name={"item_info"}
-                  type={"text"}
-                  rows={"1"}
-                  value={item.info}
-                  placeholder={baseItem.info}
-                  onChange={onTextChange}
-                  ref={textareaCallback}
-                />
-              </TextContainer>
-            ) : (
-              <TextContainer>
-                <ItemName>{item.name}</ItemName>
-                <ItemAuthor>{item.author}</ItemAuthor>
-                <ItemInfo>{item.info}</ItemInfo>
-              </TextContainer>
-            )}
+            <PhotoBlockContainer>
+              <ItemPagePhotoComponent
+                isEditing={isEditing}
+                item={item}
+                setItem={setItem}
+                pushNotification={pushNotification}
+              />
+              <IconsBlock counters={true} big={true} reactions={reactions} />
+            </PhotoBlockContainer>
+            <ItemPageTextInfo
+              isEditing={isEditing}
+              baseItem={baseItem}
+              setItem={setItem}
+              item={item}
+            />
           </ItemPageContainer>
         </Container>
       )}

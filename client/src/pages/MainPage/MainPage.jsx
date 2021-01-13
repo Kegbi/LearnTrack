@@ -1,21 +1,25 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLatestStart } from "../../redux/cards/cards.actions";
+import { selectLatestContent } from "../../redux/cards/cards.selectors";
+
 import {
   MainPageContainer,
   MainPageContent,
   MainPageGreeting,
 } from "./MainPage.styles";
+
 import ContentBlock from "../../containers/content-list/content-block.container";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchLatestStart } from "../../redux/cards/cards.actions";
-import { selectLatestContent } from "../../redux/cards/cards.selectors";
 
 const MainPage = ({ user }) => {
   const dispatch = useDispatch();
+  const isPending = useSelector((state) => state.latest.isPending);
+  const latestContent = useSelector(selectLatestContent);
+
   useEffect(() => {
     dispatch(fetchLatestStart());
   }, []);
-  const latestContent = useSelector(selectLatestContent);
-  const isPending = useSelector((state) => state.latest.isPending);
+
   return (
     <MainPageContainer>
       <MainPageContent>

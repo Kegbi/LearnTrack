@@ -8,11 +8,11 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   body {
+    font-family: "Roboto", "Segoe UI", "Ubuntu", "Fira Sans", "Droid Sans",
+      "Helvetica Neue", sans-serif;
     font-size: 14px;
     margin: 0;
     padding: 0;
-    font-family: "Roboto", "Segoe UI", "Ubuntu", "Fira Sans", "Droid Sans",
-      "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -27,6 +27,11 @@ export const GlobalStyle = createGlobalStyle`
   
   h1 {
     font-size: 2rem;
+  }
+  
+  button {
+    font-family: "Roboto", "Segoe UI", "Ubuntu", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   }
 `;
 

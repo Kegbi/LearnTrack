@@ -5,8 +5,17 @@ const getLatest = (db, type, quantity) => {
   return db.select("*").from(type).orderBy("created", "desc").limit(quantity);
 };
 
+const getSomeItems = (db, type, columnName, index, quantity) => {
+  return db
+    .select("*")
+    .from(type)
+    .where(columnName, ">=", index)
+    .orderBy(columnName, "asc")
+    .limit(quantity);
+};
+
 const getItemInfo = (db, id, type) => {
-  let id_column = getIdColumnName(type);
+  const id_column = getIdColumnName(type);
   return db
     .select("*")
     .from(type)
@@ -14,8 +23,8 @@ const getItemInfo = (db, id, type) => {
 };
 
 const getItemInteractions = (db, id, type, action) => {
-  let table = getLikesTableName(type);
-  let id_column = getIdColumnName(type);
+  const table = getLikesTableName(type);
+  const id_column = getIdColumnName(type);
   return db
     .count("*")
     .from(table)
@@ -33,6 +42,7 @@ const getProfileInteractions = (db, id, type, action) => {
 
 module.exports = {
   getLatest,
+  getSomeItems,
   getItemInfo,
   getItemInteractions,
   getProfileInteractions,

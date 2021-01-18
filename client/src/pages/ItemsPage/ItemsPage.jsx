@@ -8,9 +8,14 @@ import {
   ItemsPageTitle,
   ItemsPageTitlesGroup,
 } from "./ItemsPage.styles";
+import ContentList from "../../components/content-list/content-list.component";
+import { useSelector } from "react-redux";
+import { selectCards } from "../../redux/cards/cards.selectors";
 
 const ItemsPage = ({ type, admin }) => {
   let history = useHistory();
+  const isPending = useSelector((state) => state.cards.isPending);
+  const cards = useSelector(selectCards);
 
   return (
     <Container>
@@ -32,6 +37,12 @@ const ItemsPage = ({ type, admin }) => {
         )}
         {admin ? <ItemsPageAddNew>Add new</ItemsPageAddNew> : null}
       </ItemsPageControlsGroup>
+      {/*<ContentList*/}
+      {/*  typeOfContent={type}*/}
+      {/*  content={}*/}
+      {/*  isPending={isPending}*/}
+      {/*  recent={false}*/}
+      {/*/>*/}
     </Container>
   );
 };

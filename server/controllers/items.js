@@ -1,3 +1,4 @@
+const { getSomeItems } = require("../utils/item");
 const { getLikesTableName } = require("../utils/utils");
 const { getIdColumnName } = require("../utils/utils");
 const { getLatest } = require("../utils/item");
@@ -30,6 +31,22 @@ const getLastItems = async (req, res, db, type) => {
     }
   } catch {
     res.status(400).json(`Error getting ${type}`);
+  }
+};
+
+const getPortionOfItems = async (req, res, db, type) => {
+  const id_column = getIdColumnName(type);
+  const { index } = req.body;
+
+  try {
+    const resp = await getSomeItems(db, type, id_column, index, 10);
+    if (resp) {
+      res.json({ success: true, payload: resp });
+    } else {
+      res.status(400).json({ success: false, message: "Unable to get items" });
+    }
+  } catch {
+    res.status(400).json({ success: false, message: "Unable to get items" });
   }
 };
 
@@ -159,6 +176,7 @@ const updateItem = async (req, res, db, type) => {
 module.exports = {
   getAllItems,
   getLastItems,
+  getPortionOfItems,
   getLikedItems,
   getItem,
   addItem,

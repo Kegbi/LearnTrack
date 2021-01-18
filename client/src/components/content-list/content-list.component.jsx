@@ -10,7 +10,7 @@ import {
 import { useHistory } from "react-router-dom";
 import Loader from "../loader/loader.component";
 
-const ContentList = ({ typeOfContent, content, isPending }) => {
+const ContentList = ({ typeOfContent, content, isPending, recent }) => {
   let history = useHistory();
 
   let type;
@@ -20,12 +20,14 @@ const ContentList = ({ typeOfContent, content, isPending }) => {
   return (
     <>
       <ContentListContainer>
-        <ContentListContainerHeader>
-          <h1>Latest added {typeOfContent}</h1>
-          <ContentListHeaderLink onClick={() => history.push(`/${type}`)}>
-            Watch all
-          </ContentListHeaderLink>
-        </ContentListContainerHeader>
+        {recent ? (
+          <ContentListContainerHeader>
+            <h1>Latest added {typeOfContent}</h1>
+            <ContentListHeaderLink onClick={() => history.push(`/${type}`)}>
+              Watch all
+            </ContentListHeaderLink>
+          </ContentListContainerHeader>
+        ) : null}
         {isPending ? (
           <Loader />
         ) : content.length ? (

@@ -9,11 +9,11 @@ import {
   MainPageGreeting,
 } from "./MainPage.styles";
 
-import ContentBlock from "../../containers/content-list/content-block.container";
+import ContentList from "../../components/content-list/content-list.component";
 
 const MainPage = ({ user }) => {
   const dispatch = useDispatch();
-  const isPending = useSelector((state) => state.latest.isPending);
+  const isPending = useSelector((state) => state.cards.isPending);
   const latestContent = useSelector(selectLatestContent);
 
   useEffect(() => {
@@ -24,15 +24,17 @@ const MainPage = ({ user }) => {
     <MainPageContainer>
       <MainPageContent>
         <MainPageGreeting>Welcome, {user.name}</MainPageGreeting>
-        <ContentBlock
+        <ContentList
           typeOfContent={"Books"}
           content={latestContent.books}
           isPending={isPending}
+          recent={true}
         />
-        <ContentBlock
+        <ContentList
           typeOfContent={"Courses"}
           content={latestContent.courses}
           isPending={isPending}
+          recent={true}
         />
       </MainPageContent>
     </MainPageContainer>

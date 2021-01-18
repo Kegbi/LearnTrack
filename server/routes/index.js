@@ -30,6 +30,9 @@ module.exports = (app) => {
     .route("/api/books/latest")
     .get((req, res) => items.getLastItems(req, res, db, "books"));
   app
+    .route("/api/books/endless")
+    .get((req, res) => items.getPortionOfItems(req, res, db, "books"));
+  app
     .route("/api/books/:id")
     .get((req, res) => items.getItem(req, res, db, "books"))
     .put((req, res) => items.updateItem(req, res, db, "books"))
@@ -42,6 +45,9 @@ module.exports = (app) => {
   app
     .route("/api/courses/latest")
     .get((req, res) => items.getLastItems(req, res, db, "courses"));
+  app
+    .route("/api/courses/endless")
+    .get((req, res) => items.getPortionOfItems(req, res, db, "courses"));
   app
     .route("/api/courses/:id")
     .get((req, res) => items.getItem(req, res, db, "courses"))

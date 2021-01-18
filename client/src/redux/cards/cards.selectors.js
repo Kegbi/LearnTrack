@@ -1,8 +1,13 @@
 import { createSelector } from "reselect";
 
-const selectLatest = (state) => state.latest;
+const selectCardsSelector = (state) => state.cards;
 
 export const selectLatestContent = createSelector(
-  [selectLatest],
-  (latest) => latest.latest
+  [selectCardsSelector],
+  (cards) => cards.latest
+);
+
+export const selectCards = createSelector(
+  [selectCardsSelector],
+  (cards) => cards.cards
 );

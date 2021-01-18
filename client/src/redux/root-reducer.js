@@ -5,6 +5,6 @@ import notificationsReducer from "./notifications/notifications.reducer";
 
 export const rootReducer = combineReducers({
   user: userReducer,
-  latest: cardsReducer,
+  cards: cardsReducer,
   notifications: notificationsReducer,
 });

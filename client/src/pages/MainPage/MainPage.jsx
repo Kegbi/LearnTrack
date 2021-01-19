@@ -25,13 +25,13 @@ const MainPage = ({ user }) => {
       <MainPageContent>
         <MainPageGreeting>Welcome, {user.name}</MainPageGreeting>
         <ContentList
-          typeOfContent={"Books"}
+          typeOfContent={"books"}
           content={latestContent.books}
           isPending={isPending}
           recent={true}
         />
         <ContentList
-          typeOfContent={"Courses"}
+          typeOfContent={"courses"}
           content={latestContent.courses}
           isPending={isPending}
           recent={true}

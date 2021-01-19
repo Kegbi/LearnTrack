@@ -1,4 +1,11 @@
-import { fetchLatestFailure, fetchLatestSuccess } from "./cards.actions";
+import {
+  fetchFirstBooksFailure,
+  fetchFirstBooksSuccess,
+  fetchFirstCoursesFailure,
+  fetchFirstCoursesSuccess,
+  fetchLatestFailure,
+  fetchLatestSuccess,
+} from "./cards.actions";
 import { takeLatest, call, put, all } from "@redux-saga/core/effects";
 
 import CardsActionTypes from "./cards.types";
@@ -6,10 +13,19 @@ import { urlConstants } from "../../constants/urlConstants";
 import { apiCall, getData } from "../../api/api";
 import { addNotification } from "../notifications/notifications.actions";
 
+export function* fetchLatestStart() {
+  yield takeLatest(CardsActionTypes.FETCH_CONTENT_START, fetchLatestAsync);
+}
+
 async function fetchLatest() {
+  const books = getData(urlConstants.latestBooks);
+  const courses = getData(urlConstants.latestCourses);
+
+  const result = await Promise.all([books, courses]);
+
   return {
-    books: await getData(urlConstants.latestBooks),
-    courses: await getData(urlConstants.latestCourses),
+    books: result[0],
+    courses: result[1],
   };
 }
 
@@ -22,8 +38,72 @@ function* fetchLatestAsync() {
   }
 }
 
-export function* fetchLatestStart() {
-  yield takeLatest(CardsActionTypes.FETCH_CONTENT_START, fetchLatestAsync);
+export function* fetchFirstBooksStart() {
+  yield takeLatest(
+    CardsActionTypes.FETCH_FIRST_BOOKS_START,
+    fetchFirstBooksAsync
+  );
+}
+
+function* fetchFirstBooksAsync() {
+  try {
+    let response = yield call(getData, ...[`${urlConstants.endlessBooks}/1`]);
+    if (response.success === true) {
+      yield put(fetchFirstBooksSuccess(response.payload));
+    } else {
+      yield put(fetchFirstBooksFailure("Error with fetching books"));
+      yield put(
+        addNotification({
+          title: "Error with item fetching",
+          message: "Error occurred when fetching your items",
+          alert: true,
+        })
+      );
+    }
+  } catch (err) {
+    yield put(fetchFirstBooksFailure(err));
+    yield put(
+      addNotification({
+        title: "Error with item fetching",
+        message: "Error occurred when fetching your items",
+        alert: true,
+      })
+    );
+  }
+}
+
+export function* fetchFirstCoursesStart() {
+  yield takeLatest(
+    CardsActionTypes.FETCH_FIRST_COURSES_START,
+    fetchFirstCoursesAsync
+  );
+}
+
+function* fetchFirstCoursesAsync() {
+  try {
+    let response = yield call(getData, ...[`${urlConstants.endlessCourses}/1`]);
+    if (response.success === true) {
+      yield put(fetchFirstCoursesSuccess(response.payload));
+    } else {
+      yield put(fetchFirstCoursesFailure("Error with fetching courses"));
+      yield put(
+        addNotification({
+          title: "Error with item fetching",
+          message: "Error occurred when fetching your items",
+          alert: true,
+        })
+      );
+    }
+  } catch (err) {
+    yield put(fetchFirstCoursesFailure(err));
+    yield put(
+      addNotification({
+        title: "Error with item fetching",
+        message: "Error occurred when fetching your items",
+        alert: true,
+      })
+    );
+  }
 }
 
 function* updateCard(action) {
@@ -139,6 +219,8 @@ export function* deleteCardStart() {
 export function* cardsSagas() {
   yield all([
     call(fetchLatestStart),
+    call(fetchFirstBooksStart),
+    call(fetchFirstCoursesStart),
     call(updateCardStart),
     call(deleteCardStart),
   ]);

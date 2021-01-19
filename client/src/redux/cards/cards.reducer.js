@@ -32,6 +32,40 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
         isPending: false,
         errorMessage: action.payload,
       };
+    case CardsActionTypes.FETCH_FIRST_BOOKS_START:
+      return {
+        ...state,
+        isPending: true,
+      };
+    case CardsActionTypes.FETCH_FIRST_BOOKS_SUCCESS:
+      return {
+        ...state,
+        cards: { books: action.payload, courses: [] },
+        isPending: false,
+      };
+    case CardsActionTypes.FETCH_FIRST_BOOKS_FAILURE:
+      return {
+        ...state,
+        isPending: false,
+        errorMessage: action.payload,
+      };
+    case CardsActionTypes.FETCH_FIRST_COURSES_START:
+      return {
+        ...state,
+        isPending: true,
+      };
+    case CardsActionTypes.FETCH_FIRST_COURSES_SUCCESS:
+      return {
+        ...state,
+        cards: { books: [], courses: action.payload },
+        isPending: false,
+      };
+    case CardsActionTypes.FETCH_FIRST_COURSES_FAILURE:
+      return {
+        ...state,
+        isPending: false,
+        errorMessage: action.payload,
+      };
     case CardsActionTypes.FETCH_PORTION_OF_BOOKS_START:
       return {
         ...state,

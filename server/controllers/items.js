@@ -36,10 +36,10 @@ const getLastItems = async (req, res, db, type) => {
 
 const getPortionOfItems = async (req, res, db, type) => {
   const id_column = getIdColumnName(type);
-  const { index } = req.body;
+  const { index } = req.params;
 
   try {
-    const resp = await getSomeItems(db, type, id_column, index, 10);
+    const resp = await getSomeItems(db, type, id_column, index, 28);
     if (resp) {
       res.json({ success: true, payload: resp });
     } else {

@@ -78,7 +78,6 @@ export const uploadNewCard = (data) => ({
 export const updateCard = (data, type) => ({
   type: CardsActionTypes.UPDATE_CARD,
   payload: { data, type },
-  typeOfCard: type,
 });
 
 export const deleteCard = (data, type, history) => ({

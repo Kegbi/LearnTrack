@@ -1,5 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCards } from "../../redux/cards/cards.selectors";
 import { useHistory } from "react-router-dom";
+import {
+  fetchFirstBooksStart,
+  fetchFirstCoursesStart,
+} from "../../redux/cards/cards.actions";
 
 import {
   Container,
@@ -8,14 +14,24 @@ import {
   ItemsPageTitle,
   ItemsPageTitlesGroup,
 } from "./ItemsPage.styles";
+
 import ContentList from "../../components/content-list/content-list.component";
-import { useSelector } from "react-redux";
-import { selectCards } from "../../redux/cards/cards.selectors";
 
 const ItemsPage = ({ type, admin }) => {
-  let history = useHistory();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const isPending = useSelector((state) => state.cards.isPending);
   const cards = useSelector(selectCards);
+
+  let typeOfContent = type === "book" ? "books" : "courses";
+
+  useEffect(() => {
+    if (type === "book") {
+      dispatch(fetchFirstBooksStart());
+    } else if (type === "course") {
+      dispatch(fetchFirstCoursesStart());
+    }
+  }, [type]);
 
   return (
     <Container>
@@ -37,12 +53,21 @@ const ItemsPage = ({ type, admin }) => {
         )}
         {admin ? <ItemsPageAddNew>Add new</ItemsPageAddNew> : null}
       </ItemsPageControlsGroup>
-      {/*<ContentList*/}
-      {/*  typeOfContent={type}*/}
-      {/*  content={}*/}
-      {/*  isPending={isPending}*/}
-      {/*  recent={false}*/}
-      {/*/>*/}
+      {type === "book" ? (
+        <ContentList
+          typeOfContent={typeOfContent}
+          content={cards.books}
+          isPending={isPending}
+          recent={false}
+        />
+      ) : (
+        <ContentList
+          typeOfContent={typeOfContent}
+          content={cards.courses}
+          isPending={isPending}
+          recent={false}
+        />
+      )}
     </Container>
   );
 };

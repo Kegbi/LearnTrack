@@ -30,7 +30,7 @@ module.exports = (app) => {
     .route("/api/books/latest")
     .get((req, res) => items.getLastItems(req, res, db, "books"));
   app
-    .route("/api/books/endless")
+    .route("/api/books/endless/:index")
     .get((req, res) => items.getPortionOfItems(req, res, db, "books"));
   app
     .route("/api/books/:id")
@@ -46,7 +46,7 @@ module.exports = (app) => {
     .route("/api/courses/latest")
     .get((req, res) => items.getLastItems(req, res, db, "courses"));
   app
-    .route("/api/courses/endless")
+    .route("/api/courses/endless/:index")
     .get((req, res) => items.getPortionOfItems(req, res, db, "courses"));
   app
     .route("/api/courses/:id")

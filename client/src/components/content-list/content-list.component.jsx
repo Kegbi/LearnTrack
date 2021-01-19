@@ -15,7 +15,7 @@ const ContentList = ({ typeOfContent, content, isPending, recent }) => {
 
   let type;
 
-  typeOfContent === "Books" ? (type = "books") : (type = "courses");
+  typeOfContent === "books" ? (type = "books") : (type = "courses");
 
   return (
     <>

@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     books: [],
     courses: [],
   },
+  moreAvailable: false,
   isPending: false,
   errorMessage: null,
 };
@@ -40,7 +41,8 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
     case CardsActionTypes.FETCH_FIRST_BOOKS_SUCCESS:
       return {
         ...state,
-        cards: { books: action.payload, courses: [] },
+        moreAvailable: action.payload.moreAvailable,
+        cards: { books: action.payload.payload, courses: [] },
         isPending: false,
       };
     case CardsActionTypes.FETCH_FIRST_BOOKS_FAILURE:
@@ -57,7 +59,8 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
     case CardsActionTypes.FETCH_FIRST_COURSES_SUCCESS:
       return {
         ...state,
-        cards: { books: [], courses: action.payload },
+        moreAvailable: action.payload.moreAvailable,
+        cards: { books: [], courses: action.payload.payload },
         isPending: false,
       };
     case CardsActionTypes.FETCH_FIRST_COURSES_FAILURE:
@@ -69,35 +72,43 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
     case CardsActionTypes.FETCH_PORTION_OF_BOOKS_START:
       return {
         ...state,
-        isPending: true,
+        // isPending: true,
       };
     case CardsActionTypes.FETCH_PORTION_OF_BOOKS_SUCCESS:
       return {
         ...state,
-        cards: { books: [...state.cards.books, action.payload] },
-        isPending: false,
+        moreAvailable: action.payload.moreAvailable,
+        cards: {
+          books: [...state.cards.books, ...action.payload.payload],
+          courses: [],
+        },
+        // isPending: false,
       };
     case CardsActionTypes.FETCH_PORTION_OF_BOOKS_FAILURE:
       return {
         ...state,
-        isPending: false,
+        // isPending: false,
         errorMessage: action.payload,
       };
     case CardsActionTypes.FETCH_PORTION_OF_COURSES_START:
       return {
         ...state,
-        isPending: true,
+        // isPending: true,
       };
     case CardsActionTypes.FETCH_PORTION_OF_COURSES_SUCCESS:
       return {
         ...state,
-        cards: { courses: [...state.cards.courses, action.payload] },
-        isPending: false,
+        moreAvailable: action.payload.moreAvailable,
+        cards: {
+          books: [],
+          courses: [...state.cards.courses, ...action.payload.payload],
+        },
+        // isPending: false,
       };
     case CardsActionTypes.FETCH_PORTION_OF_COURSES_FAILURE:
       return {
         ...state,
-        isPending: false,
+        // isPending: false,
         errorMessage: action.payload,
       };
     default:

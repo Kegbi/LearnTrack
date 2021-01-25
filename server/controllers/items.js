@@ -36,12 +36,17 @@ const getLastItems = async (req, res, db, type) => {
 
 const getPortionOfItems = async (req, res, db, type) => {
   const id_column = getIdColumnName(type);
-  const { index } = req.params;
+  const { index, quantity } = req.params;
 
   try {
-    const resp = await getSomeItems(db, type, id_column, index, 28);
+    let resp = await getSomeItems(db, type, id_column, index, quantity);
     if (resp) {
-      res.json({ success: true, payload: resp });
+      if (resp.length >= quantity) {
+        resp = resp.slice(0, quantity);
+        res.json({ success: true, payload: resp, moreAvailable: true });
+      } else {
+        res.json({ success: true, payload: resp, moreAvailable: false });
+      }
     } else {
       res.status(400).json({ success: false, message: "Unable to get items" });
     }

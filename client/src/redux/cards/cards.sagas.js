@@ -5,6 +5,10 @@ import {
   fetchFirstCoursesSuccess,
   fetchLatestFailure,
   fetchLatestSuccess,
+  fetchPortionOfBooksFailure,
+  fetchPortionOfBooksSuccess,
+  fetchPortionOfCoursesFailure,
+  fetchPortionOfCoursesSuccess,
 } from "./cards.actions";
 import { takeLatest, call, put, all } from "@redux-saga/core/effects";
 
@@ -39,53 +43,67 @@ function* fetchLatestAsync() {
 }
 
 export function* fetchFirstBooksStart() {
-  yield takeLatest(
-    CardsActionTypes.FETCH_FIRST_BOOKS_START,
-    fetchFirstBooksAsync
-  );
-}
-
-function* fetchFirstBooksAsync() {
-  try {
-    let response = yield call(getData, ...[`${urlConstants.endlessBooks}/1`]);
-    if (response.success === true) {
-      yield put(fetchFirstBooksSuccess(response.payload));
-    } else {
-      yield put(fetchFirstBooksFailure("Error with fetching books"));
-      yield put(
-        addNotification({
-          title: "Error with item fetching",
-          message: "Error occurred when fetching your items",
-          alert: true,
-        })
-      );
-    }
-  } catch (err) {
-    yield put(fetchFirstBooksFailure(err));
-    yield put(
-      addNotification({
-        title: "Error with item fetching",
-        message: "Error occurred when fetching your items",
-        alert: true,
-      })
-    );
-  }
+  yield takeLatest(CardsActionTypes.FETCH_FIRST_BOOKS_START, fetchItemsAsync);
 }
 
 export function* fetchFirstCoursesStart() {
+  yield takeLatest(CardsActionTypes.FETCH_FIRST_COURSES_START, fetchItemsAsync);
+}
+
+export function* fetchPortionOfBooksStart() {
   yield takeLatest(
-    CardsActionTypes.FETCH_FIRST_COURSES_START,
-    fetchFirstCoursesAsync
+    CardsActionTypes.FETCH_PORTION_OF_BOOKS_START,
+    fetchItemsAsync
   );
 }
 
-function* fetchFirstCoursesAsync() {
+export function* fetchPortionOfCoursesStart() {
+  yield takeLatest(
+    CardsActionTypes.FETCH_PORTION_OF_COURSES_START,
+    fetchItemsAsync
+  );
+}
+
+function* fetchItemsAsync(action) {
+  const { startOn, quantity, type } = action.payload;
+  const newEndlessUrl =
+    type === "book" ? urlConstants.endlessBooks : urlConstants.endlessCourses;
   try {
-    let response = yield call(getData, ...[`${urlConstants.endlessCourses}/1`]);
+    let response = yield call(
+      getData,
+      ...[`${newEndlessUrl}/${startOn}/${quantity}`]
+    );
     if (response.success === true) {
-      yield put(fetchFirstCoursesSuccess(response.payload));
+      // Checking starting index to know, which action to fire (initial fetch or not)
+      if (startOn !== 1) {
+        if (type === "book") {
+          yield put(fetchPortionOfBooksSuccess(response));
+        } else if (type === "course") {
+          yield put(fetchPortionOfCoursesSuccess(response));
+        }
+      } else {
+        if (type === "book") {
+          yield put(fetchFirstBooksSuccess(response));
+        } else if (type === "course") {
+          yield put(fetchFirstCoursesSuccess(response));
+        }
+      }
     } else {
-      yield put(fetchFirstCoursesFailure("Error with fetching courses"));
+      if (startOn !== 1) {
+        if (type === "book") {
+          yield put(fetchPortionOfBooksFailure("Error with fetching books"));
+        } else if (type === "course") {
+          yield put(
+            fetchPortionOfCoursesFailure("Error with fetching courses")
+          );
+        }
+      } else {
+        if (type === "book") {
+          yield put(fetchFirstBooksFailure("Error with fetching books"));
+        } else if (type === "course") {
+          yield put(fetchFirstCoursesFailure("Error with fetching courses"));
+        }
+      }
       yield put(
         addNotification({
           title: "Error with item fetching",
@@ -95,7 +113,19 @@ function* fetchFirstCoursesAsync() {
       );
     }
   } catch (err) {
-    yield put(fetchFirstCoursesFailure(err));
+    if (startOn !== 1) {
+      if (type === "book") {
+        yield put(fetchPortionOfBooksFailure("Error with fetching books"));
+      } else if (type === "course") {
+        yield put(fetchPortionOfCoursesFailure("Error with fetching courses"));
+      }
+    } else {
+      if (type === "book") {
+        yield put(fetchFirstBooksFailure("Error with fetching books"));
+      } else if (type === "course") {
+        yield put(fetchFirstCoursesFailure("Error with fetching courses"));
+      }
+    }
     yield put(
       addNotification({
         title: "Error with item fetching",
@@ -221,6 +251,8 @@ export function* cardsSagas() {
     call(fetchLatestStart),
     call(fetchFirstBooksStart),
     call(fetchFirstCoursesStart),
+    call(fetchPortionOfBooksStart),
+    call(fetchPortionOfCoursesStart),
     call(updateCardStart),
     call(deleteCardStart),
   ]);

@@ -14,8 +14,9 @@ export const fetchLatestFailure = (err) => ({
   payload: err,
 });
 
-export const fetchFirstBooksStart = () => ({
+export const fetchFirstBooksStart = (data) => ({
   type: CardsActionTypes.FETCH_FIRST_BOOKS_START,
+  payload: { startOn: 1, quantity: data.quantity, type: "book" },
 });
 
 export const fetchFirstBooksSuccess = (data) => ({
@@ -28,8 +29,9 @@ export const fetchFirstBooksFailure = (err) => ({
   payload: err,
 });
 
-export const fetchFirstCoursesStart = () => ({
+export const fetchFirstCoursesStart = (data) => ({
   type: CardsActionTypes.FETCH_FIRST_COURSES_START,
+  payload: { startOn: 1, quantity: data.quantity, type: "course" },
 });
 
 export const fetchFirstCoursesSuccess = (data) => ({
@@ -42,8 +44,9 @@ export const fetchFirstCoursesFailure = (err) => ({
   payload: err,
 });
 
-export const fetchPortionOfBooksStart = () => ({
+export const fetchPortionOfBooksStart = (startOn, quantity, type) => ({
   type: CardsActionTypes.FETCH_PORTION_OF_BOOKS_START,
+  payload: { startOn, quantity, type },
 });
 
 export const fetchPortionOfBooksSuccess = (data) => ({
@@ -56,8 +59,9 @@ export const fetchPortionOfBooksFailure = (err) => ({
   payload: err,
 });
 
-export const fetchPortionOfCoursesStart = () => ({
+export const fetchPortionOfCoursesStart = (startOn, quantity, type) => ({
   type: CardsActionTypes.FETCH_PORTION_OF_COURSES_START,
+  payload: { startOn, quantity, type },
 });
 
 export const fetchPortionOfCoursesSuccess = (data) => ({

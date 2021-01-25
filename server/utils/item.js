@@ -6,6 +6,7 @@ const getLatest = (db, type, quantity) => {
 };
 
 const getSomeItems = (db, type, columnName, index, quantity) => {
+  quantity = quantity++
   return db
     .select("*")
     .from(type)

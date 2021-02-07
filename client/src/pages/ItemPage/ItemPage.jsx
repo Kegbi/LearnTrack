@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { urlConstants } from "../../constants/urlConstants";
+import { apiConstants } from "../../constants/urlConstants";
 import { getData } from "../../api/api";
 import { useConfirm } from "../../hooks/useConfirm";
 import { addNotification } from "../../redux/notifications/notifications.actions";
@@ -18,11 +18,12 @@ import {
 } from "./ItemPage.styles";
 import IconsBlock from "../../ui-kit/icons/icons-block";
 
-import Loader from "../../components/loader/loader.component";
-import Confirm from "../../components/confirm-popup/confirm-popup.component";
+import Loader from "../../components/loader/loader";
 import ItemPagePhotoComponent from "../../components/item-page-photo/item-page-photo.component";
 import { TextBtn } from "../../ui-kit/buttons/buttons";
 import ItemPageTextInfo from "../../components/item-page-text-info/item-page-text-info.component";
+
+import { buttonTypeConstants } from "../../constants/buttonTypeConstants";
 
 const ItemPage = ({ type, id, admin }) => {
   const dispatch = useDispatch();
@@ -38,9 +39,9 @@ const ItemPage = ({ type, id, admin }) => {
 
     let link;
     if (type === "course") {
-      link = urlConstants.courses;
+      link = apiConstants.courses;
     } else if (type === "book") {
-      link = urlConstants.books;
+      link = apiConstants.books;
     }
     const fetchData = async () => {
       try {
@@ -67,7 +68,7 @@ const ItemPage = ({ type, id, admin }) => {
     return () => {
       ignoreResponse = true;
     };
-  }, [type]);
+  }, [type, id]);
 
   const pushNotification = (title, message, alert) => {
     dispatch(
@@ -134,17 +135,17 @@ const ItemPage = ({ type, id, admin }) => {
     }
   };
 
-  const confirmAction = () => {
+  const deleteAction = () => {
     dispatch(deleteCard(item, type, history));
   };
 
   const { open, Confirm } = useConfirm(
-    confirmAction,
+    deleteAction,
     "Do you want to delete this item?",
     "The item will be deleted and you won't be able to restore it later",
     "Delete",
     "No, I changed my mind",
-    true
+    buttonTypeConstants.alert
   );
 
   return (

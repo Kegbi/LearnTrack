@@ -43,9 +43,9 @@ const getPortionOfItems = async (req, res, db, type) => {
     if (resp) {
       if (resp.length >= quantity) {
         resp = resp.slice(0, quantity);
-        res.json({ success: true, payload: resp, moreAvailable: true });
+        res.json({ success: true, data: resp, moreAvailable: true });
       } else {
-        res.json({ success: true, payload: resp, moreAvailable: false });
+        res.json({ success: true, data: resp, moreAvailable: false });
       }
     } else {
       res.status(400).json({ success: false, message: "Unable to get items" });
@@ -63,13 +63,17 @@ const getLikedItems = async (req, res, db, type) => {
     if (resp) {
       let response = await getItemInfo(db, resp[id_column], type);
       if (response) {
-        res.json(response);
+        res.json({ success: true, data: response });
       }
     } else {
-      res.status(400).json(`Unable to get liked ${type}`);
+      res
+        .status(400)
+        .json({ success: false, message: `Unable to get liked ${type}` });
     }
   } catch {
-    res.status(400).json(`Error getting liked ${type}`);
+    res
+      .status(400)
+      .json({ success: false, message: `Error getting liked ${type}` });
   }
 };
 
@@ -104,7 +108,7 @@ const addItem = (req, res, db, type) => {
   if (!name || !author || !info) {
     return res
       .status(400)
-      .json({ added: false, message: "Incorrect form submission" });
+      .json({ success: false, message: "Incorrect form submission" });
   }
   try {
     db.transaction((trx) => {
@@ -112,19 +116,20 @@ const addItem = (req, res, db, type) => {
         .insert({
           name: name,
           image: image,
+          type: singularType,
           author: author,
           info: info,
           created: new Date(),
         })
         .into(type)
         .returning(id_column)
-        .then((id) => res.json(id))
+        .then((id) => res.json({ success: true, data: id }))
         .then(trx.commit);
     });
   } catch {
     res
       .status(400)
-      .json({ added: false, message: `Error adding new ${singularType}` });
+      .json({ success: false, message: `Error adding new ${singularType}` });
   }
 };
 
@@ -141,17 +146,17 @@ const deleteItem = async (req, res, db, type) => {
       .where({ [id_column]: id })
       .del();
     if (resp) {
-      res.json({ deleted: true });
+      res.json({ success: true });
     } else {
       res.status(400).json({
-        deleted: false,
+        success: false,
         message: `Unable to delete ${singularType}. Maybe it's already deleted`,
       });
     }
   } catch {
     res
       .status(400)
-      .json({ deleted: false, message: `Error deleting ${singularType}` });
+      .json({ success: false, message: `Error deleting ${singularType}` });
   }
 };
 
@@ -165,16 +170,47 @@ const updateItem = async (req, res, db, type) => {
       .where({ [id_column]: id })
       .update({ name: name, image: image, author: author, info: info });
     if (resp) {
-      res.json({ updated: true });
+      res.json({ success: true });
     } else {
       res
         .status(400)
-        .json({ updated: false, message: `Unable to update ${singularType}` });
+        .json({ success: false, message: `Unable to update ${singularType}` });
     }
   } catch {
     res
       .status(400)
-      .json({ updated: false, message: `Error updating ${singularType}` });
+      .json({ success: false, message: `Error updating ${singularType}` });
+  }
+};
+
+const searchItems = async (req, res, db) => {
+  const { query } = req.params;
+
+  const getSearchData = (table) => {
+    return db
+      .select("*")
+      .from(table)
+      .where("name", "ILIKE", `%${query}%`)
+      .orWhere("author", "ILIKE", `%${query}%`);
+  };
+
+  try {
+    let respBooks = getSearchData("books");
+    let respCourses = getSearchData("courses");
+
+    const result = await Promise.all([respBooks, respCourses]);
+
+    if (result[0] && result[1]) {
+      res.json({ success: true, data: [...result[0], ...result[1]] });
+    } else {
+      res
+        .status(400)
+        .json({ success: true, message: `Unable to get search results` });
+    }
+  } catch {
+    res
+      .status(400)
+      .json({ success: true, message: `Error getting search results` });
   }
 };
 
@@ -187,4 +223,5 @@ module.exports = {
   addItem,
   deleteItem,
   updateItem,
+  searchItems,
 };

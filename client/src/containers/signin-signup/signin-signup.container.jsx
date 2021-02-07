@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { ButtonsBarContainer } from "../../components/custom-button/custom-button.styles";
-import CustomButton from "../../components/custom-button/custom-button.component";
 import LoginSignupFormFields from "../../components/signin-signup-form-fields/login-signup-form-fields.component";
 import { signInStart, signUpStart } from "../../redux/user/user.actions";
+
+import {
+  ButtonsColumnContainer,
+  CustomButtons,
+} from "../../components/custom-buttons/custom-buttons";
+
 import {
   LoginSignupForm,
   PageContainer,
@@ -46,27 +50,27 @@ const LoginSignupContainer = ({ loginPage }) => {
             userCredentials={userCredentials}
           />
           {loginPage ? (
-            <ButtonsBarContainer>
-              <CustomButton type={"submit"}>Sign-in</CustomButton>
-              <CustomButton
+            <ButtonsColumnContainer marginTop={"sm"}>
+              <CustomButtons type={"submit"}>Sign-in</CustomButtons>
+              <CustomButtons
                 type={"button"}
                 onClick={() => history.push("/signup")}
                 textButton
               >
                 Sign-up
-              </CustomButton>
-            </ButtonsBarContainer>
+              </CustomButtons>
+            </ButtonsColumnContainer>
           ) : (
-            <ButtonsBarContainer>
-              <CustomButton type={"submit"}>Sign-up</CustomButton>
-              <CustomButton
+            <ButtonsColumnContainer marginTop={"sm"}>
+              <CustomButtons type={"submit"}>Sign-up</CustomButtons>
+              <CustomButtons
                 type={"button"}
                 onClick={() => history.push("/login")}
                 textButton
               >
                 Sign-in
-              </CustomButton>
-            </ButtonsBarContainer>
+              </CustomButtons>
+            </ButtonsColumnContainer>
           )}
         </LoginSignupForm>
       </PageContent>

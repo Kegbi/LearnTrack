@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createPortal } from "react-dom";
+
 import Dialog from "../components/dialog/dialog.component";
 
 export const useConfirm = (
@@ -8,7 +8,7 @@ export const useConfirm = (
   message,
   confirmText,
   declineText,
-  alert
+  type
 ) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,19 +21,18 @@ export const useConfirm = (
     callback();
   };
 
-  const ConfirmDialog = () =>
-    createPortal(
-      <Dialog
-        title={title}
-        message={message}
-        confirmText={confirmText}
-        declineText={declineText}
-        alert={alert}
-        ok={ok}
-        cancel={cancel}
-      />,
-      document.body
-    );
+  const ConfirmDialog = () => (
+    <Dialog
+      title={title}
+      message={message}
+      confirmText={confirmText}
+      declineText={declineText}
+      setIsOpen={setIsOpen}
+      type={type}
+      ok={ok}
+      cancel={cancel}
+    />
+  );
 
   const Confirm = (props) => (
     <>

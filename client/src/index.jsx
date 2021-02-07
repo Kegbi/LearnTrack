@@ -1,22 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
+import { ThemeProvider } from "styled-components";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
 import "./fonts.css";
 import { GlobalStyle } from "./global.styles";
+import theme from "./theme";
 
 import App from "./containers/App";
-import NotificationsWrapper from "./containers/notifications-wrapper/notifications-wrapper.container";
+import NotificationsWrapper from "./components/notification/notifications-wrapper";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <GlobalStyle />
-      <NotificationsWrapper />
-      <App />
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <GlobalStyle />
+        <NotificationsWrapper />
+        <App />
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

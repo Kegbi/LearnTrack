@@ -13,7 +13,7 @@ import {
 import { takeLatest, call, put, all } from "@redux-saga/core/effects";
 
 import CardsActionTypes from "./cards.types";
-import { urlConstants } from "../../constants/urlConstants";
+import { apiConstants } from "../../constants/urlConstants";
 import { apiCall, getData } from "../../api/api";
 import { addNotification } from "../notifications/notifications.actions";
 
@@ -22,8 +22,8 @@ export function* fetchLatestStart() {
 }
 
 async function fetchLatest() {
-  const books = getData(urlConstants.latestBooks);
-  const courses = getData(urlConstants.latestCourses);
+  const books = getData(apiConstants.latestBooks);
+  const courses = getData(apiConstants.latestCourses);
 
   const result = await Promise.all([books, courses]);
 
@@ -67,7 +67,7 @@ export function* fetchPortionOfCoursesStart() {
 function* fetchItemsAsync(action) {
   const { startOn, quantity, type } = action.payload;
   const newEndlessUrl =
-    type === "book" ? urlConstants.endlessBooks : urlConstants.endlessCourses;
+    type === "book" ? apiConstants.endlessBooks : apiConstants.endlessCourses;
   try {
     let response = yield call(
       getData,
@@ -143,15 +143,15 @@ function* updateCard(action) {
     if (type === "book") {
       response = yield call(
         apiCall,
-        ...[`${urlConstants.books}/${data.bookid}`, data, "put"]
+        ...[`${apiConstants.books}/${data.bookid}`, data, "put"]
       );
     } else if (type === "course") {
       response = yield call(
         apiCall,
-        ...[`${urlConstants.courses}/${data.courseid}`, data, "put"]
+        ...[`${apiConstants.courses}/${data.courseid}`, data, "put"]
       );
     }
-    if (response.updated === true) {
+    if (response.success === true) {
       yield put(
         addNotification({
           title: "Item updated",
@@ -193,17 +193,17 @@ function* deleteCard(action) {
     if (type === "book") {
       response = yield call(
         apiCall,
-        ...[`${urlConstants.books}/${data.bookid}`, data, "delete"]
+        ...[`${apiConstants.books}/${data.bookid}`, data, "delete"]
       );
       urlToRedirect = "/books";
     } else if (type === "course") {
       response = yield call(
         apiCall,
-        ...[`${urlConstants.courses}/${data.courseid}`, data, "delete"]
+        ...[`${apiConstants.courses}/${data.courseid}`, data, "delete"]
       );
       urlToRedirect = "/courses";
     }
-    if (response.deleted === true) {
+    if (response.success === true) {
       history.push(urlToRedirect);
       yield put(
         addNotification({

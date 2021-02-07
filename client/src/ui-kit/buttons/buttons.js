@@ -15,22 +15,23 @@ const CleanDialogButton = styled.button`
 export const TextBtn = styled(CleanDialogButton)`
   font-size: 2rem;
   font-weight: 500;
-  margin-left: ${(props) => (props.ml ? props.ml : 25)}px;
+  margin-left: ${(p) => (p.ml ? p.ml : 25)}px;
   color: ${controllers_text};
   cursor: pointer;
 `;
 
 export const AcceptButton = styled(CleanDialogButton)`
   font-size: 1rem;
-  background-color: ${(props) => (props.alert ? red : green)};
-  color: white;
-  padding: 10px;
+  background-color: ${(p) =>
+    p.alert ? p.theme.colors.error.main : p.theme.colors.success};
+  color: ${(p) => p.theme.colors.white};
+  padding: ${(p) => p.theme.spacing.xs};
   min-width: 150px;
-  border-radius: 7px;
+  border-radius: ${(p) => p.theme.radius.md};
   margin-bottom: 5px;
 `;
 
 export const DeclineButton = styled(CleanDialogButton)`
-  color: ${grey};
+  color: ${(p) => p.theme.colors.grey[600]};
   font-size: 0.8rem;
 `;

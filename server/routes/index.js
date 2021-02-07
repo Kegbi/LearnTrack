@@ -53,4 +53,8 @@ module.exports = (app) => {
     .get((req, res) => items.getItem(req, res, db, "courses"))
     .put((req, res) => items.updateItem(req, res, db, "courses"))
     .delete((req, res) => items.deleteItem(req, res, db, "courses"));
+
+  app
+    .route("/api/search/:query")
+    .get((req, res) => items.searchItems(req, res, db));
 };

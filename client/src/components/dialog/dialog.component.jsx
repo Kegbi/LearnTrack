@@ -1,28 +1,56 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import {
   DialogBody,
-  DialogButtonsGroup,
   DialogMessage,
   DialogOverlay,
   DialogTitle,
 } from "./dialog.styles";
-import { AcceptButton, DeclineButton } from "../../ui-kit/buttons/buttons";
+
+import { DeclineButton } from "../../ui-kit/buttons/buttons";
+import { useClickOutside } from "../../hooks/useClickOutside";
+import {
+  ButtonsColumnContainer,
+  CustomButtons,
+} from "../custom-buttons/custom-buttons";
 
 const Dialog = (props) => {
-  const { title, message, confirmText, declineText, alert, ok, cancel } = props;
+  const {
+    title,
+    message,
+    confirmText,
+    declineText,
+    setIsOpen,
+    type,
+    ok,
+    cancel,
+  } = props;
+
+  const dialogRef = useRef(null);
+  useClickOutside(dialogRef, () => setIsOpen(false));
+
+  function dialogKeyPressHandler(e) {
+    if (e.keyCode === 27) {
+      setIsOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("keyup", dialogKeyPressHandler);
+    return () => document.removeEventListener("keyup", dialogKeyPressHandler);
+  }, []);
 
   return (
     <DialogOverlay>
-      <DialogBody>
+      <DialogBody ref={dialogRef}>
         <DialogTitle>{title}</DialogTitle>
         <DialogMessage>{message}</DialogMessage>
-        <DialogButtonsGroup>
-          <AcceptButton alert={alert} onClick={ok}>
+        <ButtonsColumnContainer>
+          <CustomButtons type={type} mb={5} radius onClick={ok}>
             {confirmText}
-          </AcceptButton>
+          </CustomButtons>
           <DeclineButton onClick={cancel}>{declineText}</DeclineButton>
-        </DialogButtonsGroup>
+        </ButtonsColumnContainer>
       </DialogBody>
     </DialogOverlay>
   );

@@ -1,20 +1,31 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLatestStart } from "../../redux/cards/cards.actions";
-import { selectLatestContent } from "../../redux/cards/cards.selectors";
+import { selectCards } from "../../redux/cards/cards.selectors";
 
-import {
-  MainPageContainer,
-  MainPageContent,
-  MainPageGreeting,
-} from "./MainPage.styles";
+import ContentList from "../../components/content-list/content-list";
 
-import ContentList from "../../components/content-list/content-list.component";
+import styled from "styled-components";
+
+export const MainPageContainer = styled.div`
+  display: flex;
+  margin-top: ${(p) => p.theme.spacing.md};
+  width: 100%;
+  height: 100%;
+`;
+
+export const MainPageContent = styled.div`
+  width: 100%;
+`;
+
+export const MainPageGreeting = styled.h1`
+  font-size: 2.3rem;
+`;
 
 const MainPage = ({ user }) => {
   const dispatch = useDispatch();
   const isPending = useSelector((state) => state.cards.isPending);
-  const latestContent = useSelector(selectLatestContent);
+  const cardsContent = useSelector(selectCards);
 
   useEffect(() => {
     dispatch(fetchLatestStart());
@@ -26,13 +37,13 @@ const MainPage = ({ user }) => {
         <MainPageGreeting>Welcome, {user.name}</MainPageGreeting>
         <ContentList
           typeOfContent={"books"}
-          content={latestContent.books}
+          content={cardsContent.books}
           isPending={isPending}
           recent={true}
         />
         <ContentList
           typeOfContent={"courses"}
-          content={latestContent.courses}
+          content={cardsContent.courses}
           isPending={isPending}
           recent={true}
         />

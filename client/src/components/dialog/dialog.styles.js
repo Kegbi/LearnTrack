@@ -8,12 +8,14 @@ export const DialogOverlay = styled.div`
   bottom: 0;
   left: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: rgba(0, 0, 0, 0.25);
+  z-index: ${(p) => p.theme.zIndex.xl};
 `;
 
 export const DialogBody = styled.div`
+  margin-top: 20vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,22 +39,4 @@ export const DialogMessage = styled.p`
   font-size: 1.4rem;
   font-weight: 400;
   text-align: center;
-`;
-
-export const DialogButtonsGroup = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
-const CleanDialogButton = styled.button`
-  border: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  text-align: center;
-  background-color: transparent;
-  font-weight: normal;
-  outline: none;
 `;

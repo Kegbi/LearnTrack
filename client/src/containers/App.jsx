@@ -3,9 +3,9 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import Header from "../components/header/header.component";
-import ErrorBoundary from "../components/error-boundary/error-boundary.component";
-import Loader from "../components/loader/loader.component";
+import Header from "../components/header/header";
+import ErrorBoundary from "../components/error-boundary/error-boundary";
+import Loader from "../components/loader/loader";
 
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { checkUserSession } from "../redux/user/user.actions";
@@ -40,7 +40,7 @@ const App = () => {
         <MainContainer>
           <ErrorBoundary>
             <AppContainer>
-              <Header user={user.currentUser} />
+              <Header location={window.location} user={user.currentUser} />
               <Suspense fallback={<Loader />}>
                 <Switch>
                   <Route

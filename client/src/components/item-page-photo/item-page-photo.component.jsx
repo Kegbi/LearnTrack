@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { urlConstants } from "../../constants/urlConstants";
+import { apiConstants } from "../../constants/urlConstants";
 
 import { Photo, PhotoContainer } from "./item-page-photo.styles";
-import { UnknownPhoto } from "../../ui-kit/unknown-photo/unknown-photo.styles";
+import { UnknownPhotoIcon } from "../icons";
 
-import Loader from "../loader/loader.component";
+import Loader from "../loader/loader";
 
 const ItemPagePhotoComponent = ({
   isEditing,
@@ -23,9 +22,11 @@ const ItemPagePhotoComponent = ({
         let formData = new FormData();
         formData.append("file", files[0]);
         togglePhotoLoading(true);
-        const { data } = await axios.post(urlConstants.uploadImage, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
+        const response = await fetch(apiConstants.uploadImage, {
+          method: "POST",
+          body: formData,
         });
+        const data = await response.json();
         if (data.success) {
           setItem({ ...item, image: data.message });
           setTimeout(function () {
@@ -65,11 +66,11 @@ const ItemPagePhotoComponent = ({
         <Loader />
       ) : item.image.length ? (
         <Photo
-          src={`${urlConstants.images}/${item.image}`}
+          src={`${apiConstants.images}/${item.image}`}
           alt={"item-photo"}
         />
       ) : (
-        <UnknownPhoto />
+        <UnknownPhotoIcon />
       )}
     </PhotoContainer>
   );

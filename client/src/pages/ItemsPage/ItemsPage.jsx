@@ -17,7 +17,7 @@ import {
   ItemsPageTitlesGroup,
 } from "./ItemsPage.styles";
 
-import ContentList from "../../components/content-list/content-list.component";
+import ContentList from "../../components/content-list/content-list";
 
 const ItemsPage = ({ type, admin }) => {
   const [currentItem, setCurrentItem] = useState(1);

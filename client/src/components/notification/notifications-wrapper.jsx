@@ -5,7 +5,7 @@ import Notification from "./notification";
 
 import styled from "styled-components";
 
-const NotificationWrapper = styled.div`
+const Wrapper = styled.div`
   position: fixed;
   bottom: 10px;
   right: 10px;
@@ -16,11 +16,11 @@ const NotificationsWrapper = () => {
   const notifications = useSelector((state) => state.notifications);
 
   return (
-    <NotificationWrapper>
+    <Wrapper>
       {notifications.map((notification) => {
         return <Notification key={notification.id} {...notification} />;
       })}
-    </NotificationWrapper>
+    </Wrapper>
   );
 };
 

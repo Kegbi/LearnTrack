@@ -8,10 +8,10 @@ export default {
    */
   font: {
     weight: {
-      normal: "400",
-      medium: "500",
-      bold: "600",
-      black: "900",
+      normal: 400,
+      medium: 500,
+      bold: 600,
+      black: 900,
     },
     size: {
       tiny: "11px",
@@ -102,7 +102,6 @@ export default {
    */
   spacing: {
     none: 0,
-    xxs: "5px",
     xs: "10px",
     sm: "20px",
     md: "30px",

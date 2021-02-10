@@ -7,8 +7,8 @@ import { signInStart, signUpStart } from "../../redux/user/user.actions";
 
 import {
   ButtonsColumnContainer,
-  CustomButtons,
-} from "../../components/custom-buttons/custom-buttons";
+  CustomButton,
+} from "../../components/custom-button";
 
 import {
   LoginSignupForm,
@@ -51,25 +51,25 @@ const LoginSignupContainer = ({ loginPage }) => {
           />
           {loginPage ? (
             <ButtonsColumnContainer marginTop={"sm"}>
-              <CustomButtons type={"submit"}>Sign-in</CustomButtons>
-              <CustomButtons
+              <CustomButton type={"submit"}>Sign-in</CustomButton>
+              <CustomButton
                 type={"button"}
                 onClick={() => history.push("/signup")}
                 textButton
               >
                 Sign-up
-              </CustomButtons>
+              </CustomButton>
             </ButtonsColumnContainer>
           ) : (
             <ButtonsColumnContainer marginTop={"sm"}>
-              <CustomButtons type={"submit"}>Sign-up</CustomButtons>
-              <CustomButtons
+              <CustomButton type={"submit"}>Sign-up</CustomButton>
+              <CustomButton
                 type={"button"}
                 onClick={() => history.push("/login")}
                 textButton
               >
                 Sign-in
-              </CustomButtons>
+              </CustomButton>
             </ButtonsColumnContainer>
           )}
         </LoginSignupForm>

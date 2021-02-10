@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { apiConstants } from "../../constants/urlConstants";
 import { getData } from "../../api/api";
@@ -20,12 +20,12 @@ import IconsBlock from "../../ui-kit/icons/icons-block";
 
 import Loader from "../../components/loader/loader";
 import ItemPagePhotoComponent from "../../components/item-page-photo/item-page-photo.component";
-import { TextBtn } from "../../ui-kit/buttons/buttons";
 import ItemPageTextInfo from "../../components/item-page-text-info/item-page-text-info.component";
 
 import { buttonTypeConstants } from "../../constants/buttonTypeConstants";
+import { CustomButton } from "../../components/custom-button";
 
-const ItemPage = ({ type, id, admin }) => {
+const ItemPage = ({ type, admin }) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const [item, setItem] = useState({});
@@ -33,6 +33,8 @@ const ItemPage = ({ type, id, admin }) => {
   const [baseItem, setBaseItem] = useState({});
   const [isPending, togglePending] = useState(true);
   const [isEditing, toggleEditing] = useState(false);
+
+  let { id } = useParams();
 
   useEffect(() => {
     let ignoreResponse = false;
@@ -157,17 +159,43 @@ const ItemPage = ({ type, id, admin }) => {
           <ControlsContainer>
             <BackControlGroup onClick={() => history.push(`/${type}s/`)}>
               <BackArrow />
-              <TextBtn ml={"15"}>Back</TextBtn>
+              <CustomButton textButton fw={"medium"} fz={"2rem"} ml={"sm"}>
+                Back
+              </CustomButton>
             </BackControlGroup>
             {admin ? (
               <ItemControlsGroup>
                 {isEditing ? (
-                  <TextBtn onClick={saveCard}>Save</TextBtn>
+                  <CustomButton
+                    textButton
+                    fw={"medium"}
+                    fz={"2rem"}
+                    ml={"sm"}
+                    onClick={saveCard}
+                  >
+                    Save
+                  </CustomButton>
                 ) : (
-                  <TextBtn onClick={startEditing}>Edit</TextBtn>
+                  <CustomButton
+                    textButton
+                    fw={"medium"}
+                    fz={"2rem"}
+                    ml={"sm"}
+                    onClick={startEditing}
+                  >
+                    Edit
+                  </CustomButton>
                 )}
                 <Confirm>
-                  <TextBtn onClick={open}>Delete</TextBtn>
+                  <CustomButton
+                    textButton
+                    fw={"medium"}
+                    fz={"2rem"}
+                    ml={"sm"}
+                    onClick={open}
+                  >
+                    Delete
+                  </CustomButton>
                 </Confirm>
               </ItemControlsGroup>
             ) : (

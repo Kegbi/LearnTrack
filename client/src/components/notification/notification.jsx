@@ -41,12 +41,12 @@ const NotificationItem = styled.div`
   width: 300px;
 `;
 
-const NotificationItemHeader = styled.h3`
+const Header = styled.h3`
   margin: 0;
   padding: ${(p) => p.theme.spacing.xs} ${(p) => p.theme.spacing.xs} 0;
 `;
 
-const NotificationItemMessage = styled.p`
+const Message = styled.p`
   margin: 0;
   padding: ${(p) => p.theme.spacing.xs};
 `;
@@ -60,7 +60,7 @@ const BarFill = keyframes`
   }
 `;
 
-const NotificationItemBar = styled.div`
+const Bar = styled.div`
   animation: ${() =>
     css`
       ${BarFill} 7s linear
@@ -93,9 +93,9 @@ const Notification = (props) => {
 
   return (
     <NotificationItem exit={exit}>
-      <NotificationItemHeader>{props.title}</NotificationItemHeader>
-      <NotificationItemMessage>{props.message}</NotificationItemMessage>
-      <NotificationItemBar alert={props.alert} />
+      <Header>{props.title}</Header>
+      <Message>{props.message}</Message>
+      <Bar alert={props.alert} />
     </NotificationItem>
   );
 };

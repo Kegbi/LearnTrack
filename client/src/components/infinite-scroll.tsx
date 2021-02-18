@@ -1,24 +1,16 @@
 import React, { useMemo, useEffect } from "react";
 
-type DataType = {
-  courseid?: number;
-  bookid?: number;
-  name: string;
-  author: string;
-  info: string;
-  image: string;
-  type: string;
-};
+import { CardType, ItemType } from "../types/item.types";
 
-type Props = {
-  content: Array<DataType>;
-  type: "books" | "courses";
-  fetchMore: () => DataType;
+type PropsType = {
+  content: Array<CardType>;
+  type: ItemType;
+  fetchMore: () => CardType;
   hasMore: boolean;
-  children: any;
+  children: React.FC<{ content: Array<CardType>; type: ItemType }>;
 };
 
-const InfiniteScroll: React.FC<Props> = ({
+const InfiniteScroll: React.FC<PropsType> = ({
   content,
   type,
   fetchMore,

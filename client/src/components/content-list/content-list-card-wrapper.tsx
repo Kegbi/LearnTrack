@@ -2,6 +2,8 @@ import React from "react";
 
 import ContentListCard from "./content-list-card";
 
+import { CardType, ItemType } from "../../types/item.types";
+
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -28,25 +30,15 @@ const Wrapper = styled.div`
   }
 `;
 
-type DataType = {
-  courseid?: number;
-  bookid?: number;
-  name: string;
-  author: string;
-  info: string;
-  image: string;
-  type: string;
-};
-
 type PropsType = {
-  content: Array<DataType>;
-  type: "books" | "courses";
+  content: Array<CardType>;
+  type: ItemType;
 };
 
 const ContentListCardWrapper = ({ content, type }: PropsType) => {
   return (
     <Wrapper>
-      {content.map((card: DataType) => {
+      {content.map((card: CardType) => {
         let id;
         if (type === "books") {
           id = card.bookid;

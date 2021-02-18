@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { black, card_bg, controllers_text } from "../../global.styles";
+import { card_bg, controllers_text } from "../../global.styles";
 
 import { ArrowBack } from "styled-icons/boxicons-regular";
 

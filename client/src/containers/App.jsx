@@ -1,11 +1,5 @@
 import React, { useEffect, lazy, Suspense } from "react";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Redirect,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { createStructuredSelector } from "reselect";
 

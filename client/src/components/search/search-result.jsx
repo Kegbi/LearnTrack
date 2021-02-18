@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Spacing } from "../layout";
 import Avatar from "../avatar";
 import { A } from "../text";
-import { clientConstants } from "../../constants/urlConstants";
 
 const Root = styled.div`
   width: 100%;

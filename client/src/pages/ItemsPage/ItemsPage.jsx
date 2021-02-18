@@ -27,8 +27,8 @@ const ItemsPage = ({ type, admin }) => {
   const moreAvailable = useSelector((state) => state.cards.moreAvailable);
   const cards = useSelector(selectCards);
 
-  let typeOfContent = type === "book" ? "books" : "courses";
-  let itemsToFetch = 28;
+  const typeOfContent = type === "book" ? "books" : "courses";
+  const itemsToFetch = 28;
 
   const fetchItems = () => {
     if (type === "book") {
@@ -72,8 +72,8 @@ const ItemsPage = ({ type, admin }) => {
       {type === "book" ? (
         <ContentList
           typeOfContent={typeOfContent}
-          content={cards.books}
           isPending={isPending}
+          content={cards.books}
           recent={false}
           fetchMore={fetchItems}
           hasMore={moreAvailable}
@@ -81,8 +81,8 @@ const ItemsPage = ({ type, admin }) => {
       ) : (
         <ContentList
           typeOfContent={typeOfContent}
-          content={cards.courses}
           isPending={isPending}
+          content={cards.courses}
           recent={false}
           fetchMore={fetchItems}
           hasMore={moreAvailable}

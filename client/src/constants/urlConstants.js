@@ -1,5 +1,3 @@
-import React from "react";
-
 export const apiConstants = {
   books: "http://localhost:50000/api/books",
   latestBooks: "http://localhost:50000/api/books/latest",

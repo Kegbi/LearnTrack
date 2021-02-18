@@ -1,5 +1,5 @@
 import React from "react";
-import FormInput from "../form-input/form-input.component";
+import FormInput from "../form-input/form-input";
 
 const LoginSignupFormFields = ({ userCredentials, setCredentials }) => {
   const handleChange = (event) => {

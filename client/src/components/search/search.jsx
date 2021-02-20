@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import { useClickOutside } from "../../hooks/useClickOutside";
-import { useDebounce } from "../../hooks/useDebounce";
+import { useDebounceValue } from "../../hooks/useDebounce";
 import { getData } from "../../api/api";
 
 import { apiConstants } from "../../constants/urlConstants";
@@ -21,16 +21,6 @@ export const SearchContainer = styled.div`
   height: 80%;
 `;
 
-// export const SearchField = styled.input`
-//   //margin: 0 auto;
-//   width: 100%;
-//   //height: 80%;
-//   font-size: 1rem;
-//   outline: none;
-//   border: none;
-//   border-bottom: 1px solid ${grey};
-// `;
-
 const StyledLoading = styled(Loading)`
   position: absolute;
   top: 14px;
@@ -46,7 +36,7 @@ const Search = ({ location }) => {
   const inputRef = useRef(null);
   useClickOutside(inputRef, () => setResultsOpen(false));
 
-  const debounceSearchQuery = useDebounce(searchQuery, 500);
+  const debounceSearchQuery = useDebounceValue(searchQuery, 500);
 
   // Clear search query when pathname changes
   useEffect(() => {

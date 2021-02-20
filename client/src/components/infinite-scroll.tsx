@@ -1,6 +1,12 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+import { useDebounceFunc } from "../hooks/useDebounce";
+
+import Loader from "./loader/loader";
 
 import { CardType, ItemType } from "../types/item.types";
+
+import { Spacing } from "./layout";
 
 type PropsType = {
   content: Array<CardType>;
@@ -17,47 +23,48 @@ const InfiniteScroll: React.FC<PropsType> = ({
   hasMore,
   children: Children,
 }) => {
-  const handleScroll = useMemo(
-    () => async () => {
-      const loadMoreData = () => {
-        return fetchMore();
-      };
+  const [loading, setLoading] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-      const windowHeight = window.innerHeight;
-      const scrollTop = document.documentElement.scrollTop;
-      const offsetHeight = document.documentElement.offsetHeight;
-      const scrolled =
-        windowHeight + scrollTop > offsetHeight - offsetHeight / 3;
-
-      if (!hasMore) {
-        window.removeEventListener("scroll", handleScroll);
-        return;
+  const handleScroll = (): void => {
+    if (wrapperRef.current !== null) {
+      const e: HTMLDivElement = wrapperRef.current;
+      const bottom: boolean =
+        e.getBoundingClientRect().bottom <= window.innerHeight * 1.5;
+      if (bottom) {
+        setLoading(true);
+        window.removeEventListener("scroll", debouncedHandleScroll);
+        fetchMore();
       }
+    }
+  };
 
-      if (scrolled) {
-        window.removeEventListener("scroll", handleScroll);
-        console.log("Lol, scroll");
-        loadMoreData();
-      }
-    },
-    [content.length, type, hasMore, fetchMore]
-  );
+  const debouncedHandleScroll = useDebounceFunc(handleScroll, 300);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    setLoading(false);
+    if (!hasMore) {
+      window.removeEventListener("scroll", debouncedHandleScroll);
+      return;
+    }
+    window.addEventListener("scroll", debouncedHandleScroll);
+    return () => window.removeEventListener("scroll", debouncedHandleScroll);
+  }, [content, hasMore]);
 
   return (
-    <>
+    <div ref={wrapperRef}>
       <Children content={content} type={type} />
+      {loading ? (
+        <Spacing top={"sm"} bottom={"sm"}>
+          <Loader />
+        </Spacing>
+      ) : null}
       {!hasMore ? (
         <h1 style={{ margin: "20px 0", textAlign: "center" }}>
           Nothing more to load
         </h1>
       ) : null}
-    </>
+    </div>
   );
 };
 

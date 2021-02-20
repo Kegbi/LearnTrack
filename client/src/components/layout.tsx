@@ -3,7 +3,16 @@ import styled from "styled-components";
 /**
  * Adds margins to UI, using theme spacing options
  */
-export const Spacing = styled.div`
+type SpacingType = {
+  top?: string;
+  right?: string;
+  bottom?: string;
+  left?: string;
+  inline?: boolean;
+  hideOnSm?: boolean;
+};
+
+export const Spacing = styled.div<SpacingType>`
   ${(p) => p.top && `margin-top: ${p.theme.spacing[p.top]}`};
   ${(p) => p.right && `margin-right: ${p.theme.spacing[p.right]}`};
   ${(p) => p.bottom && `margin-bottom: ${p.theme.spacing[p.bottom]}`};
@@ -22,7 +31,11 @@ export const Spacing = styled.div`
 /**
  * Overlay, on top of the whole UI
  */
-export const Overlay = styled.div`
+type OverlayType = {
+  transparency?: string;
+};
+
+export const Overlay = styled.div<OverlayType>`
   position: fixed;
   width: 100%;
   top: 0;

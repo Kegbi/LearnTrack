@@ -28,7 +28,7 @@ const ItemsPage = ({ type, admin }) => {
   const cards = useSelector(selectCards);
 
   const typeOfContent = type === "book" ? "books" : "courses";
-  const itemsToFetch = 28;
+  const itemsToFetch = 50;
 
   const fetchItems = () => {
     if (type === "book") {

@@ -10,6 +10,13 @@ import Header from "../components/header/header";
 import ErrorBoundary from "../components/error-boundary/error-boundary";
 import Loader from "../components/loader/loader";
 
+import ItemPage from "../pages/ItemPage/ItemPage";
+import ItemsPage from "../pages/ItemsPage/ItemsPage";
+import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
+
+import { routesConstants } from "../constants/routesConstants";
+import ProtectedRoute from "../components/protected-route";
+
 import styled from "styled-components";
 
 export const MainContainer = styled.div`
@@ -25,13 +32,6 @@ export const AppContainer = styled.div`
   align-items: center;
   width: 100%;
 `;
-
-import ItemPage from "../pages/ItemPage/ItemPage";
-import ItemsPage from "../pages/ItemsPage/ItemsPage";
-import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
-
-import { routesConstants } from "../constants/routesConstants";
-import ProtectedRoute from "../components/protected-route";
 
 const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
 const MainPage = lazy(() => import("../pages/MainPage/MainPage"));

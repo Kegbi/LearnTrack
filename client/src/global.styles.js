@@ -42,4 +42,3 @@ export const green = "#00c76f";
 export const red = "#f1320e";
 export const yellow = "#f1c900";
 export const card_bg = "rgba(196, 196, 196, 0.2)";
-export const controllers_text = "#858585";

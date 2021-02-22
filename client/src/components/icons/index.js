@@ -3,3 +3,4 @@ export { UnknownPhotoIcon } from "./icons/unknown-photo-icon";
 export { LikeIcon } from "./icons/like-icon";
 export { DislikeIcon } from "./icons/dislike-icon";
 export { BookmarkIcon } from "./icons/bookmark-icon";
+export { BackArrow } from "./icons/back-arrow-icon";

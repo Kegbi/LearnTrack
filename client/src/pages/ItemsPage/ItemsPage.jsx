@@ -9,6 +9,8 @@ import {
   fetchPortionOfCoursesStart,
 } from "../../redux/cards/cards.actions";
 
+import ContentList from "../../components/content-list/content-list";
+
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -53,8 +55,6 @@ export const ItemsPageAddNew = styled.button`
   outline: none;
   font-size: 1.3rem;
 `;
-
-import ContentList from "../../components/content-list/content-list";
 
 const ItemsPage = ({ type, admin }) => {
   const [currentItem, setCurrentItem] = useState(1);

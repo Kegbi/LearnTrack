@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import LoginSignupFormFields from "../../components/signin-signup-form-fields/login-signup-form-fields.component";
+import LoginSignupFormFields from "../../components/signin-signup-form-fields/login-signup-form-fields";
 import { signInStart, signUpStart } from "../../redux/user/user.actions";
 
 import {

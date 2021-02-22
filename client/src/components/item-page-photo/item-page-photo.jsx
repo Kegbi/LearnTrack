@@ -20,12 +20,7 @@ export const Photo = styled.img`
   height: 470px;
 `;
 
-const ItemPagePhotoComponent = ({
-  isEditing,
-  item,
-  setItem,
-  pushNotification,
-}) => {
+const ItemPagePhoto = ({ isEditing, item, setItem, pushNotification }) => {
   const [photoLoading, togglePhotoLoading] = useState(false);
 
   const changePhoto = (event) => {
@@ -90,4 +85,4 @@ const ItemPagePhotoComponent = ({
   );
 };
 
-export default ItemPagePhotoComponent;
+export default ItemPagePhoto;

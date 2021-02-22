@@ -7,27 +7,68 @@ import { useConfirm } from "../../hooks/useConfirm";
 import { addNotification } from "../../redux/notifications/notifications.actions";
 import { deleteCard, updateCard } from "../../redux/cards/cards.actions";
 
-import {
-  ItemPageContainer,
-  ControlsContainer,
-  BackControlGroup,
-  BackArrow,
-  Container,
-  ItemControlsGroup,
-  PhotoBlockContainer,
-} from "./ItemPage.styles";
 import IconsBlock from "../../components/icons-block";
 
 import Loader from "../../components/loader/loader";
-import ItemPagePhotoComponent from "../../components/item-page-photo/item-page-photo.component";
-import ItemPageTextInfo from "../../components/item-page-text-info/item-page-text-info.component";
+import ItemPagePhoto from "../../components/item-page-photo/item-page-photo";
+import ItemPageTextInfo from "../../components/item-page-text-info/item-page-text-info";
 
 import { buttonTypeConstants } from "../../constants/buttonTypeConstants";
 import { CustomButton } from "../../components/custom-button";
+import { BackArrow } from "../../components/icons";
+
+import styled from "styled-components";
+
+export const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+`;
+
+export const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  margin-top: ${(p) => p.theme.spacing.md};
+`;
+
+export const ControlsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const BackControlGroup = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const ControlsGroup = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ControlsText = styled.h2`
+  font-size: 2rem;
+  font-weight: 500;
+  margin-left: 25px;
+  color: ${(p) => p.theme.colors.grey[600]};
+  cursor: pointer;
+`;
+
+export const PhotoBlockContainer = styled.div`
+  width: 570px;
+  margin-right: 115px;
+  background-color: ${(p) => p.theme.colors.grey[200]};
+`;
 
 const ItemPage = ({ type, admin }) => {
   const dispatch = useDispatch();
-  let history = useHistory();
+  const history = useHistory();
   const [item, setItem] = useState({});
   const [reactions, setReactions] = useState({});
   const [baseItem, setBaseItem] = useState({});
@@ -84,6 +125,11 @@ const ItemPage = ({ type, admin }) => {
 
   const startEditing = () => {
     toggleEditing(true);
+  };
+
+  const cancelEditing = () => {
+    setItem(baseItem);
+    toggleEditing(false);
   };
 
   const saveCard = () => {
@@ -164,47 +210,58 @@ const ItemPage = ({ type, admin }) => {
               </CustomButton>
             </BackControlGroup>
             {admin ? (
-              <ItemControlsGroup>
+              <ControlsGroup>
                 {isEditing ? (
-                  <CustomButton
-                    textButton
-                    fw={"medium"}
-                    fz={"2rem"}
-                    ml={"sm"}
-                    onClick={saveCard}
-                  >
-                    Save
-                  </CustomButton>
+                  <Confirm>
+                    <CustomButton
+                      textButton
+                      fw={"medium"}
+                      fz={"2rem"}
+                      ml={"sm"}
+                      onClick={saveCard}
+                    >
+                      Save
+                    </CustomButton>
+                    <CustomButton
+                      textButton
+                      fw={"medium"}
+                      fz={"2rem"}
+                      ml={"sm"}
+                      onClick={cancelEditing}
+                    >
+                      Cancel
+                    </CustomButton>
+                  </Confirm>
                 ) : (
-                  <CustomButton
-                    textButton
-                    fw={"medium"}
-                    fz={"2rem"}
-                    ml={"sm"}
-                    onClick={startEditing}
-                  >
-                    Edit
-                  </CustomButton>
+                  <Confirm>
+                    <CustomButton
+                      textButton
+                      fw={"medium"}
+                      fz={"2rem"}
+                      ml={"sm"}
+                      onClick={startEditing}
+                    >
+                      Edit
+                    </CustomButton>
+                    <CustomButton
+                      textButton
+                      fw={"medium"}
+                      fz={"2rem"}
+                      ml={"sm"}
+                      onClick={open}
+                    >
+                      Delete
+                    </CustomButton>
+                  </Confirm>
                 )}
-                <Confirm>
-                  <CustomButton
-                    textButton
-                    fw={"medium"}
-                    fz={"2rem"}
-                    ml={"sm"}
-                    onClick={open}
-                  >
-                    Delete
-                  </CustomButton>
-                </Confirm>
-              </ItemControlsGroup>
+              </ControlsGroup>
             ) : (
-              <ItemControlsGroup />
+              <ControlsGroup />
             )}
           </ControlsContainer>
-          <ItemPageContainer>
+          <Wrapper>
             <PhotoBlockContainer>
-              <ItemPagePhotoComponent
+              <ItemPagePhoto
                 isEditing={isEditing}
                 item={item}
                 setItem={setItem}
@@ -218,7 +275,7 @@ const ItemPage = ({ type, admin }) => {
               setItem={setItem}
               item={item}
             />
-          </ItemPageContainer>
+          </Wrapper>
         </Container>
       )}
     </>

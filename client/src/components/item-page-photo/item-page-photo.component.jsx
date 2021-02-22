@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { apiConstants } from "../../constants/urlConstants";
 
-import { Photo, PhotoContainer } from "./item-page-photo.styles";
 import { UnknownPhotoIcon } from "../icons";
 
 import Loader from "../loader/loader";
+
+import styled from "styled-components";
+
+export const PhotoContainer = styled.label`
+  width: 570px;
+  height: 470px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Photo = styled.img`
+  width: 100%;
+  height: 470px;
+`;
 
 const ItemPagePhotoComponent = ({
   isEditing,

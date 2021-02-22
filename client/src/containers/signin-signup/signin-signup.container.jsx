@@ -10,11 +10,31 @@ import {
   CustomButton,
 } from "../../components/custom-button";
 
-import {
-  LoginSignupForm,
-  PageContainer,
-  PageContent,
-} from "./signin-signup.styles";
+import styled from "styled-components";
+
+export const Container = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 50px;
+  flex-grow: 1;
+`;
+
+export const Content = styled.div`
+  width: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+`;
+
+export const LoginSignupForm = styled.form`
+  width: 50%;
+`;
 
 const LoginSignupContainer = ({ loginPage }) => {
   const [userCredentials, setCredentials] = useState({
@@ -37,8 +57,8 @@ const LoginSignupContainer = ({ loginPage }) => {
   };
 
   return (
-    <PageContainer>
-      <PageContent>
+    <Container>
+      <Content>
         {loginPage ? (
           <h1>Sign-in into your account and continue your Learning Track!</h1>
         ) : (
@@ -73,8 +93,8 @@ const LoginSignupContainer = ({ loginPage }) => {
             </ButtonsColumnContainer>
           )}
         </LoginSignupForm>
-      </PageContent>
-    </PageContainer>
+      </Content>
+    </Container>
   );
 };
 

@@ -16,7 +16,7 @@ import {
   ItemControlsGroup,
   PhotoBlockContainer,
 } from "./ItemPage.styles";
-import IconsBlock from "../../ui-kit/icons/icons-block";
+import IconsBlock from "../../components/icons-block";
 
 import Loader from "../../components/loader/loader";
 import ItemPagePhotoComponent from "../../components/item-page-photo/item-page-photo.component";

@@ -10,7 +10,21 @@ import Header from "../components/header/header";
 import ErrorBoundary from "../components/error-boundary/error-boundary";
 import Loader from "../components/loader/loader";
 
-import { AppContainer, MainContainer } from "./app.styles";
+import styled from "styled-components";
+
+export const MainContainer = styled.div`
+  padding: 0 53px;
+  display: flex;
+`;
+
+export const AppContainer = styled.div`
+  margin: 0 auto;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
 
 import ItemPage from "../pages/ItemPage/ItemPage";
 import ItemsPage from "../pages/ItemsPage/ItemsPage";

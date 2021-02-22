@@ -32,6 +32,7 @@ export default {
     white: "#fff",
     success: "#26c24f",
     success_light: "#1cd449",
+    yellow: "#f1c900",
     body: "#fcfbfe",
 
     primary: {

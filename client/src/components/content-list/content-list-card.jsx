@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import IconsBlock from "../../ui-kit/icons/icons-block";
+import IconsBlock from "../icons-block";
 
 import { apiConstants } from "../../constants/urlConstants";
 

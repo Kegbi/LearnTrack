@@ -13,24 +13,24 @@ import ContentList from "../../components/content-list/content-list";
 
 import styled from "styled-components";
 
-export const Container = styled.div`
+const Container = styled.div`
   margin-top: 25px;
   width: 100%;
 `;
 
-export const ItemsPageControlsGroup = styled.div`
+const ItemsPageControlsGroup = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
-export const ItemsPageTitlesGroup = styled.div`
+const ItemsPageTitlesGroup = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-export const ItemsPageTitle = styled.button`
+const ItemsPageTitle = styled.button`
   color: ${(p) => (p.active ? p.theme.colors.black : p.theme.colors.grey[600])};
   margin: 0 15px 0;
   border: none;
@@ -43,7 +43,7 @@ export const ItemsPageTitle = styled.button`
   outline: none;
 `;
 
-export const ItemsPageAddNew = styled.button`
+const ItemsPageAddNew = styled.button`
   cursor: pointer;
   color: ${(p) => p.theme.colors.grey[600]};
   border: none;

@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 
 import styled from "styled-components";
 
-export const TextContainer = styled.div`
+const TextContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -27,35 +27,35 @@ const StandardTextarea = styled.textarea`
   padding: 0;
 `;
 
-export const ItemName = styled.h1`
+const ItemName = styled.h1`
   font-size: 3rem;
   margin-bottom: 25px;
 `;
 
-export const ItemNameEditing = styled(StandardTextarea)`
+const ItemNameEditing = styled(StandardTextarea)`
   font-size: 3rem;
   margin-bottom: 25px;
   font-weight: 600;
 `;
 
-export const ItemAuthor = styled.h2`
+const ItemAuthor = styled.h2`
   font-size: 2.35rem;
   font-weight: 400;
   margin-bottom: 50px;
 `;
 
-export const ItemAuthorEditing = styled(StandardTextarea)`
+const ItemAuthorEditing = styled(StandardTextarea)`
   font-size: 2.35rem;
   font-weight: 400;
   margin-bottom: 50px;
 `;
 
-export const ItemInfo = styled.p`
+const ItemInfo = styled.p`
   font-size: 1.8rem;
   font-weight: 400;
 `;
 
-export const ItemInfoEditing = styled(StandardTextarea)`
+const ItemInfoEditing = styled(StandardTextarea)`
   font-size: 1.8rem;
   font-weight: 400;
 `;

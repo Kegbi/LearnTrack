@@ -3,7 +3,7 @@ import React from "react";
 import { LikeIcon, DislikeIcon, BookmarkIcon } from "./icons";
 import styled from "styled-components";
 
-export const IconsContainer = styled.div`
+const IconsContainer = styled.div`
   margin: ${(p) => (p.big ? "15px 0" : "10px 0")};
   width: 100%;
   display: flex;
@@ -11,7 +11,7 @@ export const IconsContainer = styled.div`
   align-items: center;
 `;
 
-export const IconGroup = styled.div`
+const IconGroup = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -20,7 +20,7 @@ export const IconGroup = styled.div`
   cursor: pointer;
 `;
 
-export const IconCounter = styled.div`
+const IconCounter = styled.div`
   margin-top: ${(props) => (props.big ? "10px" : 0)};
   font-size: ${(props) => (props.big ? "1.5rem" : "1rem")};
   color: #393939;

@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { apiConstants } from "../../constants/urlConstants";
 
-import { UnknownPhotoIcon } from "../icons";
+import { UnknownPhotoIcon } from "../../components/icons";
 
-import Loader from "../loader/loader";
+import Loader from "../../components/loader/loader";
 
 import styled from "styled-components";
+import IconsBlock from "../../components/icons-block";
 
-export const PhotoContainer = styled.label`
+const PhotoBlockContainer = styled.div`
+  width: 570px;
+  margin-right: 115px;
+  background-color: ${(p) => p.theme.colors.grey[200]};
+`;
+
+const PhotoContainer = styled.label`
   width: 570px;
   height: 470px;
   display: flex;
@@ -15,12 +22,18 @@ export const PhotoContainer = styled.label`
   justify-content: center;
 `;
 
-export const Photo = styled.img`
+const Photo = styled.img`
   width: 100%;
   height: 470px;
 `;
 
-const ItemPagePhoto = ({ isEditing, item, setItem, pushNotification }) => {
+const ItemPagePhotoBlock = ({
+  isEditing,
+  item,
+  setItem,
+  pushNotification,
+  reactions,
+}) => {
   const [photoLoading, togglePhotoLoading] = useState(false);
 
   const changePhoto = (event) => {
@@ -60,29 +73,32 @@ const ItemPagePhoto = ({ isEditing, item, setItem, pushNotification }) => {
   };
 
   return (
-    <PhotoContainer>
-      {isEditing ? (
-        <input
-          type={"file"}
-          accept={"image/*"}
-          name={"photo"}
-          id={"file"}
-          hidden
-          onChange={changePhoto}
-        />
-      ) : null}
-      {photoLoading ? (
-        <Loader />
-      ) : item.image.length ? (
-        <Photo
-          src={`${apiConstants.images}/${item.image}`}
-          alt={"item-photo"}
-        />
-      ) : (
-        <UnknownPhotoIcon />
-      )}
-    </PhotoContainer>
+    <PhotoBlockContainer>
+      <PhotoContainer>
+        {isEditing ? (
+          <input
+            type={"file"}
+            accept={"image/*"}
+            name={"photo"}
+            id={"file"}
+            hidden
+            onChange={changePhoto}
+          />
+        ) : null}
+        {photoLoading ? (
+          <Loader />
+        ) : item.image.length ? (
+          <Photo
+            src={`${apiConstants.images}/${item.image}`}
+            alt={"item-photo"}
+          />
+        ) : (
+          <UnknownPhotoIcon />
+        )}
+      </PhotoContainer>
+      <IconsBlock counters={true} big={true} reactions={reactions} />
+    </PhotoBlockContainer>
   );
 };
 
-export default ItemPagePhoto;
+export default React.memo(ItemPagePhotoBlock);

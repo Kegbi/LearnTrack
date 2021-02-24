@@ -3,67 +3,29 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { apiConstants } from "../../constants/urlConstants";
 import { getData } from "../../api/api";
-import { useConfirm } from "../../hooks/useConfirm";
 import { addNotification } from "../../redux/notifications/notifications.actions";
 import { deleteCard, updateCard } from "../../redux/cards/cards.actions";
 
-import IconsBlock from "../../components/icons-block";
-
 import Loader from "../../components/loader/loader";
-import ItemPagePhoto from "../../components/item-page-photo/item-page-photo";
-import ItemPageTextInfo from "../../components/item-page-text-info/item-page-text-info";
-
-import { buttonTypeConstants } from "../../constants/buttonTypeConstants";
-import { CustomButton } from "../../components/custom-button";
-import { BackArrow } from "../../components/icons";
+import ItemPageTextInfo from "./item-page-text-info";
 
 import styled from "styled-components";
+import ItemPagePhotoBlock from "./item-page-photo";
+import ItemPageControls from "./item-page-controls";
 
-export const Container = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   margin-top: 25px;
 `;
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: start;
   align-items: start;
   margin-top: ${(p) => p.theme.spacing.md};
-`;
-
-export const ControlsContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const BackControlGroup = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
-
-export const ControlsGroup = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const ControlsText = styled.h2`
-  font-size: 2rem;
-  font-weight: 500;
-  margin-left: 25px;
-  color: ${(p) => p.theme.colors.grey[600]};
-  cursor: pointer;
-`;
-
-export const PhotoBlockContainer = styled.div`
-  width: 570px;
-  margin-right: 115px;
-  background-color: ${(p) => p.theme.colors.grey[200]};
 `;
 
 const ItemPage = ({ type, admin }) => {
@@ -187,88 +149,29 @@ const ItemPage = ({ type, admin }) => {
     dispatch(deleteCard(item, type, history));
   };
 
-  const { open, Confirm } = useConfirm(
-    deleteAction,
-    "Do you want to delete this item?",
-    "The item will be deleted and you won't be able to restore it later",
-    "Delete",
-    "No, I changed my mind",
-    buttonTypeConstants.alert
-  );
-
   return (
     <>
       {isPending ? (
         <Loader />
       ) : (
         <Container>
-          <ControlsContainer>
-            <BackControlGroup onClick={() => history.push(`/${type}s/`)}>
-              <BackArrow />
-              <CustomButton textButton fw={"medium"} fz={"2rem"} ml={"sm"}>
-                Back
-              </CustomButton>
-            </BackControlGroup>
-            {admin ? (
-              <ControlsGroup>
-                {isEditing ? (
-                  <Confirm>
-                    <CustomButton
-                      textButton
-                      fw={"medium"}
-                      fz={"2rem"}
-                      ml={"sm"}
-                      onClick={saveCard}
-                    >
-                      Save
-                    </CustomButton>
-                    <CustomButton
-                      textButton
-                      fw={"medium"}
-                      fz={"2rem"}
-                      ml={"sm"}
-                      onClick={cancelEditing}
-                    >
-                      Cancel
-                    </CustomButton>
-                  </Confirm>
-                ) : (
-                  <Confirm>
-                    <CustomButton
-                      textButton
-                      fw={"medium"}
-                      fz={"2rem"}
-                      ml={"sm"}
-                      onClick={startEditing}
-                    >
-                      Edit
-                    </CustomButton>
-                    <CustomButton
-                      textButton
-                      fw={"medium"}
-                      fz={"2rem"}
-                      ml={"sm"}
-                      onClick={open}
-                    >
-                      Delete
-                    </CustomButton>
-                  </Confirm>
-                )}
-              </ControlsGroup>
-            ) : (
-              <ControlsGroup />
-            )}
-          </ControlsContainer>
+          <ItemPageControls
+            admin={admin}
+            isEditing={isEditing}
+            saveCard={saveCard}
+            cancelEditing={cancelEditing}
+            startEditing={startEditing}
+            deleteAction={deleteAction}
+            type={type}
+          />
           <Wrapper>
-            <PhotoBlockContainer>
-              <ItemPagePhoto
-                isEditing={isEditing}
-                item={item}
-                setItem={setItem}
-                pushNotification={pushNotification}
-              />
-              <IconsBlock counters={true} big={true} reactions={reactions} />
-            </PhotoBlockContainer>
+            <ItemPagePhotoBlock
+              isEditing={isEditing}
+              item={item}
+              setItem={setItem}
+              pushNotification={pushNotification}
+              reactions={reactions}
+            />
             <ItemPageTextInfo
               isEditing={isEditing}
               baseItem={baseItem}

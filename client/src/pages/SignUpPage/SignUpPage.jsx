@@ -1,8 +1,8 @@
 import React from "react";
-import LoginSignupContainer from "../../containers/signin-signup/signin-signup.container";
+import LoginSignup from "../LoginPage/signin-signup";
 
 const SignUpPage = () => {
-  return <LoginSignupContainer loginPage={false} />;
+  return <LoginSignup loginPage={false} />;
 };
 
 export default SignUpPage;

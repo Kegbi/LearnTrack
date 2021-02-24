@@ -7,18 +7,18 @@ import ContentList from "../../components/content-list/content-list";
 
 import styled from "styled-components";
 
-export const MainPageContainer = styled.div`
+const MainPageContainer = styled.div`
   display: flex;
   margin-top: ${(p) => p.theme.spacing.md};
   width: 100%;
   height: 100%;
 `;
 
-export const MainPageContent = styled.div`
+const MainPageContent = styled.div`
   width: 100%;
 `;
 
-export const MainPageGreeting = styled.h1`
+const MainPageGreeting = styled.h1`
   font-size: 2.3rem;
 `;
 

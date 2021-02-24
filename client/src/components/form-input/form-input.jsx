@@ -2,12 +2,12 @@ import React from "react";
 
 import styled from "styled-components";
 
-export const GroupContainer = styled.div`
+const GroupContainer = styled.div`
   position: relative;
   margin: 45px 0;
 `;
 
-export const FormInputContainer = styled.input`
+const FormInputContainer = styled.input`
   background: ${(p) => p.theme.colors.white} none;
   color: ${(p) => p.theme.colors.black};
   font-size: 1.2rem;

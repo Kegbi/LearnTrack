@@ -11,7 +11,7 @@ import SearchField from "./search-field";
 import SearchResult from "./search-result";
 import { Loading } from "../loading";
 
-export const SearchContainer = styled.div`
+const SearchContainer = styled.div`
   position: relative;
   margin: 0 auto;
   display: flex;

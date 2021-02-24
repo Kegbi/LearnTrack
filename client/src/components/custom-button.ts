@@ -1,7 +1,15 @@
 import styled, { css } from "styled-components";
 import { buttonTypeConstants } from "../constants/buttonTypeConstants";
 
-const normalButtonStyles = css`
+type NormalButtonStylesTypes = {
+  w?: string;
+  borderColor?: string;
+  fw?: string;
+  fz?: string;
+  br?: string;
+};
+
+const normalButtonStyles = css<NormalButtonStylesTypes>`
   width: ${(p) => (p.w ? p.w : "150px")};
   border: 1px solid
     ${(p) => (p.borderColor ? p.theme.colors[p.borderColor] : "transparent")};
@@ -12,7 +20,12 @@ const normalButtonStyles = css`
   border-radius: ${(p) => (p.br ? p.theme.radius.md : "unset")};
 `;
 
-const textButtonStyles = css`
+type TextButtonStylesTypes = {
+  fz?: string;
+  fw?: string;
+};
+
+const textButtonStyles = css<TextButtonStylesTypes>`
   background-color: transparent;
   color: ${(p) => p.theme.colors.grey[600]};
   border: none;
@@ -47,7 +60,12 @@ const alertButtonStyles = css`
   }
 `;
 
-const getStyles = (p) => {
+type GetStylesPropsType = {
+  textButton?: string | boolean;
+  type?: "confirm" | "alert" | "text";
+};
+
+const getStyles = (p: GetStylesPropsType) => {
   if (p.textButton) {
     return textButtonStyles;
   } else if (p.type === buttonTypeConstants.confirm) {
@@ -59,7 +77,21 @@ const getStyles = (p) => {
   }
 };
 
-export const CustomButton = styled.button`
+type CustomButtonType = {
+  mt?: string;
+  mr?: string;
+  mb?: string;
+  ml?: string;
+  fz?: string;
+  fw?: string;
+  w?: string;
+  borderColor?: string;
+  br?: string;
+  textButton?: boolean | string;
+  type?: "confirm" | "alert" | "text";
+};
+
+export const CustomButton = styled.button<CustomButtonType>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,10 +107,14 @@ export const CustomButton = styled.button`
   ${getStyles}
 `;
 
-export const ButtonsColumnContainer = styled.div`
+type ButtonsColumnContainerType = {
+  mt?: string;
+};
+
+export const ButtonsColumnContainer = styled.div<ButtonsColumnContainerType>`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: ${(p) => (p.marginTop ? p.theme.spacing[p.marginTop] : 0)};
+  margin-top: ${(p) => (p.mt ? p.theme.spacing[p.mt] : 0)};
 `;

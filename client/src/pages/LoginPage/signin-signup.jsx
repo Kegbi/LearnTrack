@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import LoginSignupFormFields from "../../components/signin-signup-form-fields/login-signup-form-fields";
+import SigninSignupFormFields from "./signin-signup-form-fields";
 import { signInStart, signUpStart } from "../../redux/user/user.actions";
 
 import {
@@ -12,7 +12,7 @@ import {
 
 import styled from "styled-components";
 
-export const Container = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -23,7 +23,7 @@ export const Container = styled.div`
   flex-grow: 1;
 `;
 
-export const Content = styled.div`
+const Content = styled.div`
   width: 700px;
   display: flex;
   align-items: center;
@@ -32,11 +32,11 @@ export const Content = styled.div`
   text-align: center;
 `;
 
-export const LoginSignupForm = styled.form`
+const LoginSignupForm = styled.form`
   width: 50%;
 `;
 
-const LoginSignupContainer = ({ loginPage }) => {
+const LoginSignup = ({ loginPage }) => {
   const [userCredentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -65,12 +65,12 @@ const LoginSignupContainer = ({ loginPage }) => {
           <h1>Sign-up into your account and start your Learning Track!</h1>
         )}
         <LoginSignupForm onSubmit={handleSubmit}>
-          <LoginSignupFormFields
+          <SigninSignupFormFields
             setCredentials={setCredentials}
             userCredentials={userCredentials}
           />
           {loginPage ? (
-            <ButtonsColumnContainer marginTop={"sm"}>
+            <ButtonsColumnContainer mt={"sm"}>
               <CustomButton type={"submit"}>Sign-in</CustomButton>
               <CustomButton
                 type={"button"}
@@ -81,7 +81,7 @@ const LoginSignupContainer = ({ loginPage }) => {
               </CustomButton>
             </ButtonsColumnContainer>
           ) : (
-            <ButtonsColumnContainer marginTop={"sm"}>
+            <ButtonsColumnContainer mt={"sm"}>
               <CustomButton type={"submit"}>Sign-up</CustomButton>
               <CustomButton
                 type={"button"}
@@ -98,4 +98,4 @@ const LoginSignupContainer = ({ loginPage }) => {
   );
 };
 
-export default LoginSignupContainer;
+export default LoginSignup;

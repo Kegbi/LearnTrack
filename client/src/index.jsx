@@ -9,7 +9,7 @@ import "./fonts.css";
 import { GlobalStyle } from "./global.styles";
 import theme from "./theme";
 
-import App from "./containers/App";
+import App from "./components/App/App";
 import NotificationsWrapper from "./components/notification/notifications-wrapper";
 
 ReactDOM.render(

@@ -3,28 +3,28 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import { checkUserSession } from "../redux/user/user.actions";
-import { selectCurrentUser } from "../redux/user/user.selectors";
+import { checkUserSession } from "../../redux/user/user.actions";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 
-import Header from "../components/header/header";
-import ErrorBoundary from "../components/error-boundary/error-boundary";
-import Loader from "../components/loader/loader";
+import Header from "../header/header";
+import ErrorBoundary from "../error-boundary/error-boundary";
+import Loader from "../loader/loader";
 
-import ItemPage from "../pages/ItemPage/ItemPage";
-import ItemsPage from "../pages/ItemsPage/ItemsPage";
-import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
+import ItemPage from "../../pages/ItemPage/ItemPage";
+import ItemsPage from "../../pages/ItemsPage/ItemsPage";
+import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
 
-import { routesConstants } from "../constants/routesConstants";
-import ProtectedRoute from "../components/protected-route";
+import { routesConstants } from "../../constants/routesConstants";
+import ProtectedRoute from "../protected-route";
 
 import styled from "styled-components";
 
-export const MainContainer = styled.div`
+const MainContainer = styled.div`
   padding: 0 53px;
   display: flex;
 `;
 
-export const AppContainer = styled.div`
+const AppContainer = styled.div`
   margin: 0 auto;
   display: flex;
   height: 100vh;
@@ -33,11 +33,11 @@ export const AppContainer = styled.div`
   width: 100%;
 `;
 
-const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
-const MainPage = lazy(() => import("../pages/MainPage/MainPage"));
-const SignUpPage = lazy(() => import("../pages/SignUpPage/SignUpPage"));
+const LoginPage = lazy(() => import("../../pages/LoginPage/LoginPage"));
+const MainPage = lazy(() => import("../../pages/MainPage/MainPage"));
+const SignUpPage = lazy(() => import("../../pages/SignUpPage/SignUpPage"));
 const AchievementsPage = lazy(() =>
-  import("../pages/AchievementsPage/AchievementsPage")
+  import("../../pages/AchievementsPage/AchievementsPage")
 );
 
 const App = () => {

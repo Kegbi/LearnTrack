@@ -5,7 +5,7 @@ import Search from "../search/search";
 
 import styled from "styled-components";
 
-export const HeaderContainer = styled.header`
+const HeaderContainer = styled.header`
   width: 100%;
   justify-content: ${(props) => (props.user ? "space-between" : "center")};
   align-items: center;
@@ -14,18 +14,18 @@ export const HeaderContainer = styled.header`
   padding: ${(p) => p.theme.spacing.sm} 0 0;
 `;
 
-export const Logo = styled.div`
+const Logo = styled.div`
   width: 100%;
   cursor: pointer;
 `;
 
-export const ProfileContainer = styled.div`
+const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
 `;
 
-export const ProfilePicture = styled.div`
+const ProfilePicture = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

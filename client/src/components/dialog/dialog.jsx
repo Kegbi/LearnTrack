@@ -5,7 +5,7 @@ import { Overlay } from "../layout";
 
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   position: fixed;
   top: 0;
   right: 0;
@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
   z-index: ${(p) => p.theme.zIndex.xl};
 `;
 
-export const Body = styled.div`
+const Body = styled.div`
   margin-top: 20vh;
   display: flex;
   align-items: center;
@@ -31,13 +31,13 @@ export const Body = styled.div`
   z-index: ${(p) => p.theme.zIndex.md};
 `;
 
-export const Title = styled.h2`
+const Title = styled.h2`
   font-size: 1.7rem;
   font-weight: 500;
   text-align: center;
 `;
 
-export const Message = styled.p`
+const Message = styled.p`
   margin-top: 20px;
   margin-bottom: 20px;
   font-size: 1.4rem;

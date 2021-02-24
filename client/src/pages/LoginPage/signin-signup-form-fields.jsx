@@ -1,7 +1,7 @@
 import React from "react";
-import FormInput from "../form-input/form-input";
+import FormInput from "../../components/form-input/form-input";
 
-const LoginSignupFormFields = ({ userCredentials, setCredentials }) => {
+const SigninSignupFormFields = ({ userCredentials, setCredentials }) => {
   const handleChange = (event) => {
     const { value, name } = event.target;
 
@@ -32,4 +32,4 @@ const LoginSignupFormFields = ({ userCredentials, setCredentials }) => {
   );
 };
 
-export default LoginSignupFormFields;
+export default SigninSignupFormFields;

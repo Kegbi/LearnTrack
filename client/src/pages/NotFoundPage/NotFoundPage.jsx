@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-export const Container = styled.div`
+const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,19 +10,19 @@ export const Container = styled.div`
   height: 100%;
 `;
 
-export const TextGroup = styled.div`
+const TextGroup = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-export const Header = styled.h1`
+const Header = styled.h1`
   font-size: 9rem;
   margin-bottom: 5px;
 `;
 
-export const Subheader = styled.h2`
+const Subheader = styled.h2`
   font-size: 2rem;
 `;
 
